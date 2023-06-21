@@ -1,12 +1,19 @@
 <template>
-  <div class="home">
+  <div id="login-home" class="home">
+    <div id="spinner" class="spinner-off">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <div class="home-form-box">
       <div class="home-form">
-        <label for="">Identifiant</label>
-        <input type="text" class="form-login-input">
-        <label for="">Mot de Passe</label>
-        <input type="password" class="form-login-input">
-        <button id="button-login">Connexion</button>
+        <label for="login-input">Identifiant</label>
+        <input @input="cancelError()" v-model="login" type="text" class="form-login-input input" id="login-input">
+        <label for="password-input">Mot de Passe</label>
+        <input @input="cancelError()" v-model="password" type="password" class="form-login-input input" id="password-input">
+        <div v-if="error" class="error">{{ error.message }}</div>
+        <button @click="signIn()" id="button-login">Connexion</button>
       </div>
     </div>
     <img class="home-back" alt="" src="../assets/images/1.jpg">
@@ -17,8 +24,64 @@
 
 export default {
   name: 'LoginView',
-  components: {
-    
+  data() {
+    return {
+      error: "",
+      login: "",
+      password: ""
+    }
+  },
+  methods: {
+    showSpinner() {
+        const spinner = document.getElementById('spinner');
+        spinner.classList.replace('spinner-off', 'lds-ring');
+        const body = document.getElementById('login-home');
+        body.classList.add('on');
+    },
+    hideSpinner() {
+        const spinner = document.getElementById('spinner');
+        spinner.classList.replace('lds-ring', 'spinner-off');
+        const body = document.getElementById('login-home');
+        body.classList.remove('on');
+    },
+    signIn() {
+      this.showSpinner();
+      this.$store.dispatch('login', {
+        login: this.login,
+        password: this.password
+      })
+      .then(() => {
+        this.$store.dispatch("getProfile")
+        .then((res) => {
+          this.hideSpinner();
+          if (res.data.role === "admin" || res.data.role === "employee") {
+            this.$router.push("admin/home");
+          }
+          if (res.data.role === "customer") {
+            this.$router.push("customer/home");
+          }
+        })
+      })
+      .catch((error) => {
+        this.hideSpinner();
+        this.error = error.response.data
+        const emptyInput = document.querySelectorAll('.input');
+          emptyInput.forEach(input => {
+              if(input.value === "") {
+                  input.classList.add('empty')
+              }
+          })
+      })
+    },
+    cancelError() {
+      const emptyInput = document.querySelectorAll('.input');
+      emptyInput.forEach(input => {
+          if(input.value !== "") {
+              input.classList.remove('empty')
+          }
+      })
+      this.error = ''
+    },
   }
 }
 </script>
@@ -64,12 +127,16 @@ label{
   font-size: 1.2em;
 }
 input{
-  width: 100%;
+  width: 95%;
   height: 10%;
   margin-bottom: 20px;
   border-radius: 30px;
   border: solid 1px rgb(184, 184, 184);
-  
+  padding-left: 5%;
+  font-size: 1.2em;
+}
+input:focus{
+  outline: none;
 }
 #button-login{
   width: 100%;
@@ -80,6 +147,6 @@ input{
   margin-top: 10%;
   font-size: 1.2em;
   border: solid 2px rgb(0, 0, 0);
+  cursor: pointer;
 }
-
 </style>
