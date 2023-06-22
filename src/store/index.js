@@ -6,6 +6,9 @@ export default createStore({
   state: {
     user: "",
     profile: "",
+    // accounts: [],
+    employees: [],
+    customers: [],
   },
   getters: {
     getUser: (state) => {
@@ -13,6 +16,15 @@ export default createStore({
     },
     getProfile: (state) => {
       return state.profile
+    },
+    // getAccounts: (state) => {
+    //   return state.accounts
+    // },
+    getEmployees: (state) => {
+      return state.employees
+    },
+    getCustomers: (state) => {
+      return state.customers
     },
   },
   mutations: {
@@ -22,6 +34,15 @@ export default createStore({
     SET_PROFILE: function (state, profile) {
       state.profile = profile
     },
+    // SET_ACCOUNTS: function (state, accounts) {
+    //   state.accounts = accounts
+    // },
+    SET_EMPLOYEES: function (state, employees) {
+      state.employees = employees
+    },
+    SET_CUSTOMERS: function (state, customers) {
+      state.customers = customers
+    }
   },
   actions: {
     login: ({ commit }, userInfos) => {
@@ -71,6 +92,30 @@ export default createStore({
         return 'no token'
       }
     },
+    getEmployees: ({ commit }) => {
+      return new Promise((resolve, reject) => {
+        instance.get('/employee')
+        .then((employees) => {
+          commit('SET_EMPLOYEES', employees.data)
+          resolve(employees)
+        })
+        .catch(function (error) {
+          reject(error)
+        });
+      })
+    },
+    getCustomers: ({ commit }) => {
+      return new Promise((resolve, reject) => {
+        instance.get('/customer')
+          .then((customers) => {
+            commit('SET_CUSTOMERS', customers.data)
+            resolve(customers)
+          })
+          .catch(function (error) {
+            reject(error)
+          });
+      })
+    }
   },
   modules: {
   }
