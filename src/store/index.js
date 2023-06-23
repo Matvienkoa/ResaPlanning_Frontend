@@ -9,6 +9,7 @@ export default createStore({
     // accounts: [],
     employees: [],
     customers: [],
+    addAccountBox: "closed",
   },
   getters: {
     getUser: (state) => {
@@ -25,6 +26,9 @@ export default createStore({
     },
     getCustomers: (state) => {
       return state.customers
+    },
+    getAddAccountBox: (state) => {
+      return state.addAccountBox
     },
   },
   mutations: {

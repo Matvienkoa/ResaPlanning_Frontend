@@ -3,7 +3,11 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 
 import AdminHome from '../views/AdminHomeView.vue'
+
 import AdminAccounts from '../views/AdminAccountsView.vue'
+import AdminAccountEmployeeEdit from '../views/AdminAccountEmployeeEditView.vue'
+import AdminAccountCustomerEdit from '../views/AdminAccountCustomerEditView.vue'
+
 import AdminPlanning from '../views/AdminPlanningView.vue'
 
 import CustomerHome from '../views/CustomerHomeView.vue'
@@ -24,6 +28,16 @@ const routes = [
     path: '/admin/accounts',
     name: 'AdminAccounts',
     component: AdminAccounts
+  },
+  {
+    path: '/admin/account/employee/:id',
+    name: 'AdminAccountEmployeeEdit',
+    component: AdminAccountEmployeeEdit
+  },
+  {
+    path: '/admin/account/customer/:id',
+    name: 'AdminAccountCustomerEdit',
+    component: AdminAccountCustomerEdit
   },
   {
     path: '/admin/planning',
