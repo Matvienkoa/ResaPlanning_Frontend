@@ -6,10 +6,10 @@ export default createStore({
   state: {
     user: "",
     profile: "",
-    // accounts: [],
-    employees: [],
+    accountsEmployees: [],
+    accountsCustomers: [],
     customers: [],
-    addAccountBox: "closed",
+    addBox: "closed",
   },
   getters: {
     getUser: (state) => {
@@ -18,34 +18,46 @@ export default createStore({
     getProfile: (state) => {
       return state.profile
     },
-    // getAccounts: (state) => {
-    //   return state.accounts
-    // },
-    getEmployees: (state) => {
-      return state.employees
+    getAccountsEmployees: (state) => {
+      return state.accountsEmployees
+    },
+    getAccountsCustomers: (state) => {
+      return state.accountsCustomers
     },
     getCustomers: (state) => {
       return state.customers
     },
-    getAddAccountBox: (state) => {
-      return state.addAccountBox
+    getAddBox: (state) => {
+      return state.addBox
     },
   },
   mutations: {
+    RESET_BOX: function (state) {
+      state.addBox = "closed"
+    },
     SET_USER: function (state, user) {
       state.user = user
     },
     SET_PROFILE: function (state, profile) {
       state.profile = profile
     },
-    // SET_ACCOUNTS: function (state, accounts) {
-    //   state.accounts = accounts
-    // },
-    SET_EMPLOYEES: function (state, employees) {
-      state.employees = employees
+    SET_ACCOUNTS: function (state, accounts) {
+      state.accountsCustomers = [];
+      state.accountsEmployees = [];
+      accounts.forEach(account => {
+        if(account.role === 'employee') {
+          state.accountsEmployees.push(account)
+        }
+        if (account.role === 'customer') {
+          state.accountsCustomers.push(account)
+        }
+      });
     },
     SET_CUSTOMERS: function (state, customers) {
       state.customers = customers
+    },
+    UPDATE_CUSTOMERS: function (state, customer) {
+      state.customers.push(customer)
     }
   },
   actions: {
@@ -96,6 +108,18 @@ export default createStore({
         return 'no token'
       }
     },
+    getAccounts: ({ commit }) => {
+      return new Promise((resolve, reject) => {
+        instance.get('/account')
+        .then((accounts) => {
+          commit('SET_ACCOUNTS', accounts.data)
+          resolve(accounts)
+        })
+        .catch(function (error) {
+          reject(error)
+        });
+      })
+    },
     getEmployees: ({ commit }) => {
       return new Promise((resolve, reject) => {
         instance.get('/employee')
@@ -114,6 +138,18 @@ export default createStore({
           .then((customers) => {
             commit('SET_CUSTOMERS', customers.data)
             resolve(customers)
+          })
+          .catch(function (error) {
+            reject(error)
+          });
+      })
+    },
+    addCustomer: ({ commit }, customer) => {
+      return new Promise((resolve, reject) => {
+        instance.post('/customer', customer)
+          .then((response) => {
+            commit('UPDATE_CUSTOMERS', response.data)
+            resolve(response)
           })
           .catch(function (error) {
             reject(error)

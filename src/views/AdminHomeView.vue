@@ -11,6 +11,11 @@
         Planning
       </div>
     </router-link>
+    <router-link to="/admin/customers" class="home-menu-link">
+      <div class="home-menu-link-bloc">
+        Clients
+      </div>
+    </router-link>
   </div>
 </template>
 

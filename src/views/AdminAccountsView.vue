@@ -1,18 +1,18 @@
 <template>
-  <AdminAddAccount v-if="getAddAccountBox === 'open'" :type="this.type" />
+  <AdminAddAccountEmployee v-if="getAddBox === 'addAccountEmployee'" />
   <Header />
   <div class="account-admin-box">
     <div class="account-admin-employees">
       <div class="account-admin-employees-title-box">
         <h2 class="account-admin-employees-title">Comptes Collaborateurs</h2>
-        <img @click="openAddAccountBox('collaborateur')" src="../assets/Icons/add.svg" alt="" class="account-admin-employee-icon">
+        <img @click="openAddBox('addAccountEmployee')" src="../assets/Icons/add.svg" alt="" class="account-admin-employee-icon">
       </div>
       <div class="account-admin-employees-list">
-        <div v-for="employee in getEmployees" :key="employee.id" class="account-admin-employee">
+        <div v-for="employee in getAccountsEmployees" :key="employee.id" class="account-admin-employee">
           <div class="account-admin-employee-infos">
-            <div>Compte N°{{ employee.userId }}</div>
-            <div>{{ employee.firstName }}</div>
-            <div>{{ employee.lastName }}</div>
+            <div>Compte N°{{ employee.id }}</div>
+            <div>{{ employee.employees[0].firstName }}</div>
+            <div>{{ employee.employees[0].lastName }}</div>
           </div>
           <div class="account-admin-employee-actions">
             <router-link :to="{name: 'AdminAccountEmployeeEdit', params: {id: employee.id}}" class="account-admin-employee-link">
@@ -26,15 +26,15 @@
     <div class="account-admin-customers">
       <div class="account-admin-customers-title-box">
         <h2 class="account-admin-customers-title">Comptes Clients</h2>
-        <img @click="openAddAccountBox('client')" src="../assets/Icons/add.svg" alt="" class="account-admin-customer-icon">
+        <img src="../assets/Icons/add.svg" alt="" class="account-admin-customer-icon">
       </div>
       <div class="account-admin-customers-list">
-        <div v-for="customer in getCustomers" :key="customer.id" class="account-admin-customer">
+        <div v-for="customer in getAccountsCustomers" :key="customer.id" class="account-admin-customer">
           <div class="account-admin-customer-infos">
-            <div>Compte N°{{ customer.userId }}</div>
-            <div>{{ customer.company }}</div>
-            <div>{{ customer.firstName }}</div>
-            <div>{{ customer.lastName }}</div>
+            <div>Compte N°{{ customer.id }}</div>
+            <div>{{ customer.customers[0].company }}</div>
+            <div>{{ customer.customers[0].firstName }}</div>
+            <div>{{ customer.customers[0].lastName }}</div>
           </div>
           <div class="account-admin-customer-actions">
             <router-link :to="{name: 'AdminAccountCustomerEdit', params: {id: customer.id}}" class="account-admin-customer-link">
@@ -50,14 +50,14 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import AdminAddAccount from '@/components/AdminAddAccount.vue';
+import AdminAddAccountEmployee from '@/components/AdminAddAccountEmployee.vue';
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'AdminAccounts',
   components: {
     Header,
-    AdminAddAccount
+    AdminAddAccountEmployee
   },
   data() {
     return {
@@ -65,17 +65,16 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getEmployees', 'getCustomers', 'getAddAccountBox'])
+    ...mapGetters(['getAccountsEmployees', 'getAccountsCustomers', 'getAddBox'])
   },
   methods: {
-    openAddAccountBox(type) {
-      this.type = type
-      this.$store.state.addAccountBox = "open"
+    openAddBox(type) {
+      this.$store.state.addBox = type
     }
   },
   created: function () {
-    this.$store.dispatch('getEmployees');
-    this.$store.dispatch('getCustomers');
+    this.$store.dispatch('getAccounts');
+    this.$store.commit('RESET_BOX');
   }
 }
 </script>

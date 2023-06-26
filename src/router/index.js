@@ -10,6 +10,8 @@ import AdminAccountCustomerEdit from '../views/AdminAccountCustomerEditView.vue'
 
 import AdminPlanning from '../views/AdminPlanningView.vue'
 
+import AdminCustomers from '../views/AdminCustomersView.vue'
+
 import CustomerHome from '../views/CustomerHomeView.vue'
 
 const routes = [
@@ -24,6 +26,7 @@ const routes = [
     name: 'AdminHome',
     component: AdminHome
   },
+
   {
     path: '/admin/accounts',
     name: 'AdminAccounts',
@@ -39,10 +42,17 @@ const routes = [
     name: 'AdminAccountCustomerEdit',
     component: AdminAccountCustomerEdit
   },
+
   {
     path: '/admin/planning',
     name: 'AdminPlanning',
     component: AdminPlanning
+  },
+
+  {
+    path: '/admin/customers',
+    name: 'AdminCustomers',
+    component: AdminCustomers
   },
 
   {
