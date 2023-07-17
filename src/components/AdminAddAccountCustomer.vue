@@ -2,14 +2,14 @@
   <div class="add-back">
     <div class="add-box">
         <div @click="closeAddBox()" class="close-add">X</div>
-        <h2>Créer un compte collaborateur</h2>
+        <h2>Créer un compte client</h2>
         <div class="add-account-form">
+            <label for="form-customer">Séléctionner un Client :</label>
+            <select @change="cancelError()" v-model="customer" name="form-customer" id="form-customer" class="required">
+                <option v-for="customer in getCustomersWithoutAccount" :key="customer.id" :value="customer.id">{{customer.company}}</option>
+            </select>
             <label for="form-login">Login</label>
             <input v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login" class="required">
-            <label for="form-lastName">Nom</label>
-            <input v-model="lastName" type="text" name="form-lastName" id="form-lastName">
-            <label for="form-firstName">Prénom</label>
-            <input v-model="firstName" @input="cancelError()" type="text" name="form-firstName" id="form-firstName" class="required">
             <label for="form-password">Mot de passe</label>
             <input v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password" class="required">
             <label for="form-password-2">Répéter le Mot de passe</label>
@@ -26,31 +26,29 @@ import { mapGetters } from 'vuex';
 import instance from '@/axios';
 
 export default {
-  name: 'AdminAddAccountEmployee',
+  name: 'AdminAddAccountCustomer',
   data() {
     return {
       error: "",
       login: "",
       password: "",
       password2: "",
-      lastName: "",
-      firstName: ""
+      customer: null
     }
   },
   computed: {
-    ...mapGetters(['getAddBox'])
+    ...mapGetters(['getAddBox', 'getCustomersWithoutAccount'])
   },
   methods: {
     closeAddBox() {
       this.$store.state.addBox = "closed"
     },
     createAccount() {
-      instance.post('/account/add/employee', {
+      instance.post('/account/add/customer', {
         login: this.login,
         password: this.password,
         password2: this.password2,
-        firstName: this.firstName,
-        lastName: this.lastName
+        id: this.customer
       })
       .then((res) => {
         if(res.status === 201) {
@@ -78,38 +76,15 @@ export default {
       this.error = ''
     },
   },
+  created: function () {
+    this.$store.dispatch('getCustomers');
+  }
 }
 </script>
 
 
 <style>
-.add-back{
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.671);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 3;
-}
-.add-box{
-    position: relative;
-    width: 60%;
-    min-height: 50%;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    z-index: 4;
-}
-.close-add{
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    cursor: pointer;
-}
+
 </style>
 
 <style scoped>

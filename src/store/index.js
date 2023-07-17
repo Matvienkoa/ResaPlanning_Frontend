@@ -6,10 +6,19 @@ export default createStore({
   state: {
     user: "",
     profile: "",
-    accountsEmployees: [],
-    accountsCustomers: [],
+    account: "",
+    accounts: "",
+    accountsEmployee: [],
+    accountsCustomer: [],
     customers: [],
+    customer: "",
+    customersWithoutAccount: [],
     addBox: "closed",
+    deleteBox: "closed",
+    editBox: "closed",
+    preparations: [],
+    vehicles: [],
+    vehicle: ""
   },
   getters: {
     getUser: (state) => {
@@ -18,22 +27,51 @@ export default createStore({
     getProfile: (state) => {
       return state.profile
     },
-    getAccountsEmployees: (state) => {
-      return state.accountsEmployees
+    getAccount: (state) => {
+      return state.account
     },
-    getAccountsCustomers: (state) => {
-      return state.accountsCustomers
+    getAccounts: (state) => {
+      return state.accounts
+    },
+    getAccountsEmployee: (state) => {
+      return state.accountsEmployee
+    },
+    getAccountsCustomer: (state) => {
+      return state.accountsCustomer
     },
     getCustomers: (state) => {
       return state.customers
     },
+    getCustomer: (state) => {
+      return state.customer
+    },
+    getCustomersWithoutAccount: (state) => {
+      return state.customersWithoutAccount
+    },
     getAddBox: (state) => {
       return state.addBox
     },
+    getDeleteBox: (state) => {
+      return state.deleteBox
+    },
+    getEditBox: (state) => {
+      return state.editBox
+    },
+    getPreparations: (state) => {
+      return state.preparations
+    },
+    getVehicles: (state) => {
+      return state.vehicles
+    },
+    getVehicle: (state) => {
+      return state.vehicle
+    }
   },
   mutations: {
     RESET_BOX: function (state) {
-      state.addBox = "closed"
+      state.addBox = "closed";
+      state.deleteBox = "closed";
+      state.editBox = "closed";
     },
     SET_USER: function (state, user) {
       state.user = user
@@ -41,23 +79,78 @@ export default createStore({
     SET_PROFILE: function (state, profile) {
       state.profile = profile
     },
+    SET_ACCOUNT: function (state, account) {
+      state.account = account
+    },
     SET_ACCOUNTS: function (state, accounts) {
-      state.accountsCustomers = [];
-      state.accountsEmployees = [];
-      accounts.forEach(account => {
-        if(account.role === 'employee') {
-          state.accountsEmployees.push(account)
-        }
-        if (account.role === 'customer') {
-          state.accountsCustomers.push(account)
-        }
-      });
+      state.accounts = accounts
+    },
+    SET_ACCOUNTS_EMPLOYEE: function (state, employee) {
+      state.accountsEmployee.push(employee)
+    },
+    // ADD_ACCOUNT_EMPLOYEE: function (state, employee) {
+    //   state.accountsEmployee.push(employee)
+    // },
+    // EDIT_ACCOUNT_EMPLOYEE: function (state, newEmployee) {
+    //   const employeeIndex = state.accountsEmployee.findIndex(
+    //     e => e.id === newEmployee.id)
+    //   state.accountsEmployee[employeeIndex] = newEmployee
+    //   state.accountsEmployee = [...state.accountsEmployee]
+    // },
+    DELETE_ACCOUNT_EMPLOYEE: function (state, employee) {
+      const index = state.accountsEmployee.findIndex(e => e.id === employee);
+      if (index !== -1) {
+        state.accountsEmployee.splice(index, 1);
+      }
+    },
+    SET_ACCOUNTS_CUSTOMER: function (state, customer) {
+      state.accountsCustomer.push(customer)
+    },
+    // ADD_ACCOUNT_CUSTOMER: function (state, customer) {
+    //   state.accountsCustomer.push(customer)
+    // },
+    // EDIT_ACCOUNT_CUSTOMER: function (state, newCustomer) {
+    //   const customerIndex = state.accountsCustomer.findIndex(
+    //     c => c.id === newCustomer.id)
+    //   state.accountsCustomer[customerIndex] = newCustomer
+    //   state.accountsCustomer = [...state.accountsCustomer]
+    // },
+    DELETE_ACCOUNT_CUSTOMER: function (state, customer) {
+      const index = state.accountsCustomer.findIndex(c => c.id === customer);
+      if (index !== -1) {
+        state.accountsCustomer.splice(index, 1);
+      }
+    },
+    RESET_ACCOUNTS: function (state) {
+      state.accountsEmployee = []
+      state.accountsCustomer = []
     },
     SET_CUSTOMERS: function (state, customers) {
       state.customers = customers
     },
+    SET_CUSTOMER: function (state, customer) {
+      state.customer = customer
+    },
     UPDATE_CUSTOMERS: function (state, customer) {
       state.customers.push(customer)
+    },
+    SET_CUSTOMERS_WITHOUT_ACCOUNT: function (state, customers) {
+      let cwa = [];
+      customers.forEach(customer => {
+        if(customer.account === 'no') {
+          cwa.push(customer)
+        }
+      })
+      state.customersWithoutAccount = cwa
+    },
+    SET_PREPARATIONS: function (state, preparations) {
+      state.preparations = preparations
+    },
+    SET_VEHICLES: function (state, vehicles) {
+      state.vehicles = vehicles
+    },
+    SET_VEHICLE: function (state, vehicle) {
+      state.vehicle = vehicle
     }
   },
   actions: {
@@ -108,11 +201,51 @@ export default createStore({
         return 'no token'
       }
     },
+    getAccount: ({ commit }, user) => {
+      return new Promise((resolve, reject) => {
+        instance.get(`/account/${user}`)
+        .then(account => {
+          let accountUser = account.data;
+          if (accountUser.role === 'employee') {
+            instance.get(`/employee/${accountUser.id}`)
+            .then((employee) => {
+              accountUser.infos = employee.data
+              commit('SET_ACCOUNT', accountUser)
+              resolve(accountUser)
+            })
+          }
+          if (accountUser.role === 'customer') {
+            commit('SET_ACCOUNT', accountUser)
+            resolve(accountUser)
+          }
+        })
+        .catch(function (error) {
+          reject(error)
+        });
+      })
+    },
     getAccounts: ({ commit }) => {
       return new Promise((resolve, reject) => {
         instance.get('/account')
         .then((accounts) => {
           commit('SET_ACCOUNTS', accounts.data)
+          commit('RESET_ACCOUNTS')
+          accounts.data.forEach(account => {
+            if(account.role === 'employee') {
+              instance.get(`/employee/${account.id}`)
+              .then((employee) => {
+                account.infos = employee.data
+                commit('SET_ACCOUNTS_EMPLOYEE', account)
+              })
+            }
+            if (account.role === 'customer') {
+              instance.get(`/customer/${account.id}`)
+                .then((customer) => {
+                  account.infos = customer.data
+                  commit('SET_ACCOUNTS_CUSTOMER', account)
+                })
+            }
+          })
           resolve(accounts)
         })
         .catch(function (error) {
@@ -137,6 +270,7 @@ export default createStore({
         instance.get('/customer')
           .then((customers) => {
             commit('SET_CUSTOMERS', customers.data)
+            commit('SET_CUSTOMERS_WITHOUT_ACCOUNT', customers.data)
             resolve(customers)
           })
           .catch(function (error) {
@@ -155,7 +289,55 @@ export default createStore({
             reject(error)
           });
       })
-    }
+    },
+    getCustomer: ({ commit }, customer) => {
+      return new Promise((resolve, reject) => {
+        instance.get(`/customer/profile/${customer}`)
+        .then((response) => {
+          commit('SET_CUSTOMER', response.data)
+          resolve(response)
+        })
+        .catch(function (error) {
+          reject(error)
+        });
+      })
+    },
+    getPreparations: ({ commit }) => {
+      return new Promise((resolve, reject) => {
+        instance.get('/preparation/')
+        .then((response) => {
+          commit('SET_PREPARATIONS', response.data)
+          resolve(response)
+        })
+        .catch(function (error) {
+          reject(error)
+        });
+      })
+    },
+    getVehicles: ({ commit }) => {
+      return new Promise((resolve, reject) => {
+        instance.get('/vehicle/')
+          .then(function (response) {
+            commit('SET_VEHICLES', response.data)
+            resolve(response)
+          })
+          .catch(function (error) {
+            reject(error);
+          });
+      })
+    },
+    getVehicle: ({ commit }, vehicule) => {
+      return new Promise((resolve, reject) => {
+        instance.get(`/vehicle/${vehicule}`)
+          .then((response) => {
+            commit('SET_VEHICLE', response.data)
+            resolve(response)
+          })
+          .catch(function (error) {
+            reject(error)
+          });
+      })
+    },
   },
   modules: {
   }

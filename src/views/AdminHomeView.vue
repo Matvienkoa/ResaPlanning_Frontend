@@ -11,9 +11,19 @@
         Planning
       </div>
     </router-link>
+    <router-link to="/admin/workshop" class="home-menu-link">
+      <div class="home-menu-link-bloc">
+        Atelier
+      </div>
+    </router-link>
     <router-link to="/admin/customers" class="home-menu-link">
       <div class="home-menu-link-bloc">
         Clients
+      </div>
+    </router-link>
+    <router-link to="/admin/showcase" class="home-menu-link">
+      <div class="home-menu-link-bloc">
+        Showcase
       </div>
     </router-link>
   </div>
@@ -40,10 +50,11 @@ export default {
 
 <style>
 .home-admin-box{
-  width: 100%;
-  padding: 30px;
+  width: 95%;
+  margin: auto;
   display: flex;
   justify-content: flex-start;
+  flex-wrap: wrap;
 }
 .home-menu-link{
   width: 20%;

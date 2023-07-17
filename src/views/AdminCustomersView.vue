@@ -8,20 +8,14 @@
         <img @click="openAddBox('addCustomer')" src="../assets/Icons/add.svg" alt="" class="account-admin-customer-icon">
       </div>
       <div class="account-admin-customers-list">
-        <div v-for="customer in getCustomers" :key="customer.id" class="account-admin-customer">
+        <router-link v-for="customer in getCustomers" :key="customer.id" :to="{name: 'AdminCustomer', params: {id: customer.id}}" class="account-admin-customer">
           <div class="account-admin-customer-infos">
             <div>Client N°{{ customer.id }}</div>
             <div>{{ customer.company }}</div>
             <div>{{ customer.firstName }}</div>
             <div>{{ customer.lastName }}</div>
           </div>
-          <div class="account-admin-customer-actions">
-            <!-- <router-link :to="{name: 'AdminAccountCustomerEdit', params: {id: customer.id}}" class="account-admin-customer-link">
-              <img src="../assets/Icons/edit.svg" alt="" class="account-admin-customer-icon">
-            </router-link> -->
-            <img src="../assets/Icons/delete.svg" alt="" class="account-admin-customer-icon">
-          </div>
-        </div>
+        </router-link>
       </div>
     </div>
   </div>
@@ -90,6 +84,7 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  margin-bottom: 10px;
 }
 .account-admin-customer-infos{
   display: flex;

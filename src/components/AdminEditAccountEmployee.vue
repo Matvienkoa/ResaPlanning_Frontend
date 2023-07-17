@@ -1,8 +1,8 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <div @click="closeAddBox()" class="close-add">X</div>
-        <h2>Créer un compte collaborateur</h2>
+        <div @click="closeEditBox()" class="close-add">X</div>
+        <h2>Modifier un compte collaborateur</h2>
         <div class="add-account-form">
             <label for="form-login">Login</label>
             <input v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login" class="required">
@@ -11,11 +11,11 @@
             <label for="form-firstName">Prénom</label>
             <input v-model="firstName" @input="cancelError()" type="text" name="form-firstName" id="form-firstName" class="required">
             <label for="form-password">Mot de passe</label>
-            <input v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password" class="required">
+            <input v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
             <label for="form-password-2">Répéter le Mot de passe</label>
-            <input v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2" class="required">
+            <input v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button @click="createAccount()">Créer le compte</button>
+            <button @click="editAccount()">Modifier le compte</button>
         </div>
     </div>
   </div>
@@ -26,26 +26,27 @@ import { mapGetters } from 'vuex';
 import instance from '@/axios';
 
 export default {
-  name: 'AdminAddAccountEmployee',
+  name: 'AdminEditAccountEmployee',
+  props: ["id"],
   data() {
     return {
       error: "",
       login: "",
       password: "",
       password2: "",
-      lastName: "",
-      firstName: ""
+      firstName: "",
+      lastName: ""
     }
   },
   computed: {
-    ...mapGetters(['getAddBox'])
+    ...mapGetters(['getEditBox', 'getAccount'])
   },
   methods: {
-    closeAddBox() {
-      this.$store.state.addBox = "closed"
+    closeEditBox() {
+      this.$store.state.editBox = "closed"
     },
-    createAccount() {
-      instance.post('/account/add/employee', {
+    editAccount() {
+      instance.put(`/account/edit/employee/${this.id}`, {
         login: this.login,
         password: this.password,
         password2: this.password2,
@@ -55,7 +56,7 @@ export default {
       .then((res) => {
         if(res.status === 201) {
           this.$store.dispatch('getAccounts');
-          this.$store.state.addBox = "closed";
+          this.$store.state.editBox = "closed";
         }
       })
       .catch((error) => {
@@ -78,38 +79,21 @@ export default {
       this.error = ''
     },
   },
+  created: function () {
+    this.$store.dispatch('getAccount', this.id)
+    .then((account) => {
+      console.log(account)
+        this.login = account.login
+        this.firstName = account.infos.firstName
+        this.lastName = account.infos.lastName
+    })
+  }
 }
 </script>
 
 
 <style>
-.add-back{
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.671);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 3;
-}
-.add-box{
-    position: relative;
-    width: 60%;
-    min-height: 50%;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    z-index: 4;
-}
-.close-add{
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    cursor: pointer;
-}
+
 </style>
 
 <style scoped>
