@@ -179,13 +179,13 @@ export default createStore({
             instance.get(`/account/${userId}`)
               .then(function (response) {
                 if (response.data.role === 'customer') {
-                  instance.get(`/account/customer/${response.data.id}`)
+                  instance.get(`/customer/user/${response.data.id}`)
                     .then((res) => {
                       commit('SET_PROFILE', res.data);
                     })
                 }
                 if (response.data.role === 'employee') {
-                  instance.get(`/account/employee/${response.data.id}`)
+                  instance.get(`/employee/user/${response.data.id}`)
                     .then((res) => {
                       commit('SET_PROFILE', res.data);
                     })
@@ -207,7 +207,7 @@ export default createStore({
         .then(account => {
           let accountUser = account.data;
           if (accountUser.role === 'employee') {
-            instance.get(`/employee/${accountUser.id}`)
+            instance.get(`/employee/user/${accountUser.id}`)
             .then((employee) => {
               accountUser.infos = employee.data
               commit('SET_ACCOUNT', accountUser)
@@ -215,8 +215,12 @@ export default createStore({
             })
           }
           if (accountUser.role === 'customer') {
-            commit('SET_ACCOUNT', accountUser)
-            resolve(accountUser)
+            instance.get(`/customer/user/${accountUser.id}`)
+            .then((customer) => {
+              accountUser.infos = customer.data
+              commit('SET_ACCOUNT', accountUser)
+              resolve(accountUser)
+            })
           }
         })
         .catch(function (error) {
@@ -232,14 +236,14 @@ export default createStore({
           commit('RESET_ACCOUNTS')
           accounts.data.forEach(account => {
             if(account.role === 'employee') {
-              instance.get(`/employee/${account.id}`)
+              instance.get(`/employee/user/${account.id}`)
               .then((employee) => {
                 account.infos = employee.data
                 commit('SET_ACCOUNTS_EMPLOYEE', account)
               })
             }
             if (account.role === 'customer') {
-              instance.get(`/customer/${account.id}`)
+              instance.get(`/customer/user/${account.id}`)
                 .then((customer) => {
                   account.infos = customer.data
                   commit('SET_ACCOUNTS_CUSTOMER', account)
@@ -292,7 +296,7 @@ export default createStore({
     },
     getCustomer: ({ commit }, customer) => {
       return new Promise((resolve, reject) => {
-        instance.get(`/customer/profile/${customer}`)
+        instance.get(`/customer/${customer}`)
         .then((response) => {
           commit('SET_CUSTOMER', response.data)
           resolve(response)

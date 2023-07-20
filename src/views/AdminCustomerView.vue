@@ -1,5 +1,6 @@
 <template>
   <Header />
+  <BackButton url="/admin/customers" />
   <div class="admin-customer-page">
     <div class="admin-customer-box">
       <div class="admin-customer-title-box">
@@ -14,12 +15,14 @@
 
 <script>
 import Header from '@/components/Header.vue';
+import BackButton from '@/components/BackButton.vue';
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'AdminCustomer',
   components: {
     Header,
+    BackButton
   },
   data() {
     return {

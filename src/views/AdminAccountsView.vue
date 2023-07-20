@@ -6,6 +6,7 @@
   <AdminEditAccountEmployee v-if="getEditBox === 'editAccountEmployee'" :id="id" />
   <AdminEditAccountCustomer v-if="getEditBox === 'editAccountCustomer'" :id="id" />
   <Header />
+  <BackButton url="/admin/home" />
   <div class="account-admin-box">
     <div class="account-admin-employees">
       <div class="account-admin-employees-title-box">
@@ -38,6 +39,8 @@
             <div>{{ customer.infos.company }}</div>
             <div>{{ customer.infos.firstName }}</div>
             <div>{{ customer.infos.lastName }}</div>
+            <div>Compte AFC : {{ customer.afc }}</div>
+            <div>Compte Millenium : {{ customer.millenium }}</div>
           </div>
           <div class="account-admin-customer-actions">
             <img @click="openEditBox({id: customer.id, type: 'editAccountCustomer'})" src="../assets/Icons/edit.svg" alt="" class="account-admin-customer-icon">
@@ -51,6 +54,7 @@
 
 <script>
 import Header from '@/components/Header.vue';
+import BackButton from '@/components/BackButton.vue';
 import AdminAddAccountEmployee from '@/components/AdminAddAccountEmployee.vue';
 import AdminAddAccountCustomer from '@/components/AdminAddAccountCustomer.vue';
 import AdminDeleteAccountEmployee from '@/components/AdminDeleteAccountEmployee.vue';
@@ -63,6 +67,7 @@ export default {
   name: 'AdminAccounts',
   components: {
     Header,
+    BackButton,
     AdminAddAccountEmployee,
     AdminAddAccountCustomer,
     AdminDeleteAccountEmployee,

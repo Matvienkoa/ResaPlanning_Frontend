@@ -3,20 +3,17 @@ import { createRouter, createWebHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 
 import AdminHome from '../views/AdminHomeView.vue'
-
 import AdminAccounts from '../views/AdminAccountsView.vue'
-
 import AdminPlanning from '../views/AdminPlanningView.vue'
-
 import AdminWorkshop from '../views/AdminWorkshopView.vue'
-
-import AdminShowcase from '../views/AdminShowcaseView.vue'
-import AdminShowcaseVehicle from '../views/AdminShowcaseVehicleView.vue'
-
+import AdminShowroom from '../views/AdminShowroomView.vue'
+import AdminShowroomVehicle from '../views/AdminShowroomVehicleView.vue'
 import AdminCustomers from '../views/AdminCustomersView.vue'
 import AdminCustomer from '../views/AdminCustomerView.vue'
 
 import CustomerHome from '../views/CustomerHomeView.vue'
+import CustomerShowroom from '../views/CustomerShowroomView.vue'
+import CustomerShowroomVehicle from '../views/CustomerShowroomVehicleView.vue'
 
 const routes = [
   {
@@ -50,14 +47,14 @@ const routes = [
   },
 
   {
-    path: '/admin/showcase',
-    name: 'AdminShowcase',
-    component: AdminShowcase
+    path: '/admin/showroom',
+    name: 'AdminShowroom',
+    component: AdminShowroom
   },
   {
-    path: '/admin/showcase/vehicle/:id',
-    name: 'AdminShowcaseVehicle',
-    component: AdminShowcaseVehicle
+    path: '/admin/showroom/vehicle/:id',
+    name: 'AdminShowroomVehicle',
+    component: AdminShowroomVehicle
   },
 
   {
@@ -75,6 +72,17 @@ const routes = [
     path: '/customer/home',
     name: 'CustomerHome',
     component: CustomerHome
+  },
+
+  {
+    path: '/customer/showroom',
+    name: 'CustomerShowroom',
+    component: CustomerShowroom
+  },
+  {
+    path: '/customer/showroom/vehicle/:id',
+    name: 'CustomerShowroomVehicle',
+    component: CustomerShowroomVehicle
   },
 ]
 

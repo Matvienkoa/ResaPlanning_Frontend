@@ -1,6 +1,7 @@
 <template>
 <AdminAddCustomer v-if="getAddBox === 'addCustomer'" />
   <Header />
+  <BackButton url="/admin/home" />
   <div class="account-admin-box">
     <div class="account-admin-customers">
       <div class="account-admin-customers-title-box">
@@ -23,6 +24,7 @@
 
 <script>
 import Header from '@/components/Header.vue';
+import BackButton from '@/components/BackButton.vue';
 import AdminAddCustomer from '@/components/AdminAddCustomer.vue';
 import { mapGetters } from 'vuex';
 
@@ -30,6 +32,7 @@ export default {
   name: 'AdminCustomers',
   components: {
     Header,
+    BackButton,
     AdminAddCustomer
   },
   data() {

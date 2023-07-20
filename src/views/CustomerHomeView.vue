@@ -1,13 +1,32 @@
 <template>
-  <div class="">
-    
+  <Header />
+  <div class="home-customer-box">
+    <router-link to="#" class="home-menu-link">
+      <div class="home-menu-link-bloc">
+        Demande de réservation
+      </div>
+    </router-link>
+    <router-link to="#" class="home-menu-link">
+      <div class="home-menu-link-bloc">
+        Statut de préparation
+      </div>
+    </router-link>
+    <router-link to="/customer/showroom" class="home-menu-link">
+      <div class="home-menu-link-bloc">
+        Showroom
+      </div>
+    </router-link>
   </div>
 </template>
 
 <script>
+import Header from '@/components/Header.vue';
 
 export default {
-  name: 'HomeCustomer',
+  name: 'CustomerHome',
+  components: {
+    Header,
+  },
   data() {
     return {
       
@@ -19,6 +38,12 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style>
+.home-customer-box{
+  width: 95%;
+  margin: auto;
+  display: flex;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+}
 </style>

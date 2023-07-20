@@ -1,5 +1,6 @@
 <template>
   <Header />
+  <BackButton url="/admin/home" />
   <div class="workshop-box">
     <div class="workshop-demands-box">
         <div class="workshop-demands-title-box">
@@ -16,12 +17,13 @@
 
 <script>
 import Header from '@/components/Header.vue';
-
+import BackButton from '@/components/BackButton.vue';
 
 export default {
   name: 'AdminWorkshop',
   components: {
-    Header
+    Header,
+    BackButton
   },
   data() {
     return {

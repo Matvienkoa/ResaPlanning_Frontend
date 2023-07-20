@@ -1,5 +1,6 @@
 <template>
   <Header />
+  <BackButton url="/admin/home" />
   <div class="planning-admin-box">
     <div class="planning-banner">
       <div class="planning-banner-item">Demandes</div>
@@ -18,11 +19,13 @@ import interactionPlugin from '@fullcalendar/interaction'
 import frLocale from '@fullcalendar/core/locales/fr';
 
 import Header from '@/components/Header.vue'
+import BackButton from '@/components/BackButton.vue';
 
 export default {
   name: 'AdminPlanning',
   components: {
     Header,
+    BackButton,
     FullCalendar
   },
   data() {

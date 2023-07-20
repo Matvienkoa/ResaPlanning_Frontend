@@ -1,25 +1,26 @@
 <template>
 <AdminAddVehicle v-if="getAddBox === 'addVehicle'" />
   <Header />
-  <div class="showcase-admin-box">
-    <div class="showcase-admin">
-      <div class="showcase-admin-title-box">
-        <h2 class="showcase-admin-title">Mes Véhicules</h2>
-        <img @click="openAddBox('addVehicle')" src="../assets/Icons/add.svg" alt="" class="showcase-admin-icon">
+  <BackButton url="/admin/home" />
+  <div class="showroom-admin-box">
+    <div class="showroom-admin">
+      <div class="showroom-admin-title-box">
+        <h2 class="showroom-admin-title">Mes Véhicules</h2>
+        <img @click="openAddBox('addVehicle')" src="../assets/Icons/add.svg" alt="" class="showroom-admin-icon">
       </div>
-      <div class="showcase-admin-vehicles-box">
-        <router-link v-for="vehicle in getVehicles" :key="vehicle.id" :to="{name: 'AdminShowcaseVehicle', params: {id: vehicle.id}}" class="showcase-admin-vehicle">
-          <div class="showcase-admin-vehicle-img-box">
-            <img crossorigin="anonymous" v-if="vehicle.photo1" :src="vehicle.photo1" alt="" class="showcase-admin-vehicle-img">
+      <div class="showroom-admin-vehicles-box">
+        <router-link v-for="vehicle in getVehicles" :key="vehicle.id" :to="{name: 'AdminShowroomVehicle', params: {id: vehicle.id}}" class="showroom-admin-vehicle">
+          <div class="showroom-admin-vehicle-img-box">
+            <img crossorigin="anonymous" v-if="vehicle.photo1" :src="vehicle.photo1" alt="" class="showroom-admin-vehicle-img">
           </div>
-          <div class="showcase-admin-vehicle-infos-box">
-            <div class="showcase-admin-vehicle-model-box">
-              <div class="showcase-admin-vehicle-brand">{{vehicle.brand}}</div>
-              <div class="showcase-admin-vehicle-model">{{vehicle.model}}</div>
+          <div class="showroom-admin-vehicle-infos-box">
+            <div class="showroom-admin-vehicle-model-box">
+              <div class="showroom-admin-vehicle-brand">{{vehicle.brand}}</div>
+              <div class="showroom-admin-vehicle-model">{{vehicle.model}}</div>
             </div>
-            <div class="showcase-admin-vehicle-options-box">
-              <div class="showcase-admin-vehicle-option">{{vehicle.year}}</div>
-              <div class="showcase-admin-vehicle-option">{{vehicle.kilometers}}</div>
+            <div class="showroom-admin-vehicle-options-box">
+              <div class="showroom-admin-vehicle-option">{{vehicle.year}}</div>
+              <div class="showroom-admin-vehicle-option">{{vehicle.kilometers}}</div>
             </div>
           </div>
         </router-link>
@@ -30,13 +31,15 @@
 
 <script>
 import Header from '@/components/Header.vue';
+import BackButton from '@/components/BackButton.vue';
 import AdminAddVehicle from '@/components/AdminAddVehicle.vue';
 import { mapGetters } from 'vuex';
 
 export default {
-  name: 'AdminShowcase',
+  name: 'AdminShowroom',
   components: {
     Header,
+    BackButton,
     AdminAddVehicle
   },
   data() {
@@ -60,19 +63,19 @@ export default {
 </script>
 
 <style scoped>
-.showcase-admin-box{
+.showroom-admin-box{
   width: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
   padding-top: 1em;
 }
-.showcase-admin{
+.showroom-admin{
   width: 95%;
   display: flex;
   flex-direction: column;
 }
-.showcase-admin-title-box{
+.showroom-admin-title-box{
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -80,19 +83,19 @@ export default {
   border-bottom: 1px solid black;
   margin-bottom: 10px;
 }
-.showcase-admin-icon{
+.showroom-admin-icon{
   width: 20px;
   margin-right: 10px;
   cursor: pointer;
 }
 
-.showcase-admin-vehicles-box{
+.showroom-admin-vehicles-box{
   width: 100%;
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
 }
-.showcase-admin-vehicle{
+.showroom-admin-vehicle{
   width: 30%;
   height: 300px;
   display: flex;
@@ -100,7 +103,7 @@ export default {
   margin-left: 1.66%;
   margin-right: 1.66%;
 }
-.showcase-admin-vehicle-img-box{
+.showroom-admin-vehicle-img-box{
   width: 100%;
   height: 60%;
   overflow: hidden;
@@ -109,7 +112,7 @@ export default {
   justify-content: center;
   align-items: center;
 }
-.showcase-admin-vehicle-img{
+.showroom-admin-vehicle-img{
   width: 100%;
   height: 100%;
   object-fit: cover;

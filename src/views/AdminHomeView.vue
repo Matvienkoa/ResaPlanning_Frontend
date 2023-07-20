@@ -21,9 +21,9 @@
         Clients
       </div>
     </router-link>
-    <router-link to="/admin/showcase" class="home-menu-link">
+    <router-link to="/admin/showroom" class="home-menu-link">
       <div class="home-menu-link-bloc">
-        Showcase
+        Showroom
       </div>
     </router-link>
   </div>

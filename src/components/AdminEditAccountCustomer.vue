@@ -10,6 +10,10 @@
             <input v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
             <label for="form-password-2">Répéter le Mot de passe</label>
             <input v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
+            <label for="form-afc">Accès AFC</label>
+            <input v-model="afc" type="checkbox" name="form-afc" id="form-afc">
+            <label for="form-millenium">Accès Millenium</label>
+            <input v-model="millenium" type="checkbox" name="form-millenium" id="form-millenium">
             <div v-if="error" class="error">{{ error.message }}</div>
             <button @click="editAccount()">Modifier le compte</button>
         </div>
@@ -29,7 +33,9 @@ export default {
       error: "",
       login: "",
       password: "",
-      password2: ""
+      password2: "",
+      afc: false,
+      millenium: false
     }
   },
   computed: {
@@ -39,11 +45,20 @@ export default {
     closeEditBox() {
       this.$store.state.editBox = "closed"
     },
+    checkBox(data) {
+      if(data === true) {
+        return 'yes'
+      } else {
+        return 'no'
+      }
+    },
     editAccount() {
       instance.put(`/account/edit/customer/${this.id}`, {
         login: this.login,
         password: this.password,
-        password2: this.password2
+        password2: this.password2,
+        afc: this.checkBox(this.afc),
+        millenium: this.checkBox(this.millenium)
       })
       .then((res) => {
         if(res.status === 201) {
@@ -75,6 +90,12 @@ export default {
     this.$store.dispatch('getAccount', this.id)
     .then((account) => {
         this.login = account.login
+        if(account.afc === 'yes') {
+          this.afc = true
+        }
+        if(account.millenium === 'yes') {
+          this.millenium = true
+        }
     })
   }
 }

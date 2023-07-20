@@ -14,6 +14,10 @@
             <input v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password" class="required">
             <label for="form-password-2">Répéter le Mot de passe</label>
             <input v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2" class="required">
+            <label for="form-afc">Accès AFC</label>
+            <input v-model="afc" type="checkbox" name="form-afc" id="form-afc">
+            <label for="form-millenium">Accès Millenium</label>
+            <input v-model="millenium" type="checkbox" name="form-millenium" id="form-millenium">
             <div v-if="error" class="error">{{ error.message }}</div>
             <button @click="createAccount()">Créer le compte</button>
         </div>
@@ -33,7 +37,9 @@ export default {
       login: "",
       password: "",
       password2: "",
-      customer: null
+      customer: null,
+      afc: false,
+      millenium: false
     }
   },
   computed: {
@@ -43,12 +49,21 @@ export default {
     closeAddBox() {
       this.$store.state.addBox = "closed"
     },
+    checkBox(data) {
+      if(data === true) {
+        return 'yes'
+      } else {
+        return 'no'
+      }
+    },
     createAccount() {
       instance.post('/account/add/customer', {
         login: this.login,
         password: this.password,
         password2: this.password2,
-        id: this.customer
+        id: this.customer,
+        afc: this.checkBox(this.afc),
+        millenium: this.checkBox(this.millenium)
       })
       .then((res) => {
         if(res.status === 201) {
