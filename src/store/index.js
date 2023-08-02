@@ -17,6 +17,8 @@ export default createStore({
     deleteBox: "closed",
     editBox: "closed",
     preparations: [],
+    slots: [],
+    events: [],
     vehicles: [],
     vehicle: ""
   },
@@ -59,6 +61,12 @@ export default createStore({
     },
     getPreparations: (state) => {
       return state.preparations
+    },
+    getSlots: (state) => {
+      return state.slots
+    },
+    getEvents: (state) => {
+      return state.events
     },
     getVehicles: (state) => {
       return state.vehicles
@@ -145,6 +153,18 @@ export default createStore({
     },
     SET_PREPARATIONS: function (state, preparations) {
       state.preparations = preparations
+      preparations.forEach(prep => {
+        state.events.push(
+          {
+            title: prep.immat,
+            start: prep.start,
+            end: prep.end
+          }
+        )
+      })
+    },
+    SET_SLOTS: function (state, slots) {
+      state.slots = slots
     },
     SET_VEHICLES: function (state, vehicles) {
       state.vehicles = vehicles
@@ -311,6 +331,18 @@ export default createStore({
         instance.get('/preparation/')
         .then((response) => {
           commit('SET_PREPARATIONS', response.data)
+          resolve(response)
+        })
+        .catch(function (error) {
+          reject(error)
+        });
+      })
+    },
+    getSlots: ({ commit }) => {
+      return new Promise((resolve, reject) => {
+        instance.get('/slot/')
+        .then((response) => {
+          commit('SET_SLOTS', response.data)
           resolve(response)
         })
         .catch(function (error) {

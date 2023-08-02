@@ -1,4 +1,6 @@
 <template>
+  <AdminAddEventClick v-if="getAddBox === 'addEventClick'" :date="dateSelected" :day="allDay" />
+  <AdminAddEventSelect v-if="getAddBox === 'addEventSelect'" :startD="startDate" :endD="endDate" :day="allDay" />
   <Header />
   <BackButton url="/admin/home" />
   <div class="planning-admin-box">
@@ -18,18 +20,28 @@ import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import frLocale from '@fullcalendar/core/locales/fr';
 
+import { mapGetters } from 'vuex';
+
 import Header from '@/components/Header.vue'
 import BackButton from '@/components/BackButton.vue';
+import AdminAddEventClick from '@/components/AdminAddEventClick.vue';
+import AdminAddEventSelect from '@/components/AdminAddEventSelect.vue';
 
 export default {
   name: 'AdminPlanning',
   components: {
     Header,
     BackButton,
-    FullCalendar
+    FullCalendar,
+    AdminAddEventClick,
+    AdminAddEventSelect
   },
   data() {
     return {
+      dateSelected: "",
+      startDate: "",
+      endDate: "",
+      allDay: "",
       calendarOptions: {
         plugins: [ dayGridPlugin, timeGridPlugin, interactionPlugin ],
         headerToolbar: {
@@ -39,59 +51,87 @@ export default {
         },
         initialView: 'dayGridMonth',
         locale: frLocale,
-        allDaySlot: false,
+        selectable: true,
+        editable: true,
+        allDaySlot: true,
         navLinks: true,
         weekNumbers: true,
-
-        dateClick: function(info) {
-          console.log(info)
-        },
-
-        events: [
-          // { 
-          //   title: 'Renault Traffic', 
-          //   start: '2023-07-06T09:30:00+02:00', 
-          //   end: '2023-07-08T07:30:00+02:00'
-          // },
-          // { 
-          //   title: 'Renault Traffic', 
-          //   start: '2023-07-06T07:30:00+02:00', 
-          //   end: '2023-07-08T07:30:00+02:00'
-          // },
-          // { 
-          //   title: 'Renault Traffic', 
-          //   start: '2023-07-06T07:30:00+02:00', 
-          //   end: '2023-07-08T07:30:00+02:00'
-          // },
-          // { 
-          //   title: 'Renault Traffic', 
-          //   start: '2023-07-06T10:30:00+02:00', 
-          //   end: '2023-07-08T07:30:00+02:00'
-          // },
-          // { 
-          //   title: 'Renault Traffic', 
-          //   start: '2023-06-29T07:30:00+02:00', 
-          //   end: '2023-06-30T07:30:00+02:00'
-          // },
-        ]
+        dateClick: this.openAddBox,
+        select: this.openAddSlot,
+        eventClick: this.test,
+        eventDrop: this.test2,
+        events: []
       }
     }
   },
-  methods: {
-    
+  computed: {
+    ...mapGetters(['getAddBox', 'getPreparations', 'getEvents'])
   },
-  created: function () {
-    this.$store.dispatch('getPreparations')
-    .then((res) => {
-      console.log(res.data)
+  methods: {
+    test(event) {
+      console.log(event)
+    },
+    test2(event) {
+      console.log(event)
+    },
+    openAddBox(date) {
+      console.log(date)
+      this.dateSelected = date.dateStr
+      this.allDay = date.allDay
+      this.$store.state.addBox = 'addEventClick'
+    },
+    openAddSlot(date) {
+      console.log(date)
+      this.startDate = date.startStr
+      this.endDate = date.endStr
+      this.allDay = date.allDay
+      this.$store.state.addBox = 'addEventSelect'
+    },
+    setEvents(res) {
       res.data.forEach(prep => {
         this.calendarOptions.events.push(
           {
             title: prep.immat,
-            start: prep.createdAt,
-            end: prep.createdAt
+            start: prep.start,
+            end: prep.end,
+            id: prep.id
           }
         )
+      })
+    },
+    setSlots(res) {
+      res.data.forEach(slot => {
+        this.calendarOptions.events.push(
+          {
+            title: slot.place,
+            start: slot.start,
+            end: slot.end,
+            id: slot.id,
+            backgroundColor: 'rgb(255,0,0)'
+          }
+        )
+      })
+    }
+  },
+  created: function () {
+    this.$store.commit('RESET_BOX');
+    this.$store.dispatch('getPreparations')
+    .then((res) => {
+      this.setEvents(res)
+      this.$store.dispatch('getSlots')
+      .then((res) => {
+        this.setSlots(res)
+      })
+    })
+  },
+  updated() {
+    this.calendarOptions.events = []
+    this.$store.dispatch('getPreparations')
+    .then((res) => {
+      this.setEvents(res)
+      this.$store.dispatch('getSlots')
+      .then((res) => {
+        this.setSlots(res)
       })
     })
   }
