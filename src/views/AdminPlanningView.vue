@@ -1,6 +1,7 @@
 <template>
   <AdminAddEventClick v-if="getAddBox === 'addEventClick'" :date="dateSelected" :day="allDay" />
   <AdminAddEventSelect v-if="getAddBox === 'addEventSelect'" :startD="startDate" :endD="endDate" :day="allDay" />
+  <AdminGetPreparation v-if="getGetBox === 'getPreparation'" :id="preparation" />
   <Header />
   <BackButton url="/admin/home" />
   <div class="planning-admin-box">
@@ -26,6 +27,7 @@ import Header from '@/components/Header.vue'
 import BackButton from '@/components/BackButton.vue';
 import AdminAddEventClick from '@/components/AdminAddEventClick.vue';
 import AdminAddEventSelect from '@/components/AdminAddEventSelect.vue';
+import AdminGetPreparation from '@/components/AdminGetPreparation.vue';
 
 export default {
   name: 'AdminPlanning',
@@ -34,7 +36,8 @@ export default {
     BackButton,
     FullCalendar,
     AdminAddEventClick,
-    AdminAddEventSelect
+    AdminAddEventSelect,
+    AdminGetPreparation
   },
   data() {
     return {
@@ -42,6 +45,8 @@ export default {
       startDate: "",
       endDate: "",
       allDay: "",
+      preparation: null,
+      slot: null,
       calendarOptions: {
         plugins: [ dayGridPlugin, timeGridPlugin, interactionPlugin ],
         headerToolbar: {
@@ -58,18 +63,26 @@ export default {
         weekNumbers: true,
         dateClick: this.openAddBox,
         select: this.openAddSlot,
-        eventClick: this.test,
+        eventClick: this.openGetPreparation,
         eventDrop: this.test2,
         events: []
       }
     }
   },
   computed: {
-    ...mapGetters(['getAddBox', 'getPreparations', 'getEvents'])
+    ...mapGetters(['getAddBox', 'getPreparations', 'getEvents', 'getGetBox'])
   },
   methods: {
-    test(event) {
+    openGetPreparation(event) {
       console.log(event)
+      if(event.event._def.extendedProps.type === "preparation") {
+        this.preparation = event.event._def.extendedProps.eventId
+        this.$store.state.getBox = 'getPreparation'
+      }
+      if(event.event._def.extendedProps.type === "slot") {
+        this.slot = event.event._def.extendedProps.eventId
+        this.$store.state.getBox = 'getSlot'
+      }
     },
     test2(event) {
       console.log(event)
@@ -94,7 +107,8 @@ export default {
             title: prep.immat,
             start: prep.start,
             end: prep.end,
-            id: prep.id
+            eventId: prep.id,
+            type: 'preparation'
           }
         )
       })
@@ -106,8 +120,9 @@ export default {
             title: slot.place,
             start: slot.start,
             end: slot.end,
-            id: slot.id,
-            backgroundColor: 'rgb(255,0,0)'
+            eventId: slot.id,
+            backgroundColor: 'rgb(255,0,0)',
+            type: 'slot'
           }
         )
       })

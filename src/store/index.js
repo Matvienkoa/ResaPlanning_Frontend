@@ -16,8 +16,11 @@ export default createStore({
     addBox: "closed",
     deleteBox: "closed",
     editBox: "closed",
+    getBox: "closed",
     preparations: [],
+    preparation: "",
     slots: [],
+    slot: "",
     events: [],
     vehicles: [],
     vehicle: ""
@@ -59,11 +62,20 @@ export default createStore({
     getEditBox: (state) => {
       return state.editBox
     },
+    getGetBox: (state) => {
+      return state.getBox
+    },
     getPreparations: (state) => {
       return state.preparations
     },
+    getPreparation: (state) => {
+      return state.preparation
+    },
     getSlots: (state) => {
       return state.slots
+    },
+    getSlot: (state) => {
+      return state.slot
     },
     getEvents: (state) => {
       return state.events
@@ -80,6 +92,7 @@ export default createStore({
       state.addBox = "closed";
       state.deleteBox = "closed";
       state.editBox = "closed";
+      state.getBox = "closed";
     },
     SET_USER: function (state, user) {
       state.user = user
@@ -96,15 +109,6 @@ export default createStore({
     SET_ACCOUNTS_EMPLOYEE: function (state, employee) {
       state.accountsEmployee.push(employee)
     },
-    // ADD_ACCOUNT_EMPLOYEE: function (state, employee) {
-    //   state.accountsEmployee.push(employee)
-    // },
-    // EDIT_ACCOUNT_EMPLOYEE: function (state, newEmployee) {
-    //   const employeeIndex = state.accountsEmployee.findIndex(
-    //     e => e.id === newEmployee.id)
-    //   state.accountsEmployee[employeeIndex] = newEmployee
-    //   state.accountsEmployee = [...state.accountsEmployee]
-    // },
     DELETE_ACCOUNT_EMPLOYEE: function (state, employee) {
       const index = state.accountsEmployee.findIndex(e => e.id === employee);
       if (index !== -1) {
@@ -114,15 +118,6 @@ export default createStore({
     SET_ACCOUNTS_CUSTOMER: function (state, customer) {
       state.accountsCustomer.push(customer)
     },
-    // ADD_ACCOUNT_CUSTOMER: function (state, customer) {
-    //   state.accountsCustomer.push(customer)
-    // },
-    // EDIT_ACCOUNT_CUSTOMER: function (state, newCustomer) {
-    //   const customerIndex = state.accountsCustomer.findIndex(
-    //     c => c.id === newCustomer.id)
-    //   state.accountsCustomer[customerIndex] = newCustomer
-    //   state.accountsCustomer = [...state.accountsCustomer]
-    // },
     DELETE_ACCOUNT_CUSTOMER: function (state, customer) {
       const index = state.accountsCustomer.findIndex(c => c.id === customer);
       if (index !== -1) {
@@ -163,8 +158,14 @@ export default createStore({
         )
       })
     },
+    SET_PREPARATION: function (state, preparation) {
+      state.preparation = preparation
+    },
     SET_SLOTS: function (state, slots) {
       state.slots = slots
+    },
+    SET_SLOT: function (state, slot) {
+      state.slot = slot
     },
     SET_VEHICLES: function (state, vehicles) {
       state.vehicles = vehicles
@@ -338,6 +339,18 @@ export default createStore({
         });
       })
     },
+    getPreparation: ({ commit }, preparation) => {
+      return new Promise((resolve, reject) => {
+        instance.get(`/preparation/${preparation}`)
+          .then((response) => {
+            commit('SET_PREPARATION', response.data)
+            resolve(response)
+          })
+          .catch(function (error) {
+            reject(error)
+          });
+      })
+    },
     getSlots: ({ commit }) => {
       return new Promise((resolve, reject) => {
         instance.get('/slot/')
@@ -348,6 +361,18 @@ export default createStore({
         .catch(function (error) {
           reject(error)
         });
+      })
+    },
+    getSlot: ({ commit }, slot) => {
+      return new Promise((resolve, reject) => {
+        instance.get(`/slot/${slot}`)
+          .then((response) => {
+            commit('SET_SLOT', response.data)
+            resolve(response)
+          })
+          .catch(function (error) {
+            reject(error)
+          });
       })
     },
     getVehicles: ({ commit }) => {
