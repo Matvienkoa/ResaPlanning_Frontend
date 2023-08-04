@@ -17,6 +17,7 @@ export default createStore({
     deleteBox: "closed",
     editBox: "closed",
     getBox: "closed",
+    stepBox: "closed",
     preparations: [],
     preparation: "",
     slots: [],
@@ -64,6 +65,9 @@ export default createStore({
     },
     getGetBox: (state) => {
       return state.getBox
+    },
+    getStepBox: (state) => {
+      return state.stepBox
     },
     getPreparations: (state) => {
       return state.preparations
