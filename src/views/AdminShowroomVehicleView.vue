@@ -4,7 +4,7 @@
 <AdminEditPhotoVehicle v-if="getEditBox === 'editPhotoVehicle'" :numberPhoto="this.numberPhoto" />
 <AdminAddPhotoVehicle v-if="getAddBox === 'addPhotoVehicle'" :numberPhoto="this.numberPhoto" />
 <AdminDeletePhotoVehicle v-if="getDeleteBox === 'deletePhotoVehicle'" :numberPhoto="this.numberPhoto" />
-  <Header />
+  <Header url="/admin/showroom" />
   <BackButton url="/admin/showroom" />
   <div class="showroom-vehicle-admin-box">
     <div class="showroom-vehicle-admin-back-box">

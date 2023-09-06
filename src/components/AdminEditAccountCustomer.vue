@@ -1,21 +1,25 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <div @click="closeEditBox()" class="close-add">X</div>
-        <h2>Modifier un compte client</h2>
+        <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <h2 class="add-box-title">Modifier un compte client</h2>
         <div class="add-account-form">
-            <label for="form-login">Login</label>
-            <input v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login" class="required">
-            <label for="form-password">Mot de passe</label>
-            <input v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
-            <label for="form-password-2">Répéter le Mot de passe</label>
-            <input v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
-            <label for="form-afc">Accès AFC</label>
-            <input v-model="afc" type="checkbox" name="form-afc" id="form-afc">
-            <label for="form-millenium">Accès Millenium</label>
-            <input v-model="millenium" type="checkbox" name="form-millenium" id="form-millenium">
+            <label class="form-label" for="form-login">Login</label>
+            <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
+            <label class="form-label" for="form-password">Mot de passe</label>
+            <input class="form-input" v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
+            <label class="form-label" for="form-password-2">Répéter le Mot de passe</label>
+            <input class="form-input" v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
+            <div class="custom-checkbox">
+              <input v-model="afc" type="checkbox" name="form-afc" id="form-afc">
+              <label class="form-label-checkbox" for="form-afc">Accès AFC</label>
+            </div>
+            <div class="custom-checkbox">
+              <input v-model="millenium" type="checkbox" name="form-millenium" id="form-millenium">
+              <label class="form-label-checkbox" for="form-millenium">Accès Millenium</label>
+            </div>
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button @click="editAccount()">Modifier le compte</button>
+            <button class="add-button" @click="editAccount()">Modifier le compte</button>
         </div>
     </div>
   </div>
@@ -89,6 +93,7 @@ export default {
   created: function () {
     this.$store.dispatch('getAccount', this.id)
     .then((account) => {
+        console.log(account)
         this.login = account.login
         if(account.afc === 'yes') {
           this.afc = true
@@ -104,12 +109,4 @@ export default {
 
 <style>
 
-</style>
-
-<style scoped>
-.add-account-form{
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
 </style>

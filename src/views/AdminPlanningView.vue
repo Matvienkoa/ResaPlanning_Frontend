@@ -1,12 +1,18 @@
 <template>
+  <AdminGetRequests v-if="getGetBox === 'getRequests'" />
+  <AdminGetBillings v-if="getGetBox === 'getBillings'" />
   <AdminAddEventClick v-if="getAddBox === 'addEventClick'" :date="dateSelected" :day="allDay" />
   <AdminAddEventSelect v-if="getAddBox === 'addEventSelect'" :startD="startDate" :endD="endDate" :day="allDay" />
   <AdminGetPreparation v-if="getGetBox === 'getPreparation'" :id="preparation" />
-  <Header />
-  <BackButton url="/admin/home" />
-  <div class="planning-admin-box">
-    <div class="planning-banner">
-      <div class="planning-banner-item">Demandes</div>
+  <AdminGetSlot v-if="getGetBox === 'getSlot'" :id="slot" />
+  <AdminDropPreparation v-if="getDropBox === 'dropPreparation'" :id="preparation" :deltaD="deltaDay" :deltaM="deltaMm" />
+  <AdminSizePreparation v-if="getSizeBox === 'sizePreparation'" :id="preparation" :deltaD="deltaDay" :deltaM="deltaMm" />
+  <AdminDropSlot v-if="getDropBox === 'dropSlot'" :id="slot" :deltaD="deltaDay" :deltaM="deltaMm" />
+  <AdminSizeSlot v-if="getSizeBox === 'sizeSlot'" :id="slot" :deltaD="deltaDay" :deltaM="deltaMm" />
+  <AdminPlanningBanner url="/admin/home" />
+  <div class="main-page">
+    <div class="home-admin-title-box">
+      <h1 class="home-admin-title">Mon Planning</h1>
     </div>
     <div class="planning-calendar-box">
       <FullCalendar :options="calendarOptions" />
@@ -20,24 +26,37 @@ import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin from '@fullcalendar/interaction'
 import frLocale from '@fullcalendar/core/locales/fr';
-
 import { mapGetters } from 'vuex';
 
-import Header from '@/components/Header.vue'
-import BackButton from '@/components/BackButton.vue';
+import AdminPlanningBanner from '@/components/AdminPlanningBanner.vue';
+import AdminGetRequests from '@/components/AdminGetRequests.vue';
+import AdminGetBillings from '@/components/AdminGetBillings.vue';
+
 import AdminAddEventClick from '@/components/AdminAddEventClick.vue';
 import AdminAddEventSelect from '@/components/AdminAddEventSelect.vue';
 import AdminGetPreparation from '@/components/AdminGetPreparation.vue';
+import AdminGetSlot from '@/components/AdminGetSlot.vue';
+
+import AdminDropPreparation from '@/components/AdminDropPreparation.vue';
+import AdminSizePreparation from '@/components/AdminSizePreparation.vue';
+import AdminDropSlot from '@/components/AdminDropSlot.vue';
+import AdminSizeSlot from '@/components/AdminSizeSlot.vue';
 
 export default {
   name: 'AdminPlanning',
   components: {
-    Header,
-    BackButton,
+    AdminPlanningBanner,
+    AdminGetRequests,
+    AdminGetBillings,
     FullCalendar,
     AdminAddEventClick,
     AdminAddEventSelect,
-    AdminGetPreparation
+    AdminGetPreparation,
+    AdminDropPreparation,
+    AdminSizePreparation,
+    AdminSizeSlot,
+    AdminGetSlot,
+    AdminDropSlot
   },
   data() {
     return {
@@ -64,15 +83,48 @@ export default {
         dateClick: this.openAddBox,
         select: this.openAddSlot,
         eventClick: this.openGetPreparation,
-        eventDrop: this.test2,
+        eventDrop: this.openDropBox,
+        eventResize: this.openSizeBox,
         events: []
-      }
+      },
+      deltaDay: null,
+      deltaMm: null
     }
   },
   computed: {
-    ...mapGetters(['getAddBox', 'getPreparations', 'getEvents', 'getGetBox'])
+    ...mapGetters(['getAddBox', 'getPreparations', 'getEvents', 'getGetBox', 'getDropBox', 'getSizeBox'])
   },
   methods: {
+    openDropBox(event) {
+      console.log('drop', event)
+      if(event.event._def.extendedProps.type === "preparation") {
+        this.preparation = event.event._def.extendedProps.eventId
+        this.deltaDay = event.delta.days
+        this.deltaMm = event.delta.milliseconds
+        this.$store.state.dropBox = 'dropPreparation'
+      }
+      if(event.event._def.extendedProps.type === "slot") {
+        this.slot = event.event._def.extendedProps.eventId
+        this.deltaDay = event.delta.days
+        this.deltaMm = event.delta.milliseconds
+        this.$store.state.dropBox = 'dropSlot'
+      }
+    },
+    openSizeBox(event) {
+      console.log('resize', event)
+      if(event.event._def.extendedProps.type === "preparation") {
+        this.preparation = event.event._def.extendedProps.eventId
+        this.deltaDay = event.endDelta.days
+        this.deltaMm = event.endDelta.milliseconds
+        this.$store.state.sizeBox = 'sizePreparation'
+      }
+      if(event.event._def.extendedProps.type === "slot") {
+        this.slot = event.event._def.extendedProps.eventId
+        this.deltaDay = event.endDelta.days
+        this.deltaMm = event.endDelta.milliseconds
+        this.$store.state.sizeBox = 'sizeSlot'
+      }
+    },
     openGetPreparation(event) {
       console.log(event)
       if(event.event._def.extendedProps.type === "preparation") {
@@ -83,9 +135,6 @@ export default {
         this.slot = event.event._def.extendedProps.eventId
         this.$store.state.getBox = 'getSlot'
       }
-    },
-    test2(event) {
-      console.log(event)
     },
     openAddBox(date) {
       console.log(date)
@@ -122,6 +171,7 @@ export default {
             end: slot.end,
             eventId: slot.id,
             backgroundColor: 'rgb(255,0,0)',
+            borderColor: 'rgb(255,0,0)',
             type: 'slot'
           }
         )
@@ -153,24 +203,21 @@ export default {
 }
 </script>
 
-<style scoped>
-.planning-admin-box{
-  display: flex;
-  justify-content: flex-end;
-  width: 100%;
-}
+<style>
 .planning-calendar-box{
-  width: 85%;
-  margin-right: 3%;
-  margin-top: 3%;
+  width: 90%;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 
-.planning-banner{
-  position: fixed;
-  left: 0;
-  top: 10%;
-  width: 10%;
-  height: 80%;
-  border: solid red 2px;
+:root {
+  --fc-button-bg-color: black;
+  --fc-button-border-color: black;
+  --fc-button-hover-bg-color: rgb(198,238,0);
+  --fc-button-hover-border-color: rgb(198,238,0);
+  --fc-button-active-bg-color: rgb(198,238,0);
+  --fc-button-active-border-color: rgb(198,238,0);
+  --fc-today-bg-color: rgba(198, 238, 0, 0.438);
+  --fc-highlight-color: rgba(198, 238, 0, 0.226);
 }
 </style>

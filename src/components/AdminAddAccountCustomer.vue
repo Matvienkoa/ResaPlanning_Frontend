@@ -1,25 +1,29 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <div @click="closeAddBox()" class="close-add">X</div>
-        <h2>Créer un compte client</h2>
+        <img @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <h2 class="add-box-title">Créer un compte client</h2>
         <div class="add-account-form">
-            <label for="form-customer">Séléctionner un Client :</label>
-            <select @change="cancelError()" v-model="customer" name="form-customer" id="form-customer" class="required">
+            <label class="form-label" for="form-customer">Séléctionner un Client :</label>
+            <select class="form-input required" @change="cancelError()" v-model="customer" name="form-customer" id="form-customer">
                 <option v-for="customer in getCustomersWithoutAccount" :key="customer.id" :value="customer.id">{{customer.company}}</option>
             </select>
-            <label for="form-login">Login</label>
-            <input v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login" class="required">
-            <label for="form-password">Mot de passe</label>
-            <input v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password" class="required">
-            <label for="form-password-2">Répéter le Mot de passe</label>
-            <input v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2" class="required">
-            <label for="form-afc">Accès AFC</label>
-            <input v-model="afc" type="checkbox" name="form-afc" id="form-afc">
-            <label for="form-millenium">Accès Millenium</label>
-            <input v-model="millenium" type="checkbox" name="form-millenium" id="form-millenium">
+            <label class="form-label" for="form-login">Login</label>
+            <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
+            <label class="form-label" for="form-password">Mot de passe</label>
+            <input class="form-input required" v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
+            <label class="form-label" for="form-password-2">Répéter le Mot de passe</label>
+            <input class="form-input required" v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
+            <div class="custom-checkbox">
+              <input v-model="afc" type="checkbox" name="form-afc" id="form-afc">
+              <label class="form-label-checkbox" for="form-afc">Accès AFC</label>
+            </div>
+            <div class="custom-checkbox">
+              <input v-model="millenium" type="checkbox" name="form-millenium" id="form-millenium">
+              <label class="form-label-checkbox" for="form-millenium">Accès Millenium</label>
+            </div>
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button @click="createAccount()">Créer le compte</button>
+            <button class="add-button" @click="createAccount()">Créer le compte</button>
         </div>
     </div>
   </div>
@@ -100,12 +104,4 @@ export default {
 
 <style>
 
-</style>
-
-<style scoped>
-.add-account-form{
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
 </style>

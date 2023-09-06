@@ -2,9 +2,9 @@
     <div class="edit-state-step-back">
         <div class="edit-state-step-box">
             <p v-if="stepState === 'planned'">Valider cette étape comme finalisée?</p>
-            <button v-if="stepState === 'planned'" @click="editStateStep('complete')">Valider</button>
-            <p v-if="stepState === 'complete'">Valider cette étape comme non finalisée?</p>
-            <button v-if="stepState === 'complete'" @click="editStateStep('planned')">Valider</button>
+            <button v-if="stepState === 'planned'" @click="editStateStep('completed')">Valider</button>
+            <p v-if="stepState === 'completed'">Valider cette étape comme non finalisée?</p>
+            <button v-if="stepState === 'completed'" @click="editStateStep('planned')">Valider</button>
             <button @click="closeEditStepBox()">Annuler</button>
         </div>
     </div>

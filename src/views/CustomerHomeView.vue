@@ -1,12 +1,12 @@
 <template>
-  <Header />
+  <Header url="#"/>
   <div class="home-customer-box">
-    <router-link to="#" class="home-menu-link">
+    <router-link to="/customer/requests" class="home-menu-link">
       <div class="home-menu-link-bloc">
         Demande de réservation
       </div>
     </router-link>
-    <router-link to="#" class="home-menu-link">
+    <router-link to="/customer/tracking" class="home-menu-link">
       <div class="home-menu-link-bloc">
         Statut de préparation
       </div>

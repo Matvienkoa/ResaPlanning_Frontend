@@ -1,6 +1,6 @@
 <template>
 <AdminAddCustomer v-if="getAddBox === 'addCustomer'" />
-  <Header />
+  <Header url="/admin/home" />
   <BackButton url="/admin/home" />
   <div class="account-admin-box">
     <div class="account-admin-customers">

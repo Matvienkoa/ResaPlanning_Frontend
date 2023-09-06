@@ -5,13 +5,14 @@ import LoginView from '../views/LoginView.vue'
 import AdminHome from '../views/AdminHomeView.vue'
 import AdminAccounts from '../views/AdminAccountsView.vue'
 import AdminPlanning from '../views/AdminPlanningView.vue'
-import AdminWorkshop from '../views/AdminWorkshopView.vue'
 import AdminShowroom from '../views/AdminShowroomView.vue'
 import AdminShowroomVehicle from '../views/AdminShowroomVehicleView.vue'
 import AdminCustomers from '../views/AdminCustomersView.vue'
 import AdminCustomer from '../views/AdminCustomerView.vue'
 
 import CustomerHome from '../views/CustomerHomeView.vue'
+import CustomerRequests from '../views/CustomerRequestsView.vue'
+import CustomerTracking from '../views/CustomerTracking.vue'
 import CustomerShowroom from '../views/CustomerShowroomView.vue'
 import CustomerShowroomVehicle from '../views/CustomerShowroomVehicleView.vue'
 
@@ -41,12 +42,6 @@ const routes = [
   },
 
   {
-    path: '/admin/workshop',
-    name: 'AdminWorkshop',
-    component: AdminWorkshop
-  },
-
-  {
     path: '/admin/showroom',
     name: 'AdminShowroom',
     component: AdminShowroom
@@ -73,7 +68,16 @@ const routes = [
     name: 'CustomerHome',
     component: CustomerHome
   },
-
+  {
+    path: '/customer/requests',
+    name: 'CustomerRequests',
+    component: CustomerRequests
+  },
+  {
+    path: '/customer/tracking',
+    name: 'CustomerTracking',
+    component: CustomerTracking
+  },
   {
     path: '/customer/showroom',
     name: 'CustomerShowroom',

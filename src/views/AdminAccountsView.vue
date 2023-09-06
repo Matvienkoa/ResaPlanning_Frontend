@@ -5,46 +5,54 @@
   <AdminDeleteAccountCustomer v-if="getDeleteBox === 'deleteAccountCustomer'" :id="id" />
   <AdminEditAccountEmployee v-if="getEditBox === 'editAccountEmployee'" :id="id" />
   <AdminEditAccountCustomer v-if="getEditBox === 'editAccountCustomer'" :id="id" />
-  <Header />
-  <BackButton url="/admin/home" />
-  <div class="account-admin-box">
-    <div class="account-admin-employees">
-      <div class="account-admin-employees-title-box">
-        <h2 class="account-admin-employees-title">Comptes Collaborateurs</h2>
-        <img @click="openAddBox('addAccountEmployee')" src="../assets/Icons/add.svg" alt="" class="account-admin-employee-icon">
-      </div>
-      <div class="account-admin-employees-list">
-        <div v-for="employee in getAccountsEmployee" :key="employee.id" class="account-admin-employee">
-          <div class="account-admin-employee-infos">
-            <div>Compte N°{{ employee.id }}</div>
-            <div>{{ employee.infos.firstName }}</div>
-            <div>{{ employee.infos.lastName }}</div>
-          </div>
-          <div class="account-admin-employee-actions">
-            <img @click="openEditBox({id: employee.id, type: 'editAccountEmployee'})" src="../assets/Icons/edit.svg" alt="" class="account-admin-employee-icon">
-            <img @click="openDeleteBox({id: employee.id, type: 'deleteAccountEmployee'})" src="../assets/Icons/delete.svg" alt="" class="account-admin-employee-icon">
+  <Header url="/admin/home" />
+  <div class="main-page">
+    <div class="account-admin-title-box">
+      <h1 class="account-admin-title">Comptes Utilisateurs</h1>
+    </div>
+    <div class="account-admin-box">
+      <div class="account-admin-employees">
+        <div class="account-admin-employees-title-box">
+          <h2 class="account-admin-employees-title">Collaborateurs</h2>
+          <img @click="openAddBox('addAccountEmployee')" src="../assets/Icons/add.svg" alt="" class="account-admin-employee-icon">
+        </div>
+        <div class="account-admin-employees-list">
+          <div v-for="employee in getAccountsEmployee" :key="employee.id" class="account-admin-employee">
+            <div class="account-admin-employee-infos">
+              <div class="employee-info">N°{{ employee.id }}</div>
+              <div v-if="employee.infos.firstName" class="employee-info">{{ employee.infos.firstName }}</div>
+              <div v-if="employee.infos.lastName" class="employee-info">{{ employee.infos.lastName }}</div>
+              <div v-if="employee.infos.privileges === 'yes'" class="employee-info checkbox-box">Privilèges : <img class="checkbox" src="../assets/Icons/checkbox-check.svg" alt=""></div>
+              <div v-if="employee.infos.privileges === 'no'" class="employee-info checkbox-box">Privilèges : <img class="checkbox" src="../assets/Icons/checkbox-mark.svg" alt=""></div>
+            </div>
+            <div class="account-admin-employee-actions">
+              <img @click="openEditBox({id: employee.id, type: 'editAccountEmployee'})" src="../assets/Icons/edit.svg" alt="" class="account-admin-employee-icon">
+              <img @click="openDeleteBox({id: employee.id, type: 'deleteAccountEmployee'})" src="../assets/Icons/delete.svg" alt="" class="account-admin-employee-icon">
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="account-admin-customers">
-      <div class="account-admin-customers-title-box">
-        <h2 class="account-admin-customers-title">Comptes Clients</h2>
-        <img @click="openAddBox('addAccountCustomer')" src="../assets/Icons/add.svg" alt="" class="account-admin-customer-icon">
-      </div>
-      <div class="account-admin-customers-list">
-        <div v-for="customer in getAccountsCustomer" :key="customer.id" class="account-admin-customer">
-          <div class="account-admin-customer-infos">
-            <div>Compte N°{{ customer.id }}</div>
-            <div>{{ customer.infos.company }}</div>
-            <div>{{ customer.infos.firstName }}</div>
-            <div>{{ customer.infos.lastName }}</div>
-            <div>Compte AFC : {{ customer.afc }}</div>
-            <div>Compte Millenium : {{ customer.millenium }}</div>
-          </div>
-          <div class="account-admin-customer-actions">
-            <img @click="openEditBox({id: customer.id, type: 'editAccountCustomer'})" src="../assets/Icons/edit.svg" alt="" class="account-admin-customer-icon">
-            <img @click="openDeleteBox({id: customer.id, type: 'deleteAccountCustomer'})" src="../assets/Icons/delete.svg" alt="" class="account-admin-customer-icon">
+      <div class="account-admin-customers">
+        <div class="account-admin-customers-title-box">
+          <h2 class="account-admin-customers-title">Clients</h2>
+          <img @click="openAddBox('addAccountCustomer')" src="../assets/Icons/add.svg" alt="" class="account-admin-customer-icon">
+        </div>
+        <div class="account-admin-customers-list">
+          <div v-for="customer in getAccountsCustomer" :key="customer.id" class="account-admin-customer">
+            <div class="account-admin-customer-infos">
+              <div class="customer-info">N°{{ customer.id }}</div>
+              <div v-if="customer.infos.company" class="customer-info">{{ customer.infos.company }}</div>
+              <div v-if="customer.infos.firstName" class="customer-info">{{ customer.infos.firstName }}</div>
+              <div v-if="customer.infos.lastName" class="customer-info">{{ customer.infos.lastName }}</div>
+              <div v-if="customer.afc === 'yes'" class="customer-info checkbox-box">Compte AFC : <img class="checkbox" src="../assets/Icons/checkbox-check.svg" alt=""></div>
+              <div v-if="customer.afc === 'no'" class="customer-info checkbox-box">Compte AFC : <img class="checkbox" src="../assets/Icons/checkbox-mark.svg" alt=""></div>
+              <div v-if="customer.millenium === 'yes'" class="customer-info checkbox-box">Compte Millenium : <img class="checkbox" src="../assets/Icons/checkbox-check.svg" alt=""></div>
+              <div v-if="customer.millenium === 'no'" class="customer-info checkbox-box">Compte Millenium : <img class="checkbox" src="../assets/Icons/checkbox-mark.svg" alt=""></div>
+            </div>
+            <div class="account-admin-customer-actions">
+              <img @click="openEditBox({id: customer.id, type: 'editAccountCustomer'})" src="../assets/Icons/edit.svg" alt="" class="account-admin-customer-icon">
+              <img @click="openDeleteBox({id: customer.id, type: 'deleteAccountCustomer'})" src="../assets/Icons/delete.svg" alt="" class="account-admin-customer-icon">
+            </div>
           </div>
         </div>
       </div>
@@ -54,7 +62,6 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import BackButton from '@/components/BackButton.vue';
 import AdminAddAccountEmployee from '@/components/AdminAddAccountEmployee.vue';
 import AdminAddAccountCustomer from '@/components/AdminAddAccountCustomer.vue';
 import AdminDeleteAccountEmployee from '@/components/AdminDeleteAccountEmployee.vue';
@@ -67,7 +74,6 @@ export default {
   name: 'AdminAccounts',
   components: {
     Header,
-    BackButton,
     AdminAddAccountEmployee,
     AdminAddAccountCustomer,
     AdminDeleteAccountEmployee,
@@ -98,13 +104,24 @@ export default {
     },
   },
   created: function () {
-    this.$store.dispatch('getAccounts')
+    this.$store.dispatch('getAccounts');
     this.$store.commit('RESET_BOX');
   }
 }
 </script>
 
 <style scoped>
+.account-admin-title-box{
+  width: 100%;
+  height: 40px;
+  border-bottom: 3px solid #c0c0c0;
+  display: flex;
+  align-items: center;
+}
+.account-admin-title{
+  font-size: 1.3em;
+  margin-left: 30px;
+}
 .account-admin-box{
   width: 100%;
   display: flex;
@@ -136,12 +153,37 @@ export default {
   width: 100%;
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  background-color: rgb(236, 236, 236);
+  border-radius: 10px;
+  padding: 0.4em 0;
+  margin-bottom: 10px;
 }
 .account-admin-employee-infos, .account-admin-customer-infos{
   display: flex;
+  flex-wrap: wrap;
+}
+.employee-info, .customer-info{
+  margin: 5px;
+  display: flex;
+  align-items: center;
+}
+.checkbox-box{
+  display: flex;
+  align-items: center;
+}
+.checkbox{
+  width: 20px;
+  margin-left: 5px;
+}
+.account-admin-employee-actions, .account-admin-customer-actions{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  align-self: start;
 }
 .account-admin-employee-icon, .account-admin-customer-icon{
-  width: 20px;
+  height: 20px;
   margin-right: 10px;
   cursor: pointer;
 }

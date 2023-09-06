@@ -1,6 +1,6 @@
 <template>
   <div class="back-box">
-    <router-link :to="url">Retour</router-link>
+    <router-link class="link" :to="url">Retour</router-link>
   </div>
 </template>
 
@@ -14,7 +14,12 @@ export default {
 <style scoped>
 .back-box{
   width: 100%;
-  height: 30px;
   display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.link{
+  text-decoration: none;
+  color: white;
 }
 </style>

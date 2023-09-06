@@ -8,13 +8,18 @@
     </div>
     <div class="home-form-box">
       <div class="home-form">
-        <label for="login-input">Identifiant</label>
-        <input @input="cancelError()" v-model="login" type="text" class="form-login-input input" id="login-input">
-        <label for="password-input">Mot de Passe</label>
-        <input @input="cancelError()" v-model="password" type="password" class="form-login-input input" id="password-input">
+        <label class="home-form-label" for="login-input">Identifiant</label>
+        <input class="home-form-input form-login-input required" @input="cancelError()" v-model="login" type="text" id="login-input">
+        <label class="home-form-label" for="password-input">Mot de Passe</label>
+        <div class="home-form-password-box">
+          <input class="home-form-password-input form-login-input required" @input="cancelError()" @keyup.enter="signIn()" v-model="password" type="password" id="password-input">
+          <img v-if="modePassword === 'hidden'" @click="showPassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye.svg">
+          <img v-if="modePassword === 'visible'" @click="hidePassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye-slash.svg">
+        </div>
         <div v-if="error" class="error">{{ error.message }}</div>
         <button @click="signIn()" id="button-login">Connexion</button>
       </div>
+      <img src="../assets/images/wave-trans.svg" alt="" class="wave">
     </div>
     <img class="home-back" alt="" src="../assets/images/1.jpg">
   </div>
@@ -28,10 +33,21 @@ export default {
     return {
       error: "",
       login: "",
-      password: ""
+      password: "",
+      modePassword: 'hidden'
     }
   },
   methods: {
+    showPassword() {
+        this.modePassword = 'visible'
+        const input = document.getElementById('password-input')
+        input.type = 'text'
+    },
+    hidePassword() {
+        this.modePassword = 'hidden'
+        const input = document.getElementById('password-input')
+        input.type = 'password'
+    },
     showSpinner() {
         const spinner = document.getElementById('spinner');
         spinner.classList.replace('spinner-off', 'lds-ring');
@@ -65,7 +81,7 @@ export default {
       .catch((error) => {
         this.hideSpinner();
         this.error = error.response.data
-        const emptyInput = document.querySelectorAll('.input');
+        const emptyInput = document.querySelectorAll('.required');
           emptyInput.forEach(input => {
               if(input.value === "") {
                   input.classList.add('empty')
@@ -74,7 +90,7 @@ export default {
       })
     },
     cancelError() {
-      const emptyInput = document.querySelectorAll('.input');
+      const emptyInput = document.querySelectorAll('.required');
       emptyInput.forEach(input => {
           if(input.value !== "") {
               input.classList.remove('empty')
@@ -96,8 +112,8 @@ export default {
 }
 .home-back{
   position: absolute;
+  bottom: 0;
   right: 0;
-  top: 0;
   width: 50%;
   height: 100%;
   object-fit: cover;
@@ -105,48 +121,106 @@ export default {
   opacity: 0.9;
 }
 .home-form-box{
+  position: relative;
   width: 50%;
   height: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 1;
+  background-color: white;
+}
+.wave{
+  position: absolute;
+  width: 100%;
+  bottom: 0;
 }
 
 /* Form */
 .home-form{
+  position: relative;
   width: 60%;
-  height: 60%;
+  max-width: 350px;
   display: flex;
   flex-direction: column;
   justify-content: center;
+  z-index: 2;
 }
-label{
+.home-form-label{
   margin-bottom: 5px;
   margin-left: 5px;
   font-weight: 600;
   font-size: 1.2em;
 }
-input{
-  width: 95%;
-  height: 10%;
+.home-form-input{
+  width: 90%;
+  height: 35px;
   margin-bottom: 20px;
   border-radius: 30px;
   border: solid 1px rgb(184, 184, 184);
   padding-left: 5%;
+  padding-right: 5%;
   font-size: 1.2em;
 }
 input:focus{
   outline: none;
 }
-#button-login{
+.home-form-password-box{
+  position: relative;
   width: 100%;
-  height: 10%;
+  height: 35px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-form-password-input{
   border-radius: 30px;
-  background: black;
+  border: solid 1px rgb(184, 184, 184);
+  width: 90%;
+  height: 100%;
+  font-size: 1.2em;
+  padding-left: 5%;
+  padding-right: 15%;
+}
+.home-form-password-icon{
+  position: absolute;
+  height: 50%;
+  right: 4%;
+  top: 25%;
+  cursor: pointer;
+}
+#button-login{
+  margin: auto;
+  width: 60%;
+  height: 40px;
+  border-radius: 30px;
+  background: rgb(198,238,0);
   color: white;
   margin-top: 10%;
   font-size: 1.2em;
-  border: solid 2px rgb(0, 0, 0);
+  border: solid 2px rgb(198,238,0);
   cursor: pointer;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+
+@media (max-width: 1024px) {
+  .home-back{
+    width: 100%;
+  }
+  .home-form-box{
+    background-color: unset;
+    width: 100%;
+    align-items: flex-start;
+  }
+  .home-form{
+    top: 20%;
+  }
+  .wave{
+    top: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 </style>

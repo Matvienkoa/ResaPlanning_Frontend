@@ -1,63 +1,65 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-      <div @click="closeAddBox()" class="close-add">X</div>
+      <img @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
       <div v-if="addMode === ''" class="add-choice-box">
-        <h2>Ajouter un évènement</h2>
+        <h2 class="add-box-title">Ajouter un évènement</h2>
         <p>{{date}}</p>
-        <button @click="addOption('preparation')">Préparation</button>
-        <button @click="addOption('slot')">Créneau</button>
+        <div class="box-choice-button">
+          <button class="prep-button" @click="addOption('preparation')">Préparation</button>
+          <button class="slot-button" @click="addOption('slot')">Créneau</button>
+        </div>
       </div>
       <div v-if="addMode === 'preparation'" class="add-preparation-box">
-        <p>préparation</p>
-        <label for="preparation-form-customer">Séléctionner un Client :</label>
-        <select @change="cancelError()" v-model="customer" name="preparation-form-customer" id="preparation-form-customer" class="required">
+        <h2 class="second-title">Ajouter une préparation</h2>
+        <label class="form-label" for="preparation-form-customer">Séléctionner un Client :</label>
+        <select class="form-input required" @change="cancelError()" v-model="customer" name="preparation-form-customer" id="preparation-form-customer">
             <option v-for="customer in getCustomers" :key="customer.id" :value="customer.id">{{customer.company}}</option>
         </select>
-        <label for="preparation-form-startTime">Heure de début</label>
-        <input v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime" class="required">
-        <label for="preparation-form-endTime">Heure de fin</label>
-        <input v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime" class="required">
-        <label for="preparation-form-brand">Marque</label>
-        <input v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand" class="required">
-        <label for="preparation-form-model">Modèle</label>
-        <input v-model="model" @input="cancelError()" type="text" name="preparation-form-model" id="preparation-form-model" class="required">
-        <label for="preparation-form-year">Année</label>
-        <input v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year" class="required">
-        <label for="preparation-form-immat">Immatriculation</label>
-        <input v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat" class="required">
-        <label for="preparation-form-kilometers">Km</label>
-        <input v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers" class="required">
-        <label for="preparation-form-condition">Etat du véhicule</label>
-        <input v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition" class="required">
-        <label for="vehicle-form-observations">Observations</label>
-        <input v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-        <label for="vehicle-form-steps">Ajouter une étape de préparation</label>
-        <input @input="cancelErrorPrestation()" v-model="prestation" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
+        <label class="form-label" for="preparation-form-startTime">Heure de début</label>
+        <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
+        <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+        <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+        <label class="form-label" for="preparation-form-brand">Marque</label>
+        <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
+        <label class="form-label" for="preparation-form-model">Modèle</label>
+        <input class="form-input required" v-model="model" @input="cancelError()" type="text" name="preparation-form-model" id="preparation-form-model">
+        <label class="form-label" for="preparation-form-year">Année</label>
+        <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
+        <label class="form-label" for="preparation-form-immat">Immatriculation</label>
+        <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
+        <label class="form-label" for="preparation-form-kilometers">Km</label>
+        <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
+        <label class="form-label" for="preparation-form-condition">Etat du véhicule</label>
+        <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
+        <label class="form-label" for="vehicle-form-observations">Observations</label>
+        <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+        <label class="form-label" for="vehicle-form-steps">Ajouter une étape de préparation</label>
+        <input class="form-input" @input="cancelErrorPrestation()" v-model="prestation" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
         <div v-if="errorPrestation" class="error">{{ errorPrestation }}</div>
-        <button @click="addStep()">Ajouter la prestation</button>
-        <div>
-          <div v-for="step in steps" :key="step">{{step}}<div @click="deleteStep(step)">X</div></div>
+        <button class="add-presta-button" @click="addStep()">Ajouter la prestation</button>
+        <div class="prestas-box">
+          <div class="presta-box" v-for="step in steps" :key="step">{{step}}<img class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/></div>
         </div>
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button @click="addPreparation()">Créer la préparation</button>
+        <button class="add-button" @click="addPreparation()">Créer la préparation</button>
       </div>
       <div v-if="addMode=== 'slot'" class="add-slot-box">
-        <p>créneaux</p>
-        <label for="preparation-form-customer">Séléctionner un Client :</label>
-        <select @change="cancelError()" v-model="customer" name="preparation-form-customer" id="preparation-form-customer" class="required">
+        <h2 class="second-title">Ajouter un créneaux</h2>
+        <label class="form-label" for="preparation-form-customer">Séléctionner un Client :</label>
+        <select class="form-input required" @change="cancelError()" v-model="customer" name="preparation-form-customer" id="preparation-form-customer">
             <option v-for="customer in getCustomers" :key="customer.id" :value="customer.id">{{customer.company}}</option>
         </select>
-        <label for="preparation-form-startTime">Heure de début</label>
-        <input v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime" class="required">
-        <label for="preparation-form-endTime">Heure de fin</label>
-        <input v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime" class="required">
-        <label for="preparation-form-place">Lieux</label>
-        <input v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place" class="required">
-        <label for="vehicle-form-observations">Observations</label>
-        <input v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+        <label class="form-label" for="preparation-form-startTime">Heure de début</label>
+        <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
+        <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+        <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+        <label class="form-label" for="preparation-form-place">Lieux</label>
+        <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
+        <label class="form-label" for="vehicle-form-observations">Observations</label>
+        <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button @click="addSlot()">Créer le créneaux</button>
+        <button class="add-button" @click="addSlot()">Créer le créneaux</button>
       </div>
     </div>
   </div>
@@ -137,7 +139,7 @@ export default {
         condition: this.condition,
         observationsDepot: this.observationsDepot,
         customerId: this.customer,
-        startdate: this.date,
+        startDate: this.date,
         endDate: this.date,
         startTime: this.startTime,
         endTime: this.endTime,
@@ -209,15 +211,83 @@ export default {
 }
 </script>
 
+<style>
+.prep-button{
+  margin: 0 10px;
+  width: 120px;
+  height: 35px;
+  border-radius: 30px;
+  background: rgb(70, 137, 217);
+  color: white;
+  font-size: 1.1em;
+  border: solid 2px rgb(70, 137, 217);
+  cursor: pointer;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.slot-button{
+  margin: 0 10px;
+  width: 120px;
+  height: 35px;
+  border-radius: 30px;
+  background: red;
+  color: white;
+  font-size: 1.1em;
+  border: solid 2px red;
+  cursor: pointer;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+.add-presta-button{
+  width:160px;
+  height: 25px;
+  border-radius: 10px;
+  background: rgb(5, 122, 255);
+  border: solid 2px rgb(5, 122, 255);
+  color: white;
+  font-size: 0.9em;
+  cursor: pointer;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+  margin-bottom: 10px;
+}
+.prestas-box{
+  width: 98%;
+  margin: auto;
+  display: flex;
+  flex-wrap: wrap;
+}
+.presta-box{
+  display: flex;
+  align-items: center;
+  background: rgb(5, 122, 255);
+  border-radius: 10px;
+  color: white;
+  font-size: 0.9em;
+  padding: 5px 10px;
+  margin: 5px;
+}
+.presta-icon{
+  height: 15px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.second-title{
+  width: 100%;
+  text-align: center;
+  margin-bottom: 30px;
+  margin-top: 20px;
+}
+</style>
 
 <style scoped>
+.add-box{
+  justify-content: flex-start;
+}
 .add-choice-box{
     width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
 }
-
 .add-preparation-box, .add-slot-box{
   width: 80%;
   display: flex;

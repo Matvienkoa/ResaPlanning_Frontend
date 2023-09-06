@@ -1,0 +1,70 @@
+<template>
+    <div class="validate-preparation-back">
+        <div class="validate-preparation-box">
+            <p>Valider la préparation {{preparationId}}?</p>
+            <p>Attention une fois validée, les steps aussi</p>
+            <button @click="validatePreparation()">Valider la préparation</button>
+            <button @click="closeEditBox()">Annuler</button>
+        </div>
+    </div>
+</template>
+
+<script>
+import instance from '@/axios';
+import { mapGetters } from 'vuex';
+
+export default {
+  name: 'AdminValidatePreparation',
+  props: ['preparationId'],
+  data() {
+    return {
+      error: ""
+    }
+  },
+  computed: {
+    ...mapGetters(['getEditBox'])
+  },
+  methods: {
+    closeEditBox() {
+        this.$store.state.editBox = 'closed'
+    },
+    validatePreparation() {
+      instance.put(`/preparation/validate/${this.preparationId}`)
+      .then((res) => {
+          if(res.status === 201) {
+            this.$store.dispatch('getPreparation', this.preparationId)
+            .then(() => this.closeEditBox())
+          }
+      })
+      .catch((error) => {
+          this.error = error.response.data;
+      })
+    }
+  }
+}
+</script>
+
+<style>
+.validate-preparation-back{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.671);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+.validate-preparation-box{
+  position: relative;
+  width: 70%;
+  min-height: 50%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  z-index: 6;
+}
+</style>

@@ -1,0 +1,68 @@
+<template>
+    <div class="delete-preparation-back">
+        <div class="delete-preparation-box">
+            <p>Supprimer la préparation {{preparationId}}?</p>
+            <button @click="deletePreparation()">Supprimer la préparation</button>
+            <button @click="closeDeleteBox()">Annuler</button>
+        </div>
+    </div>
+</template>
+
+<script>
+import instance from '@/axios';
+import { mapGetters } from 'vuex';
+
+export default {
+  name: 'AdminDeletePreparation',
+  props: ['preparationId'],
+  data() {
+    return {
+      error: ""
+    }
+  },
+  computed: {
+    ...mapGetters(['getDeleteBox'])
+  },
+  methods: {
+    closeDeleteBox() {
+        this.$store.state.deleteBox = 'closed'
+    },
+    deletePreparation() {
+      instance.delete(`/preparation/${this.preparationId}`)
+      .then((res) => {
+          if(res.status === 200) {
+              this.$store.commit('RESET_BOX');
+          }
+      })
+      .catch((error) => {
+          this.error = error.response.data;
+      })
+    }
+  }
+}
+</script>
+
+<style>
+.delete-preparation-back{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.671);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 5;
+}
+.delete-preparation-box{
+  position: relative;
+  width: 70%;
+  min-height: 50%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+  z-index: 6;
+}
+</style>

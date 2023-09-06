@@ -1,6 +1,6 @@
 <template>
 <AdminAddVehicle v-if="getAddBox === 'addVehicle'" />
-  <Header />
+  <Header url="/admin/home" />
   <BackButton url="/admin/home" />
   <div class="showroom-admin-box">
     <div class="showroom-admin">

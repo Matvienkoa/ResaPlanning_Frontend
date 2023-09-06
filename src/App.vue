@@ -39,10 +39,10 @@ nav a.router-link-exact-active {
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid red;
+  border: 8px solid rgb(198,238,0);
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: red transparent transparent transparent;
+  border-color: rgb(198,238,0) transparent transparent transparent;
   z-index: 9998;
 }
 .lds-ring div:nth-child(1) {

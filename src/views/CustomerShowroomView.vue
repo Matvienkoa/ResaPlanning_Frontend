@@ -1,5 +1,5 @@
 <template>
-  <Header />
+  <Header url="/customer/home" />
   <BackButton url="/customer/home" />
   <div class="showroom-customer-box">
     <div class="showroom-customer">

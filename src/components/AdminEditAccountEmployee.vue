@@ -1,21 +1,25 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <div @click="closeEditBox()" class="close-add">X</div>
-        <h2>Modifier un compte collaborateur</h2>
+        <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <h2 class="add-box-title">Modifier un compte collaborateur</h2>
         <div class="add-account-form">
-            <label for="form-login">Login</label>
-            <input v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login" class="required">
-            <label for="form-lastName">Nom</label>
-            <input v-model="lastName" type="text" name="form-lastName" id="form-lastName">
-            <label for="form-firstName">Prénom</label>
-            <input v-model="firstName" @input="cancelError()" type="text" name="form-firstName" id="form-firstName" class="required">
-            <label for="form-password">Mot de passe</label>
-            <input v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
-            <label for="form-password-2">Répéter le Mot de passe</label>
-            <input v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
+            <label class="form-label" for="form-login">Login</label>
+            <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
+            <label class="form-label" for="form-lastName">Nom</label>
+            <input class="form-input" v-model="lastName" type="text" name="form-lastName" id="form-lastName">
+            <label class="form-label" for="form-firstName">Prénom</label>
+            <input class="form-input required" v-model="firstName" @input="cancelError()" type="text" name="form-firstName" id="form-firstName">
+            <div class="custom-checkbox">
+              <input v-model="privileges" type="checkbox" name="form-privileges" id="form-privileges">
+              <label class="form-label-checkbox" for="form-privileges">Privilèges</label>
+            </div>
+            <label class="form-label" for="form-password">Mot de passe</label>
+            <input class="form-input" v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
+            <label class="form-label" for="form-password-2">Répéter le Mot de passe</label>
+            <input class="form-input" v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button @click="editAccount()">Modifier le compte</button>
+            <button class="add-button" @click="editAccount()">Modifier le compte</button>
         </div>
     </div>
   </div>
@@ -35,7 +39,8 @@ export default {
       password: "",
       password2: "",
       firstName: "",
-      lastName: ""
+      lastName: "",
+      privileges: false
     }
   },
   computed: {
@@ -45,13 +50,21 @@ export default {
     closeEditBox() {
       this.$store.state.editBox = "closed"
     },
+    checkBox(data) {
+      if(data === true) {
+        return 'yes'
+      } else {
+        return 'no'
+      }
+    },
     editAccount() {
       instance.put(`/account/edit/employee/${this.id}`, {
         login: this.login,
         password: this.password,
         password2: this.password2,
         firstName: this.firstName,
-        lastName: this.lastName
+        lastName: this.lastName,
+        privileges: this.checkBox(this.privileges)
       })
       .then((res) => {
         if(res.status === 201) {
@@ -86,6 +99,9 @@ export default {
         this.login = account.login
         this.firstName = account.infos.firstName
         this.lastName = account.infos.lastName
+        if(account.infos.privileges === 'yes') {
+          this.privileges = true
+        }
     })
   }
 }
@@ -94,12 +110,4 @@ export default {
 
 <style>
 
-</style>
-
-<style scoped>
-.add-account-form{
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
 </style>

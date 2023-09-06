@@ -1,12 +1,12 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <div @click="closeDeleteBox()" class="close-add">X</div>
-        <h2>Supprimer ce compte client?</h2>
+        <img @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <h2 class="add-box-title">Supprimer ce compte client?</h2>
         <div v-if="error" class="error">{{ error }}</div>
-        <div class="">
-            <button @click="deleteAccount()">Oui</button>
-            <button @click="closeDeleteBox()">Non</button>
+        <div class="box-choice-button">
+            <button class="valid-button" @click="deleteAccount()">Oui</button>
+            <button class="delete-button" @click="closeDeleteBox()">Non</button>
         </div>
     </div>
   </div>
@@ -45,9 +45,5 @@ export default {
 
 
 <style>
-
-</style>
-
-<style scoped>
 
 </style>
