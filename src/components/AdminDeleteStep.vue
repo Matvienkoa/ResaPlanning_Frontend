@@ -1,9 +1,12 @@
 <template>
     <div class="delete-step-back">
         <div class="delete-step-box">
-            <p>Supprimer cette étape?</p>
-            <button @click="deleteStep()">Supprimer</button>
-            <button @click="closeDeleteBox()">Annuler</button>
+            <h2 class="add-box-title">Supprimer cette étape?</h2>
+            <div v-if="error" class="error">{{ error }}</div>
+            <div class="box-choice-button">
+              <button class="valid-button" @click="deleteStep()">Supprimer</button>
+              <button class="delete-button" @click="closeDeleteBox()">Annuler</button>
+            </div>
         </div>
     </div>
 </template>
@@ -41,25 +44,28 @@ export default {
 
 <style>
 .delete-step-back{
-  position: absolute;
-  top: 0;
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.671);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
+  z-index: 9;
 }
 .delete-step-box{
   position: relative;
-  width: 70%;
-  min-height: 50%;
+  width: 100%;
+  max-width: 500px;
+  min-height: 40%;
+  max-height: 50%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
-  z-index: 6;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 10;
+  border-radius: 10px;
 }
 </style>

@@ -1,8 +1,8 @@
 <template>
     <div class="get-back">
         <div class="get-box">
-            <div @click="closeGetBox()" class="close-get">X</div>
-            <p>Demandes de préparation</p>
+            <img @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+            <h2 class="get-box-title">Nouvelles Demandes de préparation</h2>
             <div v-for="prepR in getPrepRequestsPending" :key="prepR.id">
                 <div>{{prepR.customerId}} {{prepR.observationsCustomer}} {{prepR.deliveryDate}}</div>
                 <div @click="openEditBox({mode: 'showPrepRequest', id: prepR.id})">voir</div>
@@ -12,7 +12,7 @@
             <AdminRefusePrepRequest v-if="getDeleteBox === 'refusePrepRequest'" :id="this.requestId" />
             <AdminGetSlotRequest v-if="getEditBox === 'showSlotRequest'" :id="this.requestId" />
             <AdminRefuseSlotRequest v-if="getDeleteBox === 'refuseSlotRequest'" :id="this.requestId" />
-            <p>Demandes de créneaux</p>
+            <h2 class="get-box-title">Demandes de créneaux</h2>
             <div v-for="slotR in getSlotRequestsPending" :key="slotR.id">
                 <div>{{slotR.customerId}} {{slotR.observationsCustomer}} {{slotR.date}}</div>
                 <div @click="openEditBox({mode: 'showSlotRequest', id: slotR.id})">voir</div>

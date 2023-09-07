@@ -1,12 +1,16 @@
 <template>
     <div class="edit-step-back">
         <div class="edit-step-box">
-            modifier l'étape {{stepId}}
-            <label for="step-form-type">Type</label>
-            <input v-model="type" @input="cancelError()" type="text" name="step-form-type" id="step-form-type" class="required">
-            <div v-if="error" class="error">{{ error.message }}</div>
-            <button @click="editStep()">Modifier</button>
-            <button @click="closeEditStepBox()">Annuler</button>
+            <h2 class="add-box-title">Modifier l'étape de préparation {{stepId}}</h2>
+            <div class="edit-step-form">
+              <label class="form-label" for="step-form-type">Type</label>
+              <input class="form-input required" v-model="type" @input="cancelError()" type="text" name="step-form-type" id="step-form-type">
+              <div v-if="error" class="error">{{ error.message }}</div>
+              <div class="box-choice-button">
+                <button class="valid-button" @click="editStep()">Modifier</button>
+                <button class="delete-button" @click="closeEditStepBox()">Annuler</button>
+              </div>
+            </div>
         </div>
     </div>
 </template>
@@ -58,25 +62,34 @@ export default {
 
 <style>
 .edit-step-back{
-  position: absolute;
-  top: 0;
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.671);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
+  z-index: 9;
 }
 .edit-step-box{
   position: relative;
-  width: 70%;
-  min-height: 50%;
+  width: 100%;
+  max-width: 500px;
+  min-height: 40%;
+  max-height: 50%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
-  z-index: 6;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 10;
+  border-radius: 10px;
+}
+.edit-step-form{
+  width: 80%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
 }
 </style>

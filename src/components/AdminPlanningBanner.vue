@@ -8,7 +8,7 @@
             </router-link>
         </div>
         <div @click="openGetBox('getRequests')" class="banner-item">
-            Demandes <div v-if="getPrepRequestsPending.length > 0 || getSlotRequestsPending.length > 0" class="notification">O</div>
+            Demandes <img src="../assets/Icons/notification.svg" alt="" v-if="getPrepRequestsPending.length > 0 || getSlotRequestsPending.length > 0" class="notification" />
         </div>
         <div @click="openGetBox('getBillings')" class="banner-item">
             Facturation
@@ -89,8 +89,10 @@ export default {
     margin-bottom: 20px;
 }
 .notification{
-    color: red;
-    font-weight: bold;
+    width: 20px;
+    position: relative;
+    left: 3px;
+    bottom: 10px;
 }
 .logout-box{
   position: absolute;

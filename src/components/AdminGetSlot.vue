@@ -105,6 +105,8 @@ export default {
 .get-infos-box{
   width: 90%;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 .edit-infos-icon{
   position: absolute;
