@@ -1,22 +1,46 @@
 <template>
     <div class="get-back">
+      <AdminGetPrepRequest v-if="getEditBox === 'showPrepRequest'" :id="this.requestId" />
+      <AdminRefusePrepRequest v-if="getDeleteBox === 'refusePrepRequest'" :id="this.requestId" />
+      <AdminGetSlotRequest v-if="getEditBox === 'showSlotRequest'" :id="this.requestId" />
+      <AdminRefuseSlotRequest v-if="getDeleteBox === 'refuseSlotRequest'" :id="this.requestId" />
         <div class="get-box">
             <img @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
-            <h2 class="get-box-title">Nouvelles Demandes de préparation</h2>
-            <div v-for="prepR in getPrepRequestsPending" :key="prepR.id">
-                <div>{{prepR.customerId}} {{prepR.observationsCustomer}} {{prepR.deliveryDate}}</div>
-                <div @click="openEditBox({mode: 'showPrepRequest', id: prepR.id})">voir</div>
-                <div @click="openDeleteBox({mode: 'refusePrepRequest', id: prepR.id})">Refuser</div>
-            </div>
-            <AdminGetPrepRequest v-if="getEditBox === 'showPrepRequest'" :id="this.requestId" />
-            <AdminRefusePrepRequest v-if="getDeleteBox === 'refusePrepRequest'" :id="this.requestId" />
-            <AdminGetSlotRequest v-if="getEditBox === 'showSlotRequest'" :id="this.requestId" />
-            <AdminRefuseSlotRequest v-if="getDeleteBox === 'refuseSlotRequest'" :id="this.requestId" />
-            <h2 class="get-box-title">Demandes de créneaux</h2>
-            <div v-for="slotR in getSlotRequestsPending" :key="slotR.id">
-                <div>{{slotR.customerId}} {{slotR.observationsCustomer}} {{slotR.date}}</div>
-                <div @click="openEditBox({mode: 'showSlotRequest', id: slotR.id})">voir</div>
-                <div @click="openDeleteBox({mode: 'refuseSlotRequest', id: slotR.id})">Refuser</div>
+            <div class="get-requests-box">
+              <div class="get-preps-box">
+                <div class="get-requests-title-box">
+                  <h2 class="get-requests-title">Nouvelles Demandes de préparation</h2>
+                </div>
+                <h3 v-if="getPrepRequestsPending.length === 0" class="no-request">Aucune nouvelle demande pour le moment</h3>
+                <div class="prep-request" v-for="prepR in getPrepRequestsPending" :key="prepR.id">
+                  <div class="prep-request-infos">
+                    <p class="prep-request-info">{{prepR.company}}</p>
+                    <p class="prep-request-info">{{prepR.firstName}}</p>
+                    <p class="prep-request-info">{{prepR.lastName}}</p>
+                  </div>
+                  <div class="prep-request-actions">
+                    <img class="requests-icon" @click="openEditBox({mode: 'showPrepRequest', id: prepR.id})" src="../assets/Icons/eye.svg" alt="" />
+                    <img class="requests-icon" @click="openDeleteBox({mode: 'refusePrepRequest', id: prepR.id})" src="../assets/Icons/refuse.svg" alt="" />
+                  </div>
+                </div>
+              </div>
+              <div class="get-slots-box">
+                <div class="get-requests-title-box">
+                  <h2 class="get-requests-title">Demandes de créneaux</h2>
+                </div>
+                <h3 v-if="getSlotRequestsPending.length === 0" class="no-request">Aucune nouvelle demande pour le moment</h3>
+                <div class="slot-request" v-for="slotR in getSlotRequestsPending" :key="slotR.id">
+                  <div class="slot-request-infos">
+                    <p class="slot-request-info">{{slotR.company}}</p>
+                    <p class="slot-request-info">{{slotR.firstName}}</p>
+                    <p class="slot-request-info">{{slotR.lastName}}</p>
+                  </div>
+                  <div class="slot-request-actions">
+                    <img class="requests-icon" @click="openEditBox({mode: 'showSlotRequest', id: slotR.id})" src="../assets/Icons/eye.svg" alt="" />
+                    <img class="requests-icon" @click="openDeleteBox({mode: 'refuseSlotRequest', id: slotR.id})" src="../assets/Icons/refuse.svg" alt="" />
+                  </div>
+                </div>
+              </div>
             </div>
         </div>
     </div>
@@ -31,14 +55,14 @@ import AdminGetSlotRequest from '@/components/AdminGetSlotRequest.vue';
 import AdminRefuseSlotRequest from '@/components/AdminRefuseSlotRequest.vue';
 
 export default {
-    name: 'AdminGetRequests',
-    components: {
-        AdminGetPrepRequest,
-        AdminRefusePrepRequest,
-        AdminGetSlotRequest,
-        AdminRefuseSlotRequest
-    },
-    data() {
+  name: 'AdminGetRequests',
+  components: {
+      AdminGetPrepRequest,
+      AdminRefusePrepRequest,
+      AdminGetSlotRequest,
+      AdminRefuseSlotRequest
+  },
+  data() {
     return {
       requestId: null
     }
@@ -60,37 +84,74 @@ export default {
     },
   },
   created: function () {
-        this.$store.dispatch('getRequestsPending')
-    }
+    this.$store.dispatch('getRequestsPending')
+  }
 }
 </script>
 
 <style scoped>
-.get-back{
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.671);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 3;
-}
 .get-box{
     position: relative;
-    width: 90%;
+    width: 60%;
+    max-width: 800px;
     min-height: 70%;
+    max-height: 90%;
     background: white;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 20px 0;
-    z-index: 4;
+    justify-content: flex-start;
+    overflow-y: auto;
+    z-index: 7;
+    border-radius: 10px;
 }
-.close-get{
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    cursor: pointer;
+.get-requests-box{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  margin-top: 10px;
+}
+.get-preps-box, .get-slots-box{
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.get-requests-title-box{
+  width: 100%;
+  height: 40px;
+  border-bottom: 3px solid #c0c0c0;
+  display: flex;
+  align-items: center;
+  margin-bottom: 15px;
+  margin-top: 15px;
+}
+.get-requests-title{
+  font-size: 1.3em;
+}
+.prep-request, .slot-request{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  background-color: rgb(236, 236, 236);
+  border-radius: 10px;
+  padding: 0.4em 0;
+}
+.prep-request-infos, .slot-request-infos{
+  display: flex;
+}
+.prep-request-info, .slot-request-info{
+  margin-left: 5px;
+  margin-right: 5px;
+}
+.prep-request-actions, .slot-request-actions{
+  display: flex;
+}
+.requests-icon{
+  height: 20px;
+  cursor: pointer;
+  margin-left: 5px;
+  margin-right: 5px;
 }
 </style>

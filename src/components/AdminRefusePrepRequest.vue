@@ -1,15 +1,31 @@
 <template>
     <div class="prepR-back">
         <div class="prepR-box">
-            <div>{{getPrepRequest.customerId}} {{getPrepRequest.brand}} {{getPrepRequest.model}} {{getPrepRequest.year}}
-                {{getPrepRequest.immat}} {{getPrepRequest.kilometer}} {{getPrepRequest.observationsCustomer}} {{getPrepRequest.deliveryDate}}
+            <img @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+            <h2 class="get-box-title">Refuser la demande de préparation</h2>
+            <div class="prepR-infos-box">
+                <p>Société : {{getPrepRequest.company}}</p>
+                <p>Prénom : {{getPrepRequest.firstName}}</p>
+                <p>Nom : {{getPrepRequest.lastName}}</p>
+                <p>Adresse : {{getPrepRequest.adress}} {{getPrepRequest.adress2}} {{getPrepRequest.zipCode}} {{getPrepRequest.city}}</p>
+                <p>Contact : {{getPrepRequest.phone}} {{getPrepRequest.mail}}</p>
+
+                <p>Marque : {{getPrepRequest.brand}}</p>
+                <p>Modèle : {{getPrepRequest.model}}</p>
+                <p>Année : {{getPrepRequest.year}}</p>
+                <p>Etat : {{getPrepRequest.condition}}</p>
+                <p>Immatriculation : {{getPrepRequest.immat}}</p>
+                <p>KM : {{getPrepRequest.kilomter}}</p>
+                <p>Observations client : {{getPrepRequest.observationsCustomer}}</p>
+                <p>Date de livraison souhaitée : {{getPrepRequest.deliveryDate}}</p>
+                <p>Préparations souhaitées : {{getPrepRequest.steps}}</p>
             </div>
-            <div>{{getPrepRequest.steps}}</div>
-            <p>Refuser la demande?</p>
-            <label for="vehicle-form-observations">Motifs du refus</label>
-            <input v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-            <button @click="refusePrepRequest()">Refuser la demande</button>
-            <button @click="closeDeleteBox()">Annuler</button>
+            <div class="add-preparation-form">
+                <label class="form-label" for="vehicle-form-observations">Motifs du refus</label>
+                <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+                <div v-if="error" class="error">{{ error.message }}</div>
+                <button class="add-button" @click="refusePrepRequest()">Refuser la demande</button>
+            </div>
         </div>
     </div>
 </template>
@@ -53,34 +69,5 @@ export default {
 </script>
 
 <style>
-.prepR-back{
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.671);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
-}
-.prepR-box{
-  position: relative;
-  width: 100%;
-  min-height: 100%;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-  z-index: 6;
-}
-.close-delete{
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    cursor: pointer;
-}
-
 
 </style>

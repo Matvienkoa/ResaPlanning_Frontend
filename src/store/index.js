@@ -171,7 +171,7 @@ export default createStore({
       state.getBox = "closed";
       state.dropBox = "closed";
       state.sizeBox = "closed";
-      state.invoiceBox = 'closed'
+      state.invoiceBox = "closed";
     },
     SET_USER: function (state, user) {
       state.user = user

@@ -1,31 +1,45 @@
 <template>
     <div class="prepR-back">
         <div class="prepR-box">
-            <div @click="closeEditBox()" class="close-edit">X</div>
-            <div>{{getPrepRequest.customerId}} {{getPrepRequest.brand}} {{getPrepRequest.model}} {{getPrepRequest.year}}
-                {{getPrepRequest.immat}} {{getPrepRequest.kilometer}} {{getPrepRequest.observationsCustomer}} {{getPrepRequest.deliveryDate}}
+            <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+            <h2 class="get-box-title">Nouvelle demande de préparation</h2>
+            <div class="prepR-infos-box">
+                <p>Société : {{getPrepRequest.company}}</p>
+                <p>Prénom : {{getPrepRequest.firstName}}</p>
+                <p>Nom : {{getPrepRequest.lastName}}</p>
+                <p>Adresse : {{getPrepRequest.adress}} {{getPrepRequest.adress2}} {{getPrepRequest.zipCode}} {{getPrepRequest.city}}</p>
+                <p>Contact : {{getPrepRequest.phone}} {{getPrepRequest.mail}}</p>
+
+                <p>Marque : {{getPrepRequest.brand}}</p>
+                <p>Modèle : {{getPrepRequest.model}}</p>
+                <p>Année : {{getPrepRequest.year}}</p>
+                <p>Etat : {{getPrepRequest.condition}}</p>
+                <p>Immatriculation : {{getPrepRequest.immat}}</p>
+                <p>KM : {{getPrepRequest.kilomter}}</p>
+                <p>Observations client : {{getPrepRequest.observationsCustomer}}</p>
+                <p>Date de livraison souhaitée : {{getPrepRequest.deliveryDate}}</p>
+                <p>Préparations souhaitées : {{getPrepRequest.steps}}</p>
             </div>
-            <div>{{getPrepRequest.steps}}</div>
-            <div class="add-preparation-box">
-                <label for="preparation-form-startDate">Date de début</label>
-                <input v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate" class="required">
-                <label for="preparation-form-endDate">Date de fin</label>
-                <input v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate" class="required">
-                <label for="preparation-form-startTime">Heure de début</label>
-                <input v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime" class="required">
-                <label for="preparation-form-endTime">Heure de fin</label>
-                <input v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime" class="required">
-                <label for="vehicle-form-observations">Observations</label>
-                <input v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-                <label for="vehicle-form-steps">Ajouter une étape de préparation</label>
-                <input @input="cancelErrorPrestation()" v-model="prestation" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
+            <div class="add-preparation-form">
+                <label class="form-label" for="preparation-form-startDate">Date de début</label>
+                <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
+                <label class="form-label" for="preparation-form-endDate">Date de fin</label>
+                <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
+                <label class="form-label" for="preparation-form-startTime">Heure de début</label>
+                <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
+                <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+                <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+                <label class="form-label" for="vehicle-form-observations">Observations</label>
+                <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+                <label class="form-label" for="vehicle-form-steps">Ajouter une étape de préparation</label>
+                <input class="form-input" @input="cancelErrorPrestation()" v-model="prestation" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
                 <div v-if="errorPrestation" class="error">{{ errorPrestation }}</div>
-                <button @click="addStep()">Ajouter la prestation</button>
-                <div>
-                <div v-for="step in steps" :key="step">{{step}}<div @click="deleteStep(step)">X</div></div>
+                <button class="add-presta-button" @click="addStep()">Ajouter la prestation</button>
+                <div class="prestas-box">
+                    <div class="presta-box" v-for="step in steps" :key="step">{{step}}<div @click="deleteStep(step)">X</div></div>
                 </div>
                 <div v-if="error" class="error">{{ error.message }}</div>
-                <button @click="addPreparation()">Créer la préparation</button>
+                <button class="add-button" @click="addPreparation()">Créer la préparation</button>
             </div>
         </div>
     </div>
@@ -148,36 +162,34 @@ export default {
 
 <style>
 .prepR-back{
-  position: absolute;
-  top: 0;
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.671);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
+  z-index: 9;
 }
 .prepR-box{
   position: relative;
   width: 100%;
-  min-height: 100%;
+  max-width: 800px;
+  min-height: 90%;
+  max-height: 90%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
-  z-index: 6;
-}
-.close-edit{
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    cursor: pointer;
+  justify-content: flex-start;
+  overflow-y: auto;
+  z-index: 10;
+  border-radius: 10px;
 }
 
-.add-preparation-box{
+.add-preparation-form{
   width: 80%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
 }

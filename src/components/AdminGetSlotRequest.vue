@@ -1,23 +1,33 @@
 <template>
-    <div class="slotR-back">
-        <div class="slotR-box">
-            <div @click="closeEditBox()" class="close-edit">X</div>
-            <div>{{getSlotRequest.customerId}} {{getSlotRequest.observationsCustomer}}
-                 {{getSlotRequest.date}} {{getSlotRequest.place}} {{getSlotRequest.duration}} 
+    <div class="prepR-back">
+        <div class="prepR-box">
+            <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+            <h2 class="get-box-title">Nouvelle demande de créneau</h2>
+            <div class="prepR-infos-box">
+                <p>Société : {{getSlotRequest.company}}</p>
+                <p>Prénom : {{getSlotRequest.firstName}}</p>
+                <p>Nom : {{getSlotRequest.lastName}}</p>
+                <p>Adresse : {{getSlotRequest.adress}} {{getSlotRequest.adress2}} {{getSlotRequest.zipCode}} {{getSlotRequest.city}}</p>
+                <p>Contact : {{getSlotRequest.phone}} {{getSlotRequest.mail}}</p>
+
+                <p>Date souhaitée : {{getSlotRequest.date}}</p>
+                <p>Durée de l'intervention : {{checkDuration(getSlotRequest.duration)}}</p>
+                <p>Lieux : {{getSlotRequest.place}}</p>
+                <p>Observations client : {{getSlotRequest.observationsCustomer}}</p>
             </div>
-            <div class="add-preparation-box">
-                <label for="preparation-form-startDate">Date de début</label>
-                <input v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate" class="required">
-                <label for="preparation-form-endDate">Date de fin</label>
-                <input v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate" class="required">
-                <label for="preparation-form-startTime">Heure de début</label>
-                <input v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime" class="required">
-                <label for="preparation-form-endTime">Heure de fin</label>
-                <input v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime" class="required">
-                <label for="vehicle-form-observations">Observations</label>
-                <input v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+            <div class="add-preparation-form">
+                <label class="form-label" for="preparation-form-startDate">Date de début</label>
+                <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
+                <label class="form-label" for="preparation-form-endDate">Date de fin</label>
+                <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
+                <label class="form-label" for="preparation-form-startTime">Heure de début</label>
+                <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
+                <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+                <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+                <label class="form-label" for="vehicle-form-observations">Observations</label>
+                <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
                 <div v-if="error" class="error">{{ error.message }}</div>
-                <button @click="addSlot()">Créer le créneaux</button>
+                <button class="add-button" @click="addSlot()">Créer le créneaux</button>
             </div>
         </div>
     </div>
@@ -47,6 +57,15 @@ export default {
         ...mapGetters(['getSlotRequest'])
     },
     methods: {
+        checkDuration(duration) {
+            let dur = "";
+            if(duration === "half") {
+                dur = '1/2 Journée'
+            } else {
+                dur = 'Journée entière'
+            }
+            return dur
+        },
         closeEditBox() {
             this.$store.state.editBox = "closed"
         },
@@ -101,38 +120,5 @@ export default {
 </script>
 
 <style>
-.slotR-back{
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.671);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
-}
-.slotR-box{
-  position: relative;
-  width: 100%;
-  min-height: 100%;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-  z-index: 6;
-}
-.close-edit{
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    cursor: pointer;
-}
 
-.add-preparation-box{
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
 </style>

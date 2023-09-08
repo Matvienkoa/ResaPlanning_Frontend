@@ -98,6 +98,9 @@ export default {
         steps: this.steps,
         observationsCustomer: this.observationsCustomer,
         customerId: this.getProfile.id,
+        company: this.getProfile.company,
+        firstName: this.getProfile.firstName,
+        lastName: this.getProfile.lastName,
         deliveryDate: this.deliveryDate
       })
       .then((res) => {
@@ -128,6 +131,9 @@ export default {
     addSlotRequest() {
       instance.post('/slotrequest/', {
         customerId: this.getProfile.id,
+        company: this.getProfile.company,
+        firstName: this.getProfile.firstName,
+        lastName: this.getProfile.lastName,
         place: this.place,
         observationsCustomer: this.observationsCustomer,
         date: this.date,

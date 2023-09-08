@@ -1,10 +1,12 @@
 <template>
-    <div class="invoice-prep-back">
-        <div class="invoice-prep-box">
-            Marquer comme facturée?
+    <div class="invoice-back">
+        <div class="invoice-box">
+            <h2 class="add-box-title">Marquer comme facturée?</h2>
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button @click="invoicePrep()">Oui</button>
-            <button @click="closeInvoiceBox()">Annuler</button>
+            <div class="box-choice-button">
+              <button class="valid-button" @click="invoicePrep()">Oui</button>
+              <button class="delete-button" @click="closeInvoiceBox()">Annuler</button>
+            </div>
         </div>
     </div>
 </template>
@@ -42,27 +44,30 @@ export default {
 }
 </script>
 
-<style>
-.invoice-prep-back{
-  position: absolute;
-  top: 0;
+<style scoped>
+.invoice-back{
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background: rgba(0, 0, 0, 0.671);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 5;
+  z-index: 9;
 }
-.invoice-prep-box{
+.invoice-box{
   position: relative;
-  width: 70%;
+  width: 60%;
+  max-width: 600px;
   min-height: 50%;
+  max-height: 90%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 20px 0;
-  z-index: 6;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 10;
+  border-radius: 10px;
 }
 </style>
