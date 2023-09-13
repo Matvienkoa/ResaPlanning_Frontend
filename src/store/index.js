@@ -20,7 +20,8 @@ export default createStore({
     stepBox: "closed",
     dropBox: "closed",
     sizeBox: "closed",
-    invoiceBox: 'closed',
+    invoiceBox: "closed",
+    photoBox: "closed",
     preparations: [],
     preparation: "",
     steps: [],
@@ -96,6 +97,9 @@ export default createStore({
     getInvoiceBox: (state) => {
       return state.invoiceBox
     },
+    getPhotoBox: (state) => {
+      return state.photoBox
+    },
     getPreparations: (state) => {
       return state.preparations
     },
@@ -111,9 +115,9 @@ export default createStore({
     getSlot: (state) => {
       return state.slot
     },
-    getEvents: (state) => {
-      return state.events
-    },
+    // getEvents: (state) => {
+    //   return state.events
+    // },
     getVehicles: (state) => {
       return state.vehicles
     },
@@ -172,6 +176,7 @@ export default createStore({
       state.dropBox = "closed";
       state.sizeBox = "closed";
       state.invoiceBox = "closed";
+      state.photoBox = "closed";
     },
     SET_USER: function (state, user) {
       state.user = user
@@ -187,6 +192,12 @@ export default createStore({
     },
     SET_ACCOUNTS_EMPLOYEE: function (state, employee) {
       state.accountsEmployee.push(employee)
+      function SortTime(a, b) {
+        let da = new Date(a.createdAt);
+        let db = new Date(b.createdAt);
+        return (db > da) ? 1 : -1;
+      }
+      state.accountsEmployee.sort(SortTime)
     },
     DELETE_ACCOUNT_EMPLOYEE: function (state, employee) {
       const index = state.accountsEmployee.findIndex(e => e.id === employee);
@@ -196,6 +207,12 @@ export default createStore({
     },
     SET_ACCOUNTS_CUSTOMER: function (state, customer) {
       state.accountsCustomer.push(customer)
+      function SortTime(a, b) {
+        let da = new Date(a.createdAt);
+        let db = new Date(b.createdAt);
+        return (db > da) ? 1 : -1;
+      }
+      state.accountsCustomer.sort(SortTime)
     },
     DELETE_ACCOUNT_CUSTOMER: function (state, customer) {
       const index = state.accountsCustomer.findIndex(c => c.id === customer);
@@ -227,15 +244,15 @@ export default createStore({
     },
     SET_PREPARATIONS: function (state, preparations) {
       state.preparations = preparations
-      preparations.forEach(prep => {
-        state.events.push(
-          {
-            title: prep.immat,
-            start: prep.start,
-            end: prep.end
-          }
-        )
-      })
+      // preparations.forEach(prep => {
+      //   state.events.push(
+      //     {
+      //       title: prep.immat,
+      //       start: prep.start,
+      //       end: prep.end
+      //     }
+      //   )
+      // })
     },
     SET_PREPARATION: function (state, preparation) {
       state.preparation = preparation

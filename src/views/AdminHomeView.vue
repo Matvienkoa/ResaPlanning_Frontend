@@ -7,7 +7,7 @@
     <div class="home-admin-box">
       <router-link to="/admin/accounts" class="home-menu-link">
         <div class="home-menu-link-img-box">
-          <img class="home-menu-link-img" src="../assets/images/menu-users.jpg" alt="">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-users.jpg" alt="">
         </div>
         <div class="home-menu-link-bloc">
           <p>Gestion des comptes utilisateurs</p>
@@ -15,7 +15,7 @@
       </router-link>
       <router-link to="/admin/planning" class="home-menu-link">
         <div class="home-menu-link-img-box">
-          <img class="home-menu-link-img" src="../assets/images/menu-planning.jpg" alt="">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-planning.jpg" alt="">
         </div>
         <div class="home-menu-link-bloc">
           <p>Planning</p>
@@ -23,7 +23,7 @@
       </router-link>
       <router-link to="/admin/customers" class="home-menu-link">
         <div class="home-menu-link-img-box">
-          <img class="home-menu-link-img" src="../assets/images/menu-customers.jpg" alt="">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-customers.jpg" alt="">
         </div>
         <div class="home-menu-link-bloc">
           <p>Clients</p>
@@ -31,7 +31,7 @@
       </router-link>
       <router-link to="/admin/showroom" class="home-menu-link">
         <div class="home-menu-link-img-box">
-          <img class="home-menu-link-img" src="../assets/images/menu-showroom.jpg" alt="">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-showroom.jpg" alt="">
         </div>
         <div class="home-menu-link-bloc">
           <p>Showroom</p>
@@ -76,7 +76,7 @@ export default {
   align-items: center;
 }
 .home-admin-title{
-  font-size: 1.3em;
+  font-size: 1.4em;
   margin-left: 30px;
 }
 .home-admin-box{
@@ -87,7 +87,7 @@ export default {
 }
 .home-menu-link{
   width: 200px;
-  height: 200px;
+  height: 250px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin: 20px;
   display: flex;
@@ -113,6 +113,7 @@ export default {
 }
 .home-menu-link-bloc p{
   text-align: center;
+  font-weight: 600;
   color: black;
 }
 </style>

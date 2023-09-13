@@ -14,7 +14,9 @@
                             <p class="prep-request-info">{{prep.brand}}</p>
                             <p class="prep-request-info">{{prep.model}}</p>
                         </div>
-                        <img @click="openInvoiceBox({mode: 'invoicePrep', id: prep.id})" src="../assets/Icons/invoice.svg" alt="" class="invoice-icon" />
+                        <div @click="openInvoiceBox({mode: 'invoicePrep', id: prep.id})" class="invoice-icon-box">
+                          <img src="../assets/Icons/invoice-red.svg" alt="" class="invoice-icon" />
+                        </div>
                     </div>
                 </div>
                 <div class="get-preps-box">
@@ -26,6 +28,9 @@
                             <p class="prep-request-info">{{prep.immat}}</p>
                             <p class="prep-request-info">{{prep.brand}}</p>
                             <p class="prep-request-info">{{prep.model}}</p>
+                        </div>
+                        <div class="invoice-icon-box billed">
+                          <img src="../assets/Icons/invoice-green.svg" alt="" class="invoice-icon" />
                         </div>
                     </div>
                 </div>
@@ -123,9 +128,21 @@ export default {
   margin-left: 5px;
   margin-right: 5px;
 }
+.invoice-icon-box{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: white;
+  margin-right: 5px;
+}
 .invoice-icon{
-    height: 20px;
-    margin-right: 10px;
-    cursor: pointer;
+  height: 20px;
+}
+.billed{
+  cursor: unset;
 }
 </style>

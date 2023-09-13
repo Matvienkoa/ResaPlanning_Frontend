@@ -31,15 +31,19 @@ export default {
   background: black;
   display: flex;
   flex-direction: column;
+  align-items: center;
 }
 .logos-box{
   height: 50px;
 }
 .back-box{
-  width: 100%;
+  width: 80%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  padding-bottom: 20px;
+  border-bottom: 3px solid #383838;
+  margin-bottom: 25px;
+  font-size: 1.1em;
 }
 .link{
   text-decoration: none;

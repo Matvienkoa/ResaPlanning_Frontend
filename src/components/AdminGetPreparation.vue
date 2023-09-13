@@ -6,6 +6,7 @@
     <AdminDeleteStep v-if="getDeleteBox === 'deleteStep'" :preparationId="this.id" :stepId="step" />
     <AdminEditStateStep v-if="getStepBox === 'editStateStep'" :preparationId="this.id" :stepId="step" :stepState="state" />
     <AdminAddStep v-if="getAddBox === 'addStep'" :preparationId="this.id" />
+    <AdminGetPhotoPreparation v-if="getPhotoBox === 'getPhoto'" :url="this.urlPhoto" />
     <AdminAddPhotoPreparation v-if="getAddBox === 'addPhotoPreparation'" :preparationId="this.id" :numberPhoto="this.numberPhoto" />
     <AdminEditPhotoPreparation v-if="getEditBox === 'editPhotoPreparation'" :preparationId="this.id" :numberPhoto="this.numberPhoto" />
     <AdminDeletePhotoPreparation v-if="getDeleteBox === 'deletePhotoPreparation'" :preparationId="this.id" :numberPhoto="this.numberPhoto" />
@@ -21,6 +22,8 @@
         <img src="../assets/Icons/completed.svg" alt="" class="get-state-icon" /><p class="get-state-txt-completed">Terminée</p>
       </div>
       <div class="get-infos-box">
+        <p>Du {{moment(getPreparation.start).format('LLL')}}</p>
+        <p>Au {{moment(getPreparation.end).format('LLL')}}</p>
         <p>Marque : {{getPreparation.brand}}</p>
         <p>Modèle : {{getPreparation.model}}</p>
         <p>Annéee : {{getPreparation.year}}</p>
@@ -28,10 +31,17 @@
         <p>Etat du véhicule : {{getPreparation.condition}}</p>
         <p>Observations : {{getPreparation.observationsDepot}}</p>
         <p>Informations client : {{getPreparation.observationsCustomer}}</p>
-        <div class="buttons-prep-box">
-          <img @click="openEditBox({mode: 'editPreparation', id: this.id})" src="../assets/Icons/edit.svg" alt="" class="edit-infos-prep-button" />
-          <img @click="openDeleteBox({mode: 'deletePreparation', id: this.id})" src="../assets/Icons/delete.svg" alt="" class="delete-infos-prep-button" />
+        <div @click="openEditBox({mode: 'editPreparation', id: this.id})" class="edit-icon-box">
+          <img src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
         </div>
+        <div @click="openDeleteBox({mode: 'deletePreparation', id: this.id})" class="delete-icon-box">
+          <img src="../assets/Icons/delete-2.svg" alt="" class="delete-icon" />
+        </div>
+      </div>
+      <div class="get-customer-box">
+        <p>Client : {{getCustomer.company}} {{getCustomer.firstName}} {{getCustomer.lastName}}</p>
+        <p>Adresse : {{getCustomer.adress}} {{getCustomer.adress2}} {{getCustomer.zipCode}} {{getCustomer.city}}</p>
+        <p>Contact : {{getCustomer.phone}} {{getCustomer.mail}}</p>
       </div>
       <div class="get-steps-box">
         <h2 class="second-title">Etapes de préparations</h2>
@@ -50,10 +60,15 @@
           </div>
           <h3 class="step-state-type">{{step.type}}</h3>
           <div class="step-fonctions-box">
-            <img @click="openEditStepBox({mode: 'editStep', id: step.id, type: step.type})" src="../assets/Icons/edit.svg" alt="" class="step-edit-icon" />
-            <img @click="openDeleteStepBox({mode: 'deleteStep', id: step.id})" src="../assets/Icons/delete.svg" alt="" class="step-delete-icon" />
+            <div @click="openEditStepBox({mode: 'editStep', id: step.id, type: step.type})" class="edit-step-icon-box">
+              <img src="../assets/Icons/edit.svg" alt="" class="step-edit-icon" />
+            </div>
+            <div @click="openDeleteStepBox({mode: 'deleteStep', id: step.id})" class="delete-step-icon-box">
+              <img src="../assets/Icons/delete-2.svg" alt="" class="step-delete-icon" />
+            </div>
           </div>
         </div>
+        <h3 v-if="getSteps.length === 0" class="no-step">Aucune étape renseignée pour le moment</h3>
         <div class="add-step-box-2">
           <button class="add-button" @click="openAddStepBox('addStep')">Ajouter une étape</button>
         </div>
@@ -61,36 +76,52 @@
       <h2 class="second-title">Photos</h2>
       <div class="get-photos-box">
         <div v-if="getPreparation.photo1" class="get-photo-box">
-          <img :src="getPreparation.photo1" alt="" class="get-photo">
-          <img @click="openEditPhoto({number: 'photo1', type: 'editPhotoPreparation'})" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
-          <img @click="openDeletePhoto({number: 'photo1', type: 'deletePhotoPreparation'})" src="../assets/Icons/delete.svg" alt="" class="get-photo-delete-icon">
+          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo1})" :src="getPreparation.photo1" alt="" class="get-photo">
+          <div @click="openEditPhoto({number: 'photo1', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
+            <img src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
+          </div>
+          <div @click="openDeletePhoto({number: 'photo1', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
+            <img src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+          </div>
         </div>
         <div v-if="!getPreparation.photo1" class="get-photo-box">
           <img src="../assets/images/1.jpg" alt="" class="get-no-photo">
           <img @click="openAddPhoto({number: 'photo1', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
         <div v-if="getPreparation.photo2" class="get-photo-box">
-          <img :src="getPreparation.photo2" alt="" class="get-photo">
-          <img @click="openEditPhoto({number: 'photo2', type: 'editPhotoPreparation'})" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
-          <img @click="openDeletePhoto({number: 'photo2', type: 'deletePhotoPreparation'})" src="../assets/Icons/delete.svg" alt="" class="get-photo-delete-icon">
+          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo2})" :src="getPreparation.photo2" alt="" class="get-photo">
+          <div @click="openEditPhoto({number: 'photo2', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
+            <img src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
+          </div>
+          <div @click="openDeletePhoto({number: 'photo2', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
+            <img src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+          </div>
         </div>
         <div v-if="!getPreparation.photo2" class="get-photo-box">
           <img src="../assets/images/1.jpg" alt="" class="get-no-photo">
           <img @click="openAddPhoto({number: 'photo2', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
         <div v-if="getPreparation.photo3" class="get-photo-box">
-          <img :src="getPreparation.photo3" alt="" class="get-photo">
-          <img @click="openEditPhoto({number: 'photo3', type: 'editPhotoPreparation'})" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
-          <img @click="openDeletePhoto({number: 'photo3', type: 'deletePhotoPreparation'})" src="../assets/Icons/delete.svg" alt="" class="get-photo-delete-icon">
+          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo3})" :src="getPreparation.photo3" alt="" class="get-photo">
+          <div @click="openEditPhoto({number: 'photo3', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
+            <img src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
+          </div>
+          <div @click="openDeletePhoto({number: 'photo3', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
+            <img src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+          </div>
         </div>
         <div v-if="!getPreparation.photo3" class="get-photo-box">
           <img src="../assets/images/1.jpg" alt="" class="get-no-photo">
           <img @click="openAddPhoto({number: 'photo3', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
         <div v-if="getPreparation.photo4" class="get-photo-box">
-          <img :src="getPreparation.photo4" alt="" class="get-photo">
-          <img @click="openEditPhoto({number: 'photo4', type: 'editPhotoPreparation'})" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
-          <img @click="openDeletePhoto({number: 'photo4', type: 'deletePhotoPreparation'})" src="../assets/Icons/delete.svg" alt="" class="get-photo-delete-icon">
+          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo4})" :src="getPreparation.photo4" alt="" class="get-photo">
+          <div @click="openEditPhoto({number: 'photo4', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
+            <img src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
+          </div>
+          <div @click="openDeletePhoto({number: 'photo4', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
+            <img src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+          </div>
         </div>
         <div v-if="!getPreparation.photo4" class="get-photo-box">
           <img src="../assets/images/1.jpg" alt="" class="get-no-photo">
@@ -107,6 +138,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
+let moment = require('moment');
+moment.locale('fr');
 
 import AdminAddStep from '@/components/AdminAddStep.vue';
 import AdminEditStep from '@/components/AdminEditStep.vue';
@@ -117,6 +150,7 @@ import AdminDeleteStep from '@/components/AdminDeleteStep.vue';
 import AdminValidatePreparation from '@/components/AdminValidatePreparation.vue';
 import AdminInvalidatePreparation from '@/components/AdminInvalidatePreparation.vue';
 
+import AdminGetPhotoPreparation from '@/components/AdminGetPhotoPreparation.vue';
 import AdminAddPhotoPreparation from '@/components/AdminAddPhotoPreparation.vue';
 import AdminEditPhotoPreparation from '@/components/AdminEditPhotoPreparation.vue';
 import AdminDeletePhotoPreparation from '@/components/AdminDeletePhotoPreparation.vue';
@@ -130,6 +164,7 @@ export default {
     AdminEditPreparation,
     AdminDeletePreparation,
     AdminDeleteStep,
+    AdminGetPhotoPreparation,
     AdminAddPhotoPreparation,
     AdminEditPhotoPreparation,
     AdminDeletePhotoPreparation,
@@ -139,18 +174,25 @@ export default {
   props: ['id'],
   data() {
     return {
+      moment: moment,
       step: null,
       type: "",
       state: "",
       customer: null,
       preparation: null,
-      numberPhoto: ""
+      numberPhoto: "",
+      urlPhoto: ""
     }
   },
   computed: {
-    ...mapGetters(['getPreparation', 'getSteps', 'getCustomers', 'getStepBox', 'getEditBox', 'getAddBox', 'getDeleteBox'])
+    ...mapGetters(['getPreparation', 'getSteps', 'getCustomers','getCustomer', 'getStepBox', 'getEditBox', 'getAddBox', 'getDeleteBox', 'getPhotoBox'])
   },
   methods: {
+    openPhotoBox(data) {
+      this.urlPhoto = data.url
+      this.$store.state.photoBox = data.mode
+      console.log('ok')
+    },
     openEditBox(data) {
       this.preparation = data.id
       this.$store.state.editBox = data.mode
@@ -195,12 +237,30 @@ export default {
   created: function () {
     this.$store.dispatch('getCustomers');
     this.$store.dispatch('getPreparation', this.id)
+    .then((res) => {
+      this.$store.dispatch('getCustomer', res.data.customerId)
+    })
   },
   updated() {
     
   }
 }
 </script>
+
+<style>
+.get-customer-box{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(236, 236, 236);
+  padding: 0.4em 0;
+  border-radius: 10px;
+}
+.get-customer-box p{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+</style>
 
 <style scoped>
 .get-box{
@@ -218,11 +278,35 @@ export default {
     z-index: 7;
     border-radius: 10px;
 }
+.get-box-title{
+  text-align: start;
+  width: 90%;
+  border-bottom: 3px solid #c0c0c0;
+  padding-bottom: 5px;
+}
 .get-box-state{
   width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 20px;
+}
+.get-infos-box{
+  position: relative;
+  background-color: rgb(240, 240, 240);
+  padding: 0.4em 0;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.get-infos-box p{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.second-title{
+  text-align: start;
+  width: 90%;
+  border-bottom: 3px solid #c0c0c0;
+  padding-bottom: 5px;
 }
 .get-state-icon{
   height: 40px;
@@ -240,20 +324,27 @@ export default {
   color: rgb(198,238,0);
   margin: 0 5px;
 }
-
-.buttons-prep-box{
-  width: 100%;
-  display: flex;
-  justify-content: flex-end;
+.edit-icon-box{
+  position: absolute;
+  top: 5px;
+  right: 45px;
+  height: 35px;
+  width: 35px;
+  margin: unset;
 }
-.edit-infos-prep-button{
-  height: 20px;
-  cursor: pointer;
+.delete-icon-box{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  height: 35px;
+  width: 35px;
+  margin: unset;
 }
-.delete-infos-prep-button{
-  height: 20px;
-  cursor: pointer;
-  margin-left: 20px;
+.edit-icon{
+  height: 16px;
+}
+.delete-icon{
+  height: 16px;
 }
 
 .get-steps-box{
@@ -315,17 +406,36 @@ export default {
   margin-left: 20px;
 }
 .step-fonctions-box{
-  width: 55px;
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
+}
+.edit-step-icon-box{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: #f0f0f0;
+  margin-right: 5px;
 }
 .step-edit-icon{
-  height: 20px;
+  height: 16px;
+}
+.delete-step-icon-box{
+  height: 35px;
+  width: 35px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: #f0f0f0;
+  margin-right: 5px;
 }
 .step-delete-icon{
-  height: 20px;
-  cursor: pointer;
+  height: 16px;
 }
 .add-step-box-2{
   width: 100%;
@@ -348,7 +458,8 @@ export default {
 .get-photo{
   width: 100%;
   height: 100%;
-  object-fit: contain;
+  object-fit: cover;
+  cursor: zoom-in;
 }
 .get-no-photo{
   width: 100%;
@@ -356,21 +467,37 @@ export default {
   object-fit: cover;
   opacity: 0.6;
 }
-.get-photo-edit-icon{
-  height: 20px;
-  position: absolute;
-  z-index: 1;
-  top: 2%;
-  right: 15%;
+.get-photo-edit-icon-box{
+  background-color: white;
+  border-radius: 30px;
+  height: 30px;
+  width: 30px;
+  bottom: 3px;
+  right: 40px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+}
+.get-photo-edit-icon{
+  height: 15px;
+}
+.get-photo-delete-icon-box{
+  background-color: white;
+  border-radius: 30px;
+  height: 30px;
+  width: 30px;
+  bottom: 3px;
+  right: 3px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
 }
 .get-photo-delete-icon{
-  height: 20px;
-  position: absolute;
-  z-index: 1;
-  top: 2%;
-  right: 2%;
-  cursor: pointer;
+  height: 15px;
 }
 .get-photo-add-icon{
   position: absolute;

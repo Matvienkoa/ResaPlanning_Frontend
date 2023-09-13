@@ -8,7 +8,6 @@ import AdminPlanning from '../views/AdminPlanningView.vue'
 import AdminShowroom from '../views/AdminShowroomView.vue'
 import AdminShowroomVehicle from '../views/AdminShowroomVehicleView.vue'
 import AdminCustomers from '../views/AdminCustomersView.vue'
-import AdminCustomer from '../views/AdminCustomerView.vue'
 
 import CustomerHome from '../views/CustomerHomeView.vue'
 import CustomerRequests from '../views/CustomerRequestsView.vue'
@@ -56,11 +55,6 @@ const routes = [
     path: '/admin/customers',
     name: 'AdminCustomers',
     component: AdminCustomers
-  },
-  {
-    path: '/admin/customer/:id',
-    name: 'AdminCustomer',
-    component: AdminCustomer
   },
 
   {

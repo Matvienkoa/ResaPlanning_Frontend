@@ -1,28 +1,31 @@
 <template>
 <div class="edit-slot-back">
-  <h2 class="add-box-title">Modifier le créneau</h2>
   <div class="edit-slot-box">
-      <label class="form-label" for="preparation-form-customer">Séléctionner un Client :</label>
+    <h2 class="add-box-title">Modifier le créneau</h2>
+    <div class="edit-slot-form">
+      <label class="form-label" for="preparation-form-customer">Séléctionner un Client :<span class="star">*</span></label>
       <select class="form-input required" @change="cancelError()" v-model="customer" name="preparation-form-customer" id="preparation-form-customer">
+          <option v-if="getCustomers.length === 0" disabled selected value="">Aucun client trouvé</option>
           <option v-for="customer in getCustomers" :key="customer.id" :value="customer.id">{{customer.company}}</option>
       </select>
-      <label class="form-label" for="preparation-form-startDate">Date de début</label>
+      <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
       <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
-      <label class="form-label" for="preparation-form-endDate">Date de fin</label>
+      <label class="form-label" for="preparation-form-endDate">Date de fin<span class="star">*</span></label>
       <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
-      <label class="form-label" for="preparation-form-startTime">Heure de début</label>
+      <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
       <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-      <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+      <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
       <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
-      <label class="form-label" for="preparation-form-place">Lieux</label>
+      <label class="form-label" for="preparation-form-place">Lieux<span class="star">*</span></label>
       <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
       <label class="form-label" for="vehicle-form-observations">Observations</label>
       <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
       <div v-if="error" class="error">{{ error.message }}</div>
       <div class="box-choice-button">
         <button class="valid-button" @click="editSlot()">Modifier</button>
-        <button class="delete-button" @click="closeEditBox()">Annuler</button>
+        <div class="cancel-button" @click="closeEditBox()">Annuler</div>
       </div>
+    </div>
   </div>
 </div>
 </template>
@@ -110,18 +113,31 @@ export default {
 
 <style>
 .edit-slot-back{
-  position: absolute;
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.671);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9;
+}
+.edit-slot-box{
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+  min-height: 90%;
+  max-height: 90%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   overflow-y: auto;
-  z-index: 8;
+  z-index: 10;
+  border-radius: 10px;
 }
-.edit-slot-box{
+.edit-slot-form{
   width: 80%;
   max-width: 400px;
   display: flex;

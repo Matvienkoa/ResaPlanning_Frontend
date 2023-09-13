@@ -169,7 +169,7 @@ input:focus{
   position: relative;
   width: 100%;
   height: 35px;
-  margin-bottom: 20px;
+  margin-bottom: 30px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -197,7 +197,7 @@ input:focus{
   border-radius: 30px;
   background: rgb(198,238,0);
   color: white;
-  margin-top: 10%;
+  margin-top: 7%;
   font-size: 1.2em;
   border: solid 2px rgb(198,238,0);
   cursor: pointer;

@@ -1,27 +1,31 @@
 <template>
   <Header url="/customer/home" />
-  <BackButton url="/customer/home" />
-  <div class="showroom-customer-box">
-    <div class="showroom-customer">
-      <div class="showroom-customer-title-box">
-        <h2 class="showroom-customer-title">Mes Véhicules</h2>
-      </div>
-      <div class="showroom-customer-vehicles-box">
-        <router-link v-for="vehicle in getVehicles" :key="vehicle.id" :to="{name: 'CustomerShowroomVehicle', params: {id: vehicle.id}}" class="showroom-customer-vehicle">
-          <div class="showroom-customer-vehicle-img-box">
-            <img crossorigin="anonymous" v-if="vehicle.photo1" :src="vehicle.photo1" alt="" class="showroom-customer-vehicle-img">
-          </div>
-          <div class="showroom-customer-vehicle-infos-box">
-            <div class="showroom-customer-vehicle-model-box">
-              <div class="showroom-customer-vehicle-brand">{{vehicle.brand}}</div>
-              <div class="showroom-customer-vehicle-model">{{vehicle.model}}</div>
+  <div class="main-page">
+    <div class="account-admin-title-box">
+      <h1 class="account-admin-title">Showroom</h1>
+    </div>
+    <div class="showroom-customer-box">
+      <div class="showroom-customer">
+        <div class="showroom-customer-title-box">
+          <h2 class="showroom-customer-title">Véhicules disponibles</h2>
+        </div>
+        <div class="showroom-customer-vehicles-box">
+          <router-link v-for="vehicle in getVehicles" :key="vehicle.id" :to="{name: 'CustomerShowroomVehicle', params: {id: vehicle.id}}" class="showroom-customer-vehicle">
+            <div class="showroom-customer-vehicle-img-box">
+              <img crossorigin="anonymous" v-if="vehicle.photo1" :src="vehicle.photo1" alt="" class="showroom-customer-vehicle-img">
             </div>
-            <div class="showroom-customer-vehicle-options-box">
-              <div class="showroom-customer-vehicle-option">{{vehicle.year}}</div>
-              <div class="showroom-customer-vehicle-option">{{vehicle.kilometers}}</div>
+            <div class="showroom-customer-vehicle-infos-box">
+              <div class="showroom-customer-vehicle-model-box">
+                <div class="showroom-customer-vehicle-brand">{{vehicle.brand}}</div>
+                <div class="showroom-customer-vehicle-model">{{vehicle.model}}</div>
+              </div>
+              <div class="showroom-customer-vehicle-options-box">
+                <div class="showroom-customer-vehicle-option">{{vehicle.year}}</div>
+                <div class="showroom-customer-vehicle-option">{{vehicle.kilometers}}</div>
+              </div>
             </div>
-          </div>
-        </router-link>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -29,14 +33,12 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import BackButton from '@/components/BackButton.vue';
 import { mapGetters } from 'vuex';
 
 export default {
   name: 'CustomerShowroom',
   components: {
-    Header,
-    BackButton
+    Header
   },
   data() {
     return {
@@ -90,6 +92,7 @@ export default {
 }
 .showroom-customer-vehicle{
   width: 30%;
+  max-width: 300px;
   height: 300px;
   display: flex;
   flex-direction: column;

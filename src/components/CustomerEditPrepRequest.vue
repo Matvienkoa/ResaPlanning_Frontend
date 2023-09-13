@@ -1,28 +1,30 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-      <div @click="closeEditBox()" class="close-add">X</div>
-        <p>préparation</p>
-        <label for="preparation-form-deliveryDate">Date de livraison souhaitée</label>
-        <input v-model="deliveryDate" @input="cancelError()" type="date" name="preparation-form-deliveryDate" id="preparation-form-deliveryDate" class="required">
-        <label for="preparation-form-brand">Marque</label>
-        <input v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand" class="required">
-        <label for="preparation-form-model">Modèle</label>
-        <input v-model="model" @input="cancelError()" type="text" name="preparation-form-model" id="preparation-form-model" class="required">
-        <label for="preparation-form-year">Année</label>
-        <input v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year" class="required">
-        <label for="preparation-form-immat">Immatriculation</label>
-        <input v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat" class="required">
-        <label for="preparation-form-kilometers">Km</label>
-        <input v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers" class="required">
-        <label for="preparation-form-condition">Etat du véhicule</label>
-        <input v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition" class="required">
-        <label for="vehicle-form-steps">Etapes souhaitées</label>
-        <input v-model="steps" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
-        <label for="vehicle-form-observations">Observations</label>
-        <input v-model="observationsCustomer" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+      <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+      <h2 class="add-box-title">Modifier la demande</h2>
+      <div class="add-account-form">
+        <label class="form-label" for="preparation-form-deliveryDate">Date de livraison souhaitée</label>
+        <input class="form-input required" v-model="deliveryDate" @input="cancelError()" type="date" name="preparation-form-deliveryDate" id="preparation-form-deliveryDate">
+        <label class="form-label" for="preparation-form-brand">Marque</label>
+        <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
+        <label class="form-label" for="preparation-form-model">Modèle</label>
+        <input class="form-input required" v-model="model" @input="cancelError()" type="text" name="preparation-form-model" id="preparation-form-model">
+        <label class="form-label" for="preparation-form-year">Année</label>
+        <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
+        <label class="form-label" for="preparation-form-immat">Immatriculation</label>
+        <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
+        <label class="form-label" for="preparation-form-kilometers">Km</label>
+        <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
+        <label class="form-label" for="preparation-form-condition">Etat du véhicule</label>
+        <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
+        <label class="form-label" for="vehicle-form-steps">Etapes souhaitées</label>
+        <input class="form-input" v-model="steps" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
+        <label class="form-label" for="vehicle-form-observations">Observations</label>
+        <input class="form-input" v-model="observationsCustomer" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button @click="editPrepRequest()">Modifier la demande</button>
+        <button class="add-button" @click="editPrepRequest()">Modifier la demande</button>
+      </div>
     </div>
   </div>
 </template>
@@ -117,5 +119,13 @@ export default {
 
 
 <style scoped>
-
+.add-box{
+  justify-content: flex-start;
+}
+.edit-request-form{
+  width: 80%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+}
 </style>

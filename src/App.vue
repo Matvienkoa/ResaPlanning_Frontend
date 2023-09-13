@@ -22,6 +22,15 @@ nav a.router-link-exact-active {
   color: #42b983;
 }
 
+select.form-input{
+  cursor: pointer;
+}
+input:focus{
+  outline: none;
+}
+button:focus{
+  outline: none;
+}
 /* Spinner */
 .lds-ring {
   position: absolute;
@@ -66,6 +75,13 @@ nav a.router-link-exact-active {
 .on {
   opacity: 0.3;
   transition: 400ms;
+}
+
+.star{
+  color: #ea510b;
+  margin-left: 3px;
+  font-weight: bold;
+  font-size: 1.2em;
 }
 
 /* Error */

@@ -1,9 +1,12 @@
 <template>
-    <div class="delete-request-back">
-        <div class="delete-request-box">
-            <p>Supprimer le demande?</p>
-            <button @click="deletePrepRequest()">Supprimer la demande</button>
-            <button @click="closeDeleteBox()">Annuler</button>
+    <div class="add-back">
+        <div class="add-box">
+            <h2 class="add-box-title">Supprimer la demande?</h2>
+            <div v-if="error" class="error">{{ error }}</div>
+            <div class="box-choice-button">
+              <button class="valid-button" @click="deletePrepRequest()">Supprimer la demande</button>
+              <button class="delete-button" @click="closeDeleteBox()">Annuler</button>
+            </div>
         </div>
     </div>
 </template>
@@ -44,26 +47,5 @@ export default {
 </script>
 
 <style>
-.delete-request-back{
-  position: absolute;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  background: rgba(0, 0, 0, 0.671);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 5;
-}
-.delete-request-box{
-  position: relative;
-  width: 70%;
-  min-height: 50%;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 20px 0;
-  z-index: 6;
-}
+
 </style>

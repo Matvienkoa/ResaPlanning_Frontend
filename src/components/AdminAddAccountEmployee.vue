@@ -4,19 +4,19 @@
         <img @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
         <h2 class="add-box-title">Créer un compte collaborateur</h2>
         <div class="add-account-form">
-            <label class="form-label" for="form-login">Login</label>
+            <label class="form-label" for="form-login">Login<span class="star">*</span></label>
             <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
             <label class="form-label" for="form-lastName">Nom</label>
-            <input class="form-input required" v-model="lastName" type="text" name="form-lastName" id="form-lastName">
-            <label class="form-label" for="form-firstName">Prénom</label>
+            <input class="form-input" v-model="lastName" type="text" name="form-lastName" id="form-lastName">
+            <label class="form-label" for="form-firstName">Prénom<span class="star">*</span></label>
             <input class="form-input required" v-model="firstName" @input="cancelError()" type="text" name="form-firstName" id="form-firstName">
             <div class="custom-checkbox">
               <input v-model="privileges" type="checkbox" name="form-privileges" id="form-privileges">
               <label class="form-label-checkbox" for="form-privileges">Privilèges</label>
             </div>
-            <label class="form-label" for="form-password">Mot de passe</label>
+            <label class="form-label" for="form-password">Mot de passe<span class="star">*</span></label>
             <input class="form-input required" v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
-            <label class="form-label" for="form-password-2">Répéter le Mot de passe</label>
+            <label class="form-label" for="form-password-2">Répéter le Mot de passe<span class="star">*</span></label>
             <input class="form-input required" v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
             <div v-if="error" class="error">{{ error.message }}</div>
             <button class="add-button" @click="createAccount()">Créer le compte</button>
@@ -94,7 +94,6 @@ export default {
 }
 </script>
 
-
 <style>
 .add-back{
   position: fixed;
@@ -126,7 +125,7 @@ export default {
   margin: auto;
   text-align: center;
   margin-bottom: 20px;
-  margin-top: 40px;
+  margin-top: 30px;
 }
 .close-add{
   position: absolute;

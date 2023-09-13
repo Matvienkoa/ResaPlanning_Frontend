@@ -3,36 +3,37 @@
         <div class="edit-preparation-box">
           <h2 class="add-box-title">Modifier la préparation</h2>
           <div class="edit-preparation-form">
-            <label class="form-label" for="preparation-form-customer">Séléctionner un Client :</label>
+            <label class="form-label" for="preparation-form-customer">Séléctionner un Client :<span class="star">*</span></label>
             <select class="form-input required" @change="cancelError()" v-model="customer" name="preparation-form-customer" id="preparation-form-customer">
+                <option v-if="getCustomers.length === 0" disabled selected value="">Aucun client trouvé</option>
                 <option v-for="customer in getCustomers" :key="customer.id" :value="customer.id">{{customer.company}}</option>
             </select>
-            <label class="form-label" for="preparation-form-startDate">Date de début</label>
+            <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
             <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
-            <label class="form-label" for="preparation-form-endDate">Date de fin</label>
+            <label class="form-label" for="preparation-form-endDate">Date de fin<span class="star">*</span></label>
             <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
-            <label class="form-label" for="preparation-form-startTime">Heure de début</label>
+            <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
             <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-            <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+            <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
             <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
-            <label class="form-label" for="preparation-form-brand">Marque</label>
+            <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
             <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
-            <label class="form-label" for="preparation-form-model">Modèle</label>
+            <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
             <input class="form-input required" v-model="model" @input="cancelError()" type="text" name="preparation-form-model" id="preparation-form-model">
-            <label class="form-label" for="preparation-form-year">Année</label>
+            <label class="form-label" for="preparation-form-year">Année<span class="star">*</span></label>
             <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
-            <label class="form-label" for="preparation-form-immat">Immatriculation</label>
+            <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
             <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
-            <label class="form-label" for="preparation-form-kilometers">Km</label>
+            <label class="form-label" for="preparation-form-kilometers">Km<span class="star">*</span></label>
             <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
-            <label class="form-label" for="preparation-form-condition">Etat du véhicule</label>
+            <label class="form-label" for="preparation-form-condition">Etat du véhicule<span class="star">*</span></label>
             <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
             <label class="form-label" for="vehicle-form-observations">Observations</label>
             <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
               <button class="valid-button" @click="editPreparation()">Modifier la préparation</button>
-              <button class="delete-button" @click="closeEditBox()">Annuler</button>
+              <div class="cancel-button" @click="closeEditBox()">Annuler</div>
             </div>
           </div>
         </div>

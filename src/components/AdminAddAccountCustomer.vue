@@ -4,15 +4,16 @@
         <img @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
         <h2 class="add-box-title">Créer un compte client</h2>
         <div class="add-account-form">
-            <label class="form-label" for="form-customer">Séléctionner un Client :</label>
+            <label class="form-label" for="form-customer">Séléctionner un Client :<span class="star">*</span></label>
             <select class="form-input required" @change="cancelError()" v-model="customer" name="form-customer" id="form-customer">
-                <option v-for="customer in getCustomersWithoutAccount" :key="customer.id" :value="customer.id">{{customer.company}}</option>
+                <option v-if="getCustomersWithoutAccount.length === 0" disabled selected value="">Aucun client trouvé</option>
+                <option v-for="customer in getCustomersWithoutAccount" :key="customer.id" :value="customer.id">{{customer.company}} {{customer.firstName}} {{customer.lastName}}</option>
             </select>
-            <label class="form-label" for="form-login">Login</label>
+            <label class="form-label" for="form-login">Login<span class="star">*</span></label>
             <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
-            <label class="form-label" for="form-password">Mot de passe</label>
+            <label class="form-label" for="form-password">Mot de passe<span class="star">*</span></label>
             <input class="form-input required" v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
-            <label class="form-label" for="form-password-2">Répéter le Mot de passe</label>
+            <label class="form-label" for="form-password-2">Répéter le Mot de passe<span class="star">*</span></label>
             <input class="form-input required" v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
             <div class="custom-checkbox">
               <input v-model="afc" type="checkbox" name="form-afc" id="form-afc">

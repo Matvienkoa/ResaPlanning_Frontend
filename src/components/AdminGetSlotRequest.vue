@@ -3,26 +3,25 @@
         <div class="prepR-box">
             <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <h2 class="get-box-title">Nouvelle demande de créneau</h2>
-            <div class="prepR-infos-box">
-                <p>Société : {{getSlotRequest.company}}</p>
-                <p>Prénom : {{getSlotRequest.firstName}}</p>
-                <p>Nom : {{getSlotRequest.lastName}}</p>
+            <div class="prepR-customer-box">
+                <p>Client : {{getSlotRequest.company}} {{getSlotRequest.firstName}} {{getSlotRequest.lastName}}</p>
                 <p>Adresse : {{getSlotRequest.adress}} {{getSlotRequest.adress2}} {{getSlotRequest.zipCode}} {{getSlotRequest.city}}</p>
                 <p>Contact : {{getSlotRequest.phone}} {{getSlotRequest.mail}}</p>
-
-                <p>Date souhaitée : {{getSlotRequest.date}}</p>
-                <p>Durée de l'intervention : {{checkDuration(getSlotRequest.duration)}}</p>
+            </div>
+            <div class="prepR-infos-box">
+                <p>Date souhaitée : {{moment(getSlotRequest.date).format('LL')}}</p>
                 <p>Lieux : {{getSlotRequest.place}}</p>
+                <p>Durée de l'intervention : {{checkDuration(getSlotRequest.duration)}}</p>
                 <p>Observations client : {{getSlotRequest.observationsCustomer}}</p>
             </div>
             <div class="add-preparation-form">
-                <label class="form-label" for="preparation-form-startDate">Date de début</label>
+                <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
                 <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
-                <label class="form-label" for="preparation-form-endDate">Date de fin</label>
+                <label class="form-label" for="preparation-form-endDate">Date de fin<span class="star">*</span></label>
                 <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
-                <label class="form-label" for="preparation-form-startTime">Heure de début</label>
+                <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
                 <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-                <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+                <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
                 <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
                 <label class="form-label" for="vehicle-form-observations">Observations</label>
                 <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
@@ -119,6 +118,11 @@ export default {
 }
 </script>
 
-<style>
-
+<style scoped>
+.get-box-title{
+  text-align: start;
+  width: 90%;
+  border-bottom: 3px solid #c0c0c0;
+  padding-bottom: 5px;
+}
 </style>

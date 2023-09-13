@@ -2,9 +2,10 @@
     <div class="validate-preparation-back">
         <div class="validate-preparation-box">
             <h2 class="add-box-title">Valider la préparation?</h2>
+            <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
               <button class="valid-button" @click="validatePreparation()">Valider la préparation</button>
-              <button class="delete-button" @click="closeEditBox()">Annuler</button>
+              <div class="cancel-button" @click="closeEditBox()">Annuler</div>
             </div>
         </div>
     </div>

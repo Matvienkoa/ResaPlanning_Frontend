@@ -1,11 +1,11 @@
 <template>
     <div class="delete-slot-back">
         <div class="delete-slot-box">
-            <h2 class="add-box-title">Supprimer le créneau {{slotId}}?</h2>
+            <h2 class="add-box-title">Supprimer le créneau?</h2>
             <div v-if="error" class="error">{{ error }}</div>
             <div class="box-choice-button">
               <button class="valid-button" @click="deleteSlot()">Oui</button>
-              <button class="delete-button" @click="closeDeleteBox()">Annuler</button>
+              <div class="cancel-button" @click="closeDeleteBox()">Annuler</div>
             </div>
         </div>
     </div>
@@ -47,22 +47,28 @@ export default {
 
 <style>
 .delete-slot-back{
-  position: absolute;
+  position: fixed;
   width: 100%;
-  height: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.671);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9;
+}
+.delete-slot-box{
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  min-height: 40%;
+  max-height: 50%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start;
+  justify-content: center;
   overflow-y: auto;
-  z-index: 8;
-}
-.delete-slot-box{
-  width: 80%;
-  max-width: 400px;
-  display: flex;
-  flex-direction: column;
-  z-index: 6;
+  z-index: 10;
+  border-radius: 10px;
 }
 </style>

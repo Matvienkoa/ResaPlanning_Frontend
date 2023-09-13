@@ -3,21 +3,20 @@
         <div class="prepR-box">
             <img @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <h2 class="get-box-title">Refuser la demande de créneau</h2>
-            <div class="prepR-infos-box">
-                <p>Société : {{getSlotRequest.company}}</p>
-                <p>Prénom : {{getSlotRequest.firstName}}</p>
-                <p>Nom : {{getSlotRequest.lastName}}</p>
+            <div class="prepR-customer-box">
+                <p>Client : {{getSlotRequest.company}} {{getSlotRequest.firstName}} {{getSlotRequest.lastName}}</p>
                 <p>Adresse : {{getSlotRequest.adress}} {{getSlotRequest.adress2}} {{getSlotRequest.zipCode}} {{getSlotRequest.city}}</p>
                 <p>Contact : {{getSlotRequest.phone}} {{getSlotRequest.mail}}</p>
-
-                <p>Date souhaitée : {{getSlotRequest.date}}</p>
-                <p>Durée de l'intervention : {{checkDuration(getSlotRequest.duration)}}</p>
+            </div>
+            <div class="prepR-infos-box">
+                <p>Date souhaitée : {{moment(getSlotRequest.date).format('LL')}}</p>
                 <p>Lieux : {{getSlotRequest.place}}</p>
+                <p>Durée de l'intervention : {{checkDuration(getSlotRequest.duration)}}</p>
                 <p>Observations client : {{getSlotRequest.observationsCustomer}}</p>
             </div>
             <div class="add-preparation-form">
-                <label class="form-label" for="vehicle-form-observations">Motifs du refus</label>
-                <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+                <label class="form-label" for="vehicle-form-observations">Motifs du refus<span class="star">*</span></label>
+                <input class="form-input required" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
                 <div v-if="error" class="error">{{ error.message }}</div>
                 <button class="add-button" @click="refuseSlotRequest()">Refuser la demande</button>
             </div>
@@ -28,12 +27,15 @@
 <script>
 import instance from '@/axios';
 import { mapGetters } from 'vuex';
+let moment = require('moment');
+moment.locale('fr');
 
 export default {
     name: 'AdminRefuseSlotRequest',
     props: ['id'],
     data() {
         return {
+            moment: moment,
             error: "",
             observationsDepot: ""
         }
@@ -63,6 +65,15 @@ export default {
                     this.$store.dispatch('getRequestsPending')
                     this.closeDeleteBox()
                 }
+            })
+            .catch((error) => {
+                this.error = error.response.data;
+                const emptyInput = document.querySelectorAll('.required');
+                emptyInput.forEach(input => {
+                    if(input.value === "") {
+                        input.classList.add('empty')
+                    }
+                })
             })
         }
     },

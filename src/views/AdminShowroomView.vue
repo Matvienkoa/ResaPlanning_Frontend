@@ -1,29 +1,33 @@
 <template>
 <AdminAddVehicle v-if="getAddBox === 'addVehicle'" />
   <Header url="/admin/home" />
-  <BackButton url="/admin/home" />
-  <div class="showroom-admin-box">
-    <div class="showroom-admin">
-      <div class="showroom-admin-title-box">
-        <h2 class="showroom-admin-title">Mes Véhicules</h2>
-        <img @click="openAddBox('addVehicle')" src="../assets/Icons/add.svg" alt="" class="showroom-admin-icon">
-      </div>
-      <div class="showroom-admin-vehicles-box">
-        <router-link v-for="vehicle in getVehicles" :key="vehicle.id" :to="{name: 'AdminShowroomVehicle', params: {id: vehicle.id}}" class="showroom-admin-vehicle">
-          <div class="showroom-admin-vehicle-img-box">
-            <img crossorigin="anonymous" v-if="vehicle.photo1" :src="vehicle.photo1" alt="" class="showroom-admin-vehicle-img">
-          </div>
-          <div class="showroom-admin-vehicle-infos-box">
-            <div class="showroom-admin-vehicle-model-box">
-              <div class="showroom-admin-vehicle-brand">{{vehicle.brand}}</div>
-              <div class="showroom-admin-vehicle-model">{{vehicle.model}}</div>
+  <div class="main-page">
+    <div class="account-admin-title-box">
+      <h1 class="account-admin-title">Showroom</h1>
+    </div>
+    <div class="showroom-admin-box">
+      <div class="showroom-admin">
+        <div class="showroom-admin-title-box">
+          <h2 class="showroom-admin-title">Mes Véhicules</h2>
+          <img @click="openAddBox('addVehicle')" src="../assets/Icons/add.svg" alt="" class="showroom-admin-icon">
+        </div>
+        <div class="showroom-admin-vehicles-box">
+          <router-link v-for="vehicle in getVehicles" :key="vehicle.id" :to="{name: 'AdminShowroomVehicle', params: {id: vehicle.id}}" class="showroom-admin-vehicle">
+            <div class="showroom-admin-vehicle-img-box">
+              <img crossorigin="anonymous" v-if="vehicle.photo1" :src="vehicle.photo1" alt="" class="showroom-admin-vehicle-img">
             </div>
-            <div class="showroom-admin-vehicle-options-box">
-              <div class="showroom-admin-vehicle-option">{{vehicle.year}}</div>
-              <div class="showroom-admin-vehicle-option">{{vehicle.kilometers}}</div>
+            <div class="showroom-admin-vehicle-infos-box">
+              <div class="showroom-admin-vehicle-model-box">
+                <div class="showroom-admin-vehicle-brand">{{vehicle.brand}}</div>
+                <div class="showroom-admin-vehicle-model">{{vehicle.model}}</div>
+              </div>
+              <div class="showroom-admin-vehicle-options-box">
+                <div class="showroom-admin-vehicle-option">{{vehicle.year}}</div>
+                <div class="showroom-admin-vehicle-option">{{vehicle.kilometers}}</div>
+              </div>
             </div>
-          </div>
-        </router-link>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
@@ -31,7 +35,6 @@
 
 <script>
 import Header from '@/components/Header.vue';
-import BackButton from '@/components/BackButton.vue';
 import AdminAddVehicle from '@/components/AdminAddVehicle.vue';
 import { mapGetters } from 'vuex';
 
@@ -39,7 +42,6 @@ export default {
   name: 'AdminShowroom',
   components: {
     Header,
-    BackButton,
     AdminAddVehicle
   },
   data() {
@@ -97,6 +99,7 @@ export default {
 }
 .showroom-admin-vehicle{
   width: 30%;
+  max-width: 300px;
   height: 300px;
   display: flex;
   flex-direction: column;

@@ -3,31 +3,30 @@
         <div class="prepR-box">
             <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <h2 class="get-box-title">Nouvelle demande de préparation</h2>
-            <div class="prepR-infos-box">
-                <p>Société : {{getPrepRequest.company}}</p>
-                <p>Prénom : {{getPrepRequest.firstName}}</p>
-                <p>Nom : {{getPrepRequest.lastName}}</p>
+            <div class="prepR-customer-box">
+                <p>Client : {{getPrepRequest.company}} {{getPrepRequest.firstName}} {{getPrepRequest.lastName}}</p>
                 <p>Adresse : {{getPrepRequest.adress}} {{getPrepRequest.adress2}} {{getPrepRequest.zipCode}} {{getPrepRequest.city}}</p>
                 <p>Contact : {{getPrepRequest.phone}} {{getPrepRequest.mail}}</p>
-
+            </div>
+            <div class="prepR-infos-box">
+                <p>Date de livraison souhaitée : {{moment(getPrepRequest.deliveryDate).format('LL')}}</p>
                 <p>Marque : {{getPrepRequest.brand}}</p>
                 <p>Modèle : {{getPrepRequest.model}}</p>
                 <p>Année : {{getPrepRequest.year}}</p>
                 <p>Etat : {{getPrepRequest.condition}}</p>
                 <p>Immatriculation : {{getPrepRequest.immat}}</p>
                 <p>KM : {{getPrepRequest.kilomter}}</p>
-                <p>Observations client : {{getPrepRequest.observationsCustomer}}</p>
-                <p>Date de livraison souhaitée : {{getPrepRequest.deliveryDate}}</p>
                 <p>Préparations souhaitées : {{getPrepRequest.steps}}</p>
+                <p>Observations client : {{getPrepRequest.observationsCustomer}}</p>
             </div>
             <div class="add-preparation-form">
-                <label class="form-label" for="preparation-form-startDate">Date de début</label>
+                <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
                 <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
-                <label class="form-label" for="preparation-form-endDate">Date de fin</label>
+                <label class="form-label" for="preparation-form-endDate">Date de fin<span class="star">*</span></label>
                 <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
-                <label class="form-label" for="preparation-form-startTime">Heure de début</label>
+                <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
                 <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-                <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+                <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
                 <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
                 <label class="form-label" for="vehicle-form-observations">Observations</label>
                 <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
@@ -174,7 +173,7 @@ export default {
 .prepR-box{
   position: relative;
   width: 100%;
-  max-width: 800px;
+  max-width: 600px;
   min-height: 90%;
   max-height: 90%;
   background: white;
@@ -186,11 +185,45 @@ export default {
   z-index: 10;
   border-radius: 10px;
 }
-
+.prepR-customer-box{
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  background-color: rgb(236, 236, 236);
+  padding: 0.4em 0;
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+.prepR-customer-box p{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.prepR-infos-box{
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(240, 240, 240);
+    padding: 0.4em 0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.prepR-infos-box p{
+  margin-left: 10px;
+  margin-right: 10px;
+}
 .add-preparation-form{
   width: 80%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
+}
+</style>
+
+<style scoped>
+.get-box-title{
+  text-align: start;
+  width: 90%;
+  border-bottom: 3px solid #c0c0c0;
+  padding-bottom: 5px;
 }
 </style>

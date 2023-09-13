@@ -1,24 +1,43 @@
 <template>
     <CustomerGetPreparation v-if="getGetBox === 'getCustomerPreparation'" :id="preparation" />
     <Header url="/customer/home" />
-    <BackButton url="/customer/home" />
-    <div>Preparations En cours</div>
-    <div class="home-tracking-box">
-        <div @click="openGetBox(prep.id)" v-for="prep in getPreparationsCustomerPlanned" :key="prep.id" class="home-tracking-prep-box">
-            {{prep.brand}} {{prep.model}} {{prep.state}}
+    <div class="main-page">
+        <div class="account-admin-title-box">
+            <h1 class="account-admin-title">Suivi des préparations</h1>
         </div>
-    </div>
-    <div>Preparations Terminées</div>
-    <div class="home-tracking-box">
-        <div @click="openGetBox(prep.id)" v-for="prep in getPreparationsCustomerCompleted" :key="prep.id" class="home-tracking-prep-box">
-            {{prep.brand}} {{prep.model}} {{prep.state}}
+        <div class="requests-customer-box">
+            <div class="requests-customer-pending-box">
+                <div class="requests-customer-pending-title-box">
+                    <h2 class="requests-customer-pending-title">Preparations En cours</h2>
+                </div>
+                <div @click="openGetBox(prep.id)" v-for="prep in getPreparationsCustomerPlanned" :key="prep.id" class="home-tracking-prep-box">
+                    <div class="home-tracking-prep-infos">
+                        <p>{{prep.brand}}</p>
+                        <p>{{prep.model}}</p>
+                        <p>{{prep.state}}</p>
+                    </div>
+                    <img src="../assets/Icons/eye.svg" alt="" class="home-tracking-prep-icon" />
+                </div>
+            </div>
+            <div class="requests-customer-pending-box">
+                <div class="requests-customer-pending-title-box">
+                    <h2 class="requests-customer-pending-title">Preparations Terminées</h2>
+                </div>
+                <div @click="openGetBox(prep.id)" v-for="prep in getPreparationsCustomerCompleted" :key="prep.id" class="home-tracking-prep-box">
+                    <div class="home-tracking-prep-infos">
+                        <p>{{prep.brand}}</p>
+                        <p>{{prep.model}}</p>
+                        <p>{{prep.state}}</p>
+                    </div>
+                    <img src="../assets/Icons/eye.svg" alt="" class="home-tracking-prep-icon" />
+                </div>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
 import Header from '@/components/Header.vue';
-import BackButton from '@/components/BackButton.vue';
 import CustomerGetPreparation from '@/components/CustomerGetPreparation.vue';
 import { mapGetters } from 'vuex';
 
@@ -26,7 +45,6 @@ export default {
     name: 'CustomerTracking',
     components: {
         Header,
-        BackButton,
         CustomerGetPreparation
     },
     data() {
@@ -50,16 +68,21 @@ export default {
 </script>
 
 <style scoped>
-.home-tracking-box{
-  width: 95%;
-  margin: auto;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
 .home-tracking-prep-box{
-    width: 100px;
-    height: 100px;
-    border: solid 1px red;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgb(236, 236, 236);
+    border-radius: 10px;
+    padding: 0.4em 0;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+.home-tracking-prep-infos{
+    display: flex;
+}
+.home-tracking-prep-icon{
+    height: 20px;
 }
 </style>

@@ -5,7 +5,7 @@
         <div v-if="error" class="error">{{ error.message }}</div>
         <div class="box-choice-button">
           <button class="valid-button" @click="deletePhotoPreparation()">Supprimer la photo</button>
-          <button class="delete-button" @click="closeDeleteBox()">Annuler</button>
+          <div class="cancel-button" @click="closeDeleteBox()">Annuler</div>
         </div>
     </div>
   </div>

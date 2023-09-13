@@ -3,7 +3,7 @@
     <div class="edit-photo-preparation-box">
         <h2 class="add-box-title">Modifier la photo n°{{checkPhoto(numberPhoto)}}</h2>
         <div class="edit-photo-preparation-form">
-            <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="edit-photo-preparation-form-photo" id="edit-photo-preparation-form-photo">
+            <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="edit-photo-preparation-form-photo" id="edit-photo-preparation-form-photo" class="required">
             <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
             <img crossorigin="anonymous" v-if="this.url === '' && this.numberPhoto ==='photo1'" :src="getPreparation.photo1" alt="" class="photo-selected">
             <img crossorigin="anonymous" v-if="this.url === '' && this.numberPhoto ==='photo2'" :src="getPreparation.photo2" alt="" class="photo-selected">
@@ -12,7 +12,7 @@
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
               <button class="valid-button" @click="editPhotoPreparation()">Modifier la photo</button>
-              <button class="delete-button" @click="closeEditBox()">Annuler</button>
+              <div class="cancel-button" @click="closeEditBox()">Annuler</div>
             </div>
         </div>
     </div>
@@ -132,5 +132,6 @@ export default {
 .photo-selected{
   width: 100%;
   object-fit: cover;
+  margin-top: 20px;
 }
 </style>

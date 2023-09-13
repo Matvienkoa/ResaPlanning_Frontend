@@ -3,12 +3,12 @@
     <div class="add-photo-preparation-box">
         <h2 class="add-box-title">Ajouter la photo n°{{checkPhoto(numberPhoto)}}</h2>
         <div class="add-photo-preparation-form">
-            <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="add-photo-preparation-form-photo" id="add-photo-preparation-form-photo">
+            <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="add-photo-preparation-form-photo" id="add-photo-preparation-form-photo" class="required">
             <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
-              <button class="valid-button" @click="addPhotoPreparation()">Ajouter la photo</button>
-              <button class="delete-button" @click="closeAddBox()">Annuler</button>
+              <button class="add-button" @click="addPhotoPreparation()">Ajouter la photo</button>
+              <div class="cancel-button" @click="closeAddBox()">Annuler</div>
             </div>
         </div>
     </div>
@@ -128,5 +128,9 @@ export default {
 .photo-selected{
   width: 100%;
   object-fit: cover;
+  margin-top: 20px;
+}
+.add-button{
+  margin: 0 10px;
 }
 </style>

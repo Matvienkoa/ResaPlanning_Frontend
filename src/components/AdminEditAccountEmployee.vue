@@ -2,13 +2,13 @@
   <div class="add-back">
     <div class="add-box">
         <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
-        <h2 class="add-box-title">Modifier un compte collaborateur</h2>
+        <h2 class="add-box-title">Modifier le compte collaborateur</h2>
         <div class="add-account-form">
-            <label class="form-label" for="form-login">Login</label>
+            <label class="form-label" for="form-login">Login<span class="star">*</span></label>
             <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
             <label class="form-label" for="form-lastName">Nom</label>
             <input class="form-input" v-model="lastName" type="text" name="form-lastName" id="form-lastName">
-            <label class="form-label" for="form-firstName">Prénom</label>
+            <label class="form-label" for="form-firstName">Prénom<span class="star">*</span></label>
             <input class="form-input required" v-model="firstName" @input="cancelError()" type="text" name="form-firstName" id="form-firstName">
             <div class="custom-checkbox">
               <input v-model="privileges" type="checkbox" name="form-privileges" id="form-privileges">

@@ -5,7 +5,7 @@
             <div v-if="error" class="error">{{ error }}</div>
             <div class="box-choice-button">
               <button class="valid-button" @click="deleteStep()">Supprimer</button>
-              <button class="delete-button" @click="closeDeleteBox()">Annuler</button>
+              <div class="cancel-button" @click="closeDeleteBox()">Annuler</div>
             </div>
         </div>
     </div>
@@ -19,11 +19,8 @@ export default {
   props: ['preparationId', 'stepId'],
   data() {
     return {
-      
+      error: ""
     }
-  },
-  computed: {
-    
   },
   methods: {
     closeDeleteBox() {
@@ -36,6 +33,9 @@ export default {
               this.$store.dispatch('getPreparation', this.preparationId)
               this.closeDeleteBox()
           }
+      })
+      .catch((error) => {
+          this.error = error.response.data;
       })
     }
   }

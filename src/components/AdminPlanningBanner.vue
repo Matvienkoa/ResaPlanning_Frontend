@@ -13,9 +13,6 @@
         <div @click="openGetBox('getBillings')" class="banner-item">
             Facturation
         </div>
-        <div class="banner-item">
-            Autre
-        </div>
         <div class="logout-box">
             <img class="logout-icon" src="../assets/Icons/logout.svg" alt="">
             <p class="logout-txt">Se Déconnecter</p>

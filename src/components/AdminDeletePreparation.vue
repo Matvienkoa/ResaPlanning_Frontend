@@ -1,11 +1,11 @@
 <template>
     <div class="delete-preparation-back">
         <div class="delete-preparation-box">
-          <h2 class="add-box-title">Supprimer la préparation {{preparationId}}?</h2>
+          <h2 class="add-box-title">Supprimer la préparation?</h2>
           <div v-if="error" class="error">{{ error }}</div>
           <div class="box-choice-button">
             <button class="valid-button" @click="deletePreparation()">Oui</button>
-            <button class="delete-button" @click="closeDeleteBox()">Annuler</button>
+            <div class="cancel-button" @click="closeDeleteBox()">Annuler</div>
           </div>
         </div>
     </div>
@@ -70,5 +70,11 @@ export default {
   overflow-y: auto;
   z-index: 10;
   border-radius: 10px;
+}
+.cancel-button{
+  margin: 0 10px;
+  font-size: 1.2em;
+  font-weight: 600;
+  cursor: pointer;
 }
 </style>

@@ -1,21 +1,23 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-      <div @click="closeEditBox()" class="close-add">X</div>
-        <p>créneaux</p>
-        <label for="preparation-form-date">Date souhaitée</label>
-        <input v-model="date" @input="cancelError()" type="date" name="preparation-form-date" id="preparation-form-date" class="required">
-        <label for="preparation-form-duration">Durée de l'intervention</label>
-        <select @change="cancelError()" v-model="duration" name="preparation-form-duration" id="preparation-form-duration" class="required">
+      <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+      <h2 class="add-box-title">Modifier la demande</h2>
+      <div class="add-account-form">
+        <label class="form-label" for="preparation-form-date">Date souhaitée</label>
+        <input class="form-input required" v-model="date" @input="cancelError()" type="date" name="preparation-form-date" id="preparation-form-date">
+        <label class="form-label" for="preparation-form-duration">Durée de l'intervention</label>
+        <select class="form-input required" @change="cancelError()" v-model="duration" name="preparation-form-duration" id="preparation-form-duration">
             <option value="half">Demi-Journée</option>
             <option value="day">Journée</option>
         </select>
-        <label for="preparation-form-place">Lieux</label>
-        <input v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place" class="required">
-        <label for="vehicle-form-observations">Observations</label>
-        <input v-model="observationsCustomer" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+        <label class="form-label" for="preparation-form-place">Lieux</label>
+        <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
+        <label class="form-label" for="vehicle-form-observations">Observations</label>
+        <input class="form-input" v-model="observationsCustomer" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button @click="editSlotRequest()">Envoyer la demande</button>
+        <button class="add-button" @click="editSlotRequest()">Envoyer la demande</button>
+      </div>
     </div>
   </div>
 </template>
@@ -94,5 +96,13 @@ export default {
 
 
 <style scoped>
-
+.add-box{
+  justify-content: flex-start;
+}
+.edit-request-form{
+  width: 80%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+}
 </style>

@@ -1,33 +1,55 @@
 <template>
-    <div class="get-back">
+  <div class="get-back">
+    <AdminGetPhotoPreparation v-if="getPhotoBox === 'getPhoto'" :url="this.urlPhoto" />
     <div class="get-box">
-      <div @click="closeGetBox()" class="close-get">X</div>
+      <img @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+      <h2 class="get-box-title">Préparation du véhicule immatriculé {{getPreparation.immat}}</h2>
+      <div v-if="getPreparation.state === 'planned'" class="get-box-state">
+        <img src="../assets/Icons/in-time.svg" alt="" class="get-state-icon" /><p class="get-state-txt-in-time">En cours</p>
+      </div>
+      <div v-if="getPreparation.state === 'completed'" class="get-box-state">
+        <img src="../assets/Icons/completed.svg" alt="" class="get-state-icon" /><p class="get-state-txt-completed">Terminée</p>
+      </div>
       <div class="get-infos-box">
-        <p>Préparation pour le véhicule :</p>
-        <p>{{getPreparation.immat}}</p>
-        <p>{{getPreparation.brand}}</p>
-        <p>{{getPreparation.model}}</p>
-        <p>{{getPreparation.year}}</p>
+        <p>Marque : {{getPreparation.brand}}</p>
+        <p>Modèle : {{getPreparation.model}}</p>
+        <p>Annéee : {{getPreparation.year}}</p>
+        <p>KM : {{getPreparation.kilometer}}</p>
+        <p>Etat du véhicule : {{getPreparation.condition}}</p>
+        <p>Observations : {{getPreparation.observationsDepot}}</p>
+        <p>Informations client : {{getPreparation.observationsCustomer}}</p>
       </div>
       <div class="get-steps-box">
+        <h2 class="second-title">Etapes de préparations</h2>
         <div v-for="step in getSteps" :key="step.id" class="step-box">
-          {{step.type}}
-          <div class="planned" v-if="step.state === 'planned'">En cours</div>
-          <div class="completed" v-if="step.state === 'completed'">Terminé</div>
+          <div v-if="step.state === 'planned'" class="step-state-box-in-time">
+            <div class="step-state-box-icon-in-time">
+              <img src="../assets/Icons/in-time.svg" alt="" class="step-state-icon" />
+            </div>
+            <p class="step-state-txt-in-time">En cours</p>
+          </div>
+          <div v-if="step.state === 'completed'" class="step-state-box-completed">
+            <div class="step-state-box-icon-completed">
+              <img src="../assets/Icons/completed.svg" alt="" class="step-state-icon" />
+            </div>
+            <p class="step-state-txt-completed">Terminé</p>
+          </div>
+          <h3 class="step-state-type">{{step.type}}</h3>
         </div>
       </div>
+      <h2 class="second-title">Photos</h2>
       <div class="get-photos-box">
         <div v-if="getPreparation.photo1" class="get-photo-box">
-          <img :src="getPreparation.photo1" alt="" class="get-photo">
+          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo1})" :src="getPreparation.photo1" alt="" class="get-photo">
         </div>
         <div v-if="getPreparation.photo2" class="get-photo-box">
-          <img :src="getPreparation.photo2" alt="" class="get-photo">
+          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo2})" :src="getPreparation.photo2" alt="" class="get-photo">
         </div>
         <div v-if="getPreparation.photo3" class="get-photo-box">
-          <img :src="getPreparation.photo3" alt="" class="get-photo">
+          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo3})" :src="getPreparation.photo3" alt="" class="get-photo">
         </div>
         <div v-if="getPreparation.photo4" class="get-photo-box">
-          <img :src="getPreparation.photo4" alt="" class="get-photo">
+          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo4})" :src="getPreparation.photo4" alt="" class="get-photo">
         </div>
       </div>
     </div>
@@ -36,22 +58,27 @@
 
 <script>
 import { mapGetters } from 'vuex';
+import AdminGetPhotoPreparation from '@/components/AdminGetPhotoPreparation.vue';
 
 export default {
   name: 'CustomerGetPreparation',
   components: {
-    
+    AdminGetPhotoPreparation
   },
   props: ['id'],
   data() {
     return {
-      
+      urlPhoto: ""
     }
   },
   computed: {
-    ...mapGetters(['getPreparation', 'getSteps'])
+    ...mapGetters(['getPreparation', 'getSteps', 'getPhotoBox'])
   },
   methods: {
+    openPhotoBox(data) {
+      this.urlPhoto = data.url
+      this.$store.state.photoBox = data.mode
+    },
     closeGetBox() {
       this.$store.state.getBox = "closed"
     }
@@ -63,76 +90,117 @@ export default {
 </script>
 
 <style scoped>
-.get-back{
-    position: fixed;
-    width: 100%;
-    height: 100vh;
-    background: rgba(0, 0, 0, 0.671);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 3;
-}
 .get-box{
-    position: relative;
-    width: 90%;
-    min-height: 70%;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px 0;
-    z-index: 4;
-}
-.close-get{
-    position: absolute;
-    top: 2%;
-    right: 2%;
-    cursor: pointer;
-}
-.get-infos-box{
-  width: 90%;
   position: relative;
+  width: 60%;
+  max-width: 800px;
+  min-height: 70%;
+  max-height: 90%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+  z-index: 7;
+  border-radius: 10px;
+}
+.get-box-state{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.get-state-icon{
+  height: 40px;
+  margin: 0 5px;
+}
+.get-state-txt-in-time{
+  font-weight: 700;
+  font-size: 1.4em;
+  color: rgb(243,126,0);
+  margin: 0 5px;
+}
+.get-state-txt-completed{
+  font-weight: 700;
+  font-size: 1.4em;
+  color: rgb(198,238,0);
+  margin: 0 5px;
 }
 .get-steps-box{
-  width: 90%;
+  width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
   margin-top: 10px;
 }
-.step-box, .add-step-box-2{
-  width: 100px;
+.step-box{
+  position: relative;
+  width: 400px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+.step-state-box-in-time, .step-state-box-completed{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.step-state-box-icon-in-time{
   height: 80px;
-  border: red solid 1px;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  border: solid 5px rgb(243,126,0);
 }
-.planned{
-  font-weight: bold;
-  color: red;
+.step-state-box-icon-completed{
+  height: 80px;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  border: solid 5px rgb(198,238,0);
 }
-.completed{
-  font-weight: bold;
-  color: green;
+.step-state-txt-in-time{
+  font-size: 1.2em;
+  font-weight: 700;
+  color: rgb(243,126,0);
 }
-
+.step-state-txt-completed{
+  font-size: 1.2em;
+  font-weight: 700;
+  color: rgb(198,238,0);
+}
+.step-state-icon{
+  width: 60%;
+  height: auto;
+}
+.step-state-type{
+  width: 260px;
+  margin-left: 20px;
+}
 .get-photos-box{
   width: 100%;
   display: flex;
   justify-content: space-evenly;
+  flex-wrap: wrap;
 }
 .get-photo-box{
   position: relative;
   width: 150px;
   height: 150px;
+  margin: 0 5px 10px 5px;
 }
 .get-photo{
   width: 100%;
   height: 100%;
   object-fit: contain;
-}
-.get-no-photo{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.6;
+  cursor: zoom-in;
 }
 </style>

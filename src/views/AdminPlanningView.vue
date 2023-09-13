@@ -92,7 +92,7 @@ export default {
     }
   },
   computed: {
-    ...mapGetters(['getAddBox', 'getPreparations', 'getEvents', 'getGetBox', 'getDropBox', 'getSizeBox'])
+    ...mapGetters(['getAddBox', 'getGetBox', 'getDropBox', 'getSizeBox'])
   },
   methods: {
     openDropBox(event) {
@@ -153,7 +153,7 @@ export default {
       res.data.forEach(prep => {
         this.calendarOptions.events.push(
           {
-            title: prep.immat,
+            title: prep.immat + ' ' + prep.brand + ' ' + prep.model,
             start: prep.start,
             end: prep.end,
             eventId: prep.id,
@@ -213,7 +213,7 @@ export default {
 :root {
   --fc-button-bg-color: black;
   --fc-button-border-color: black;
-  --fc-button-hover-bg-color: rgb(198,238,0);
+  --fc-button-hover-bg-color: rgba(198, 238, 0);
   --fc-button-hover-border-color: rgb(198,238,0);
   --fc-button-active-bg-color: rgb(198,238,0);
   --fc-button-active-border-color: rgb(198,238,0);

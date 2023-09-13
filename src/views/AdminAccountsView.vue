@@ -14,20 +14,28 @@
       <div class="account-admin-employees">
         <div class="account-admin-employees-title-box">
           <h2 class="account-admin-employees-title">Collaborateurs</h2>
-          <img @click="openAddBox('addAccountEmployee')" src="../assets/Icons/add.svg" alt="" class="account-admin-employee-icon">
+          <div @click="openAddBox('addAccountEmployee')" class="add-icon-box">
+            <img src="../assets/Icons/add-2.svg" alt="" class="add-icon">
+          </div>
         </div>
         <div class="account-admin-employees-list">
           <div v-for="employee in getAccountsEmployee" :key="employee.id" class="account-admin-employee">
             <div class="account-admin-employee-infos">
               <div class="employee-info">N°{{ employee.id }}</div>
+              <div class="employee-info slash">|</div>
               <div v-if="employee.infos.firstName" class="employee-info">{{ employee.infos.firstName }}</div>
               <div v-if="employee.infos.lastName" class="employee-info">{{ employee.infos.lastName }}</div>
+              <div class="employee-info slash">|</div>
               <div v-if="employee.infos.privileges === 'yes'" class="employee-info checkbox-box">Privilèges : <img class="checkbox" src="../assets/Icons/checkbox-check.svg" alt=""></div>
               <div v-if="employee.infos.privileges === 'no'" class="employee-info checkbox-box">Privilèges : <img class="checkbox" src="../assets/Icons/checkbox-mark.svg" alt=""></div>
             </div>
             <div class="account-admin-employee-actions">
-              <img @click="openEditBox({id: employee.id, type: 'editAccountEmployee'})" src="../assets/Icons/edit.svg" alt="" class="account-admin-employee-icon">
-              <img @click="openDeleteBox({id: employee.id, type: 'deleteAccountEmployee'})" src="../assets/Icons/delete.svg" alt="" class="account-admin-employee-icon">
+              <div @click="openEditBox({id: employee.id, type: 'editAccountEmployee'})" class="edit-icon-box">
+                <img src="../assets/Icons/edit.svg" alt="" class="edit-icon">
+              </div>
+              <div @click="openDeleteBox({id: employee.id, type: 'deleteAccountEmployee'})" class="delete-icon-box">
+                <img src="../assets/Icons/delete-2.svg" alt="" class="delete-icon">
+              </div>
             </div>
           </div>
         </div>
@@ -35,23 +43,33 @@
       <div class="account-admin-customers">
         <div class="account-admin-customers-title-box">
           <h2 class="account-admin-customers-title">Clients</h2>
-          <img @click="openAddBox('addAccountCustomer')" src="../assets/Icons/add.svg" alt="" class="account-admin-customer-icon">
+          <div @click="openAddBox('addAccountCustomer')" class="add-icon-box">
+            <img src="../assets/Icons/add-2.svg" alt="" class="add-icon">
+          </div>
         </div>
         <div class="account-admin-customers-list">
           <div v-for="customer in getAccountsCustomer" :key="customer.id" class="account-admin-customer">
             <div class="account-admin-customer-infos">
               <div class="customer-info">N°{{ customer.id }}</div>
+              <div class="employee-info slash">|</div>
               <div v-if="customer.infos.company" class="customer-info">{{ customer.infos.company }}</div>
+              <div class="employee-info slash">|</div>
               <div v-if="customer.infos.firstName" class="customer-info">{{ customer.infos.firstName }}</div>
               <div v-if="customer.infos.lastName" class="customer-info">{{ customer.infos.lastName }}</div>
+              <div class="employee-info slash">|</div>
               <div v-if="customer.afc === 'yes'" class="customer-info checkbox-box">Compte AFC : <img class="checkbox" src="../assets/Icons/checkbox-check.svg" alt=""></div>
               <div v-if="customer.afc === 'no'" class="customer-info checkbox-box">Compte AFC : <img class="checkbox" src="../assets/Icons/checkbox-mark.svg" alt=""></div>
+              <div class="employee-info slash">|</div>
               <div v-if="customer.millenium === 'yes'" class="customer-info checkbox-box">Compte Millenium : <img class="checkbox" src="../assets/Icons/checkbox-check.svg" alt=""></div>
               <div v-if="customer.millenium === 'no'" class="customer-info checkbox-box">Compte Millenium : <img class="checkbox" src="../assets/Icons/checkbox-mark.svg" alt=""></div>
             </div>
             <div class="account-admin-customer-actions">
-              <img @click="openEditBox({id: customer.id, type: 'editAccountCustomer'})" src="../assets/Icons/edit.svg" alt="" class="account-admin-customer-icon">
-              <img @click="openDeleteBox({id: customer.id, type: 'deleteAccountCustomer'})" src="../assets/Icons/delete.svg" alt="" class="account-admin-customer-icon">
+              <div @click="openEditBox({id: customer.id, type: 'editAccountCustomer'})" class="edit-icon-box">
+                <img src="../assets/Icons/edit.svg" alt="" class="edit-icon">
+              </div>
+              <div @click="openDeleteBox({id: customer.id, type: 'deleteAccountCustomer'})" class="delete-icon-box">
+                <img src="../assets/Icons/delete-2.svg" alt="" class="delete-icon">
+              </div>
             </div>
           </div>
         </div>
@@ -110,7 +128,7 @@ export default {
 }
 </script>
 
-<style scoped>
+<style>
 .account-admin-title-box{
   width: 100%;
   height: 40px;
@@ -127,7 +145,7 @@ export default {
   display: flex;
   align-items: center;
   flex-direction: column;
-  padding-top: 1em;
+  padding-top: 1.5em;
 }
 .account-admin-employees, .account-admin-customers{
   width: 95%;
@@ -139,8 +157,9 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid black;
-  margin-bottom: 10px;
+  border-bottom: 2px solid #c0c0c0;
+  margin-bottom: 15px;
+  padding-bottom: 5px;
 }
 
 .account-admin-employees-list, .account-admin-customers-list{
@@ -155,18 +174,23 @@ export default {
   justify-content: space-between;
   align-items: center;
   background-color: rgb(236, 236, 236);
-  border-radius: 10px;
+  border-radius: 5px;
   padding: 0.4em 0;
   margin-bottom: 10px;
 }
 .account-admin-employee-infos, .account-admin-customer-infos{
   display: flex;
   flex-wrap: wrap;
+  margin-left: 15px;
 }
 .employee-info, .customer-info{
   margin: 5px;
   display: flex;
   align-items: center;
+  font-weight: 600;
+}
+.slash{
+  font-weight: 400;
 }
 .checkbox-box{
   display: flex;
@@ -180,12 +204,48 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  align-self: start;
 }
-.account-admin-employee-icon, .account-admin-customer-icon{
-  height: 20px;
-  margin-right: 10px;
+
+.add-icon-box{
+  height: 40px;
+  width: 40px;
   cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
 }
+.add-icon{
+  height: 20px;
+}
+.edit-icon-box{
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: #fff;
+  margin-right: 5px;
+}
+.edit-icon{
+  height: 20px;
+}
+.delete-icon-box{
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: #fff;
+  margin-right: 5px;
+}
+.delete-icon{
+  height: 20px;
+}
+
 
 </style>

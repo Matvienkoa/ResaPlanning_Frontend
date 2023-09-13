@@ -19,8 +19,12 @@
                     <p class="prep-request-info">{{prepR.lastName}}</p>
                   </div>
                   <div class="prep-request-actions">
-                    <img class="requests-icon" @click="openEditBox({mode: 'showPrepRequest', id: prepR.id})" src="../assets/Icons/eye.svg" alt="" />
-                    <img class="requests-icon" @click="openDeleteBox({mode: 'refusePrepRequest', id: prepR.id})" src="../assets/Icons/refuse.svg" alt="" />
+                    <div @click="openEditBox({mode: 'showPrepRequest', id: prepR.id})" class="requests-icon-box">
+                      <img class="requests-icon" src="../assets/Icons/eye-green.svg" alt="" />
+                    </div>
+                    <div @click="openDeleteBox({mode: 'refusePrepRequest', id: prepR.id})" class="requests-icon-box">
+                      <img class="requests-icon" src="../assets/Icons/refuse.svg" alt="" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -36,8 +40,12 @@
                     <p class="slot-request-info">{{slotR.lastName}}</p>
                   </div>
                   <div class="slot-request-actions">
-                    <img class="requests-icon" @click="openEditBox({mode: 'showSlotRequest', id: slotR.id})" src="../assets/Icons/eye.svg" alt="" />
-                    <img class="requests-icon" @click="openDeleteBox({mode: 'refuseSlotRequest', id: slotR.id})" src="../assets/Icons/refuse.svg" alt="" />
+                    <div @click="openEditBox({mode: 'showSlotRequest', id: slotR.id})" class="requests-icon-box">
+                      <img class="requests-icon" src="../assets/Icons/eye-green.svg" alt="" />
+                    </div>
+                    <div @click="openDeleteBox({mode: 'refuseSlotRequest', id: slotR.id})" class="requests-icon-box">
+                      <img class="requests-icon" src="../assets/Icons/refuse.svg" alt="" />
+                    </div>
                   </div>
                 </div>
               </div>
@@ -144,14 +152,23 @@ export default {
 .prep-request-info, .slot-request-info{
   margin-left: 5px;
   margin-right: 5px;
+  font-weight: 600;
 }
 .prep-request-actions, .slot-request-actions{
   display: flex;
 }
+.requests-icon-box{
+  height: 35px;
+  width: 35px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: white;
+  margin-right: 5px;
+}
 .requests-icon{
   height: 20px;
-  cursor: pointer;
-  margin-left: 5px;
-  margin-right: 5px;
 }
 </style>

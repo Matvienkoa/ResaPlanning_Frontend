@@ -1,14 +1,15 @@
 <template>
-  <div class="add-back">
-    <div class="add-box">
-        <div @click="closeAddBox()" class="close-add">X</div>
-        <h2>Ajouter une photo</h2>
-        <div class="add-vehicle-form">
-            <label>{{numberPhoto}}</label>
+  <div class="add-photo-vehicle-back">
+    <div class="add-photo-vehicle-box">
+        <h2 class="add-box-title">Ajouter la photo n°{{checkPhoto(numberPhoto)}}</h2>
+        <div class="add-photo-vehicle-form">
             <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="vehicle-form-photo" id="vehicle-form-photo">
             <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button @click="addPhotoVehicle()">Ajouter la photo</button>
+            <div class="box-choice-button">
+              <button class="valid-button" @click="addPhotoVehicle()">Ajouter la photo</button>
+              <button class="delete-button" @click="closeAddBox()">Annuler</button>
+            </div>
         </div>
     </div>
   </div>
@@ -32,6 +33,24 @@ export default {
     ...mapGetters(['getAddBox', 'getVehicle'])
   },
   methods: {
+    checkPhoto(photo) {
+      let number = ""
+      switch (photo) {
+        case 'photo1':
+          number = '1'
+          break;
+        case 'photo2':
+          number = '2';
+          break;
+        case 'photo3':
+          number = '3'
+          break;
+        case 'photo4':
+          number = '4'
+          break;
+      }
+      return number
+    },
     onFileSelected(event) {
         this.photo = event.target.files[0];
         this.url = URL.createObjectURL(event.target.files[0])
@@ -78,9 +97,39 @@ export default {
 
 
 <style scoped>
-.add-vehicle-form{
-  width: 80%;
+.add-photo-vehicle-back{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.671);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9;
+}
+.add-photo-vehicle-box{
+  position: relative;
+  width: 100%;
+  max-width: 700px;
+  min-height: 40%;
+  max-height: 80%;
+  background: white;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 10;
+  border-radius: 10px;
+}
+.add-photo-vehicle-form{
+  width: 80%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+}
+.photo-selected{
+  width: 100%;
+  object-fit: cover;
 }
 </style>

@@ -1,25 +1,25 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <div @click="closeEditBox()" class="close-add">X</div>
-        <h2>Modifier le véhicule</h2>
+        <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <h2 class="add-box-title">Modifier le véhicule</h2>
         <div class="add-vehicle-form">
-            <label for="vehicle-form-brand">Marque</label>
-            <input v-model="brand" @input="cancelError()" type="text" name="vehicle-form-brand" id="vehicle-form-brand" class="required">
-            <label for="vehicle-form-model">Modèle</label>
-            <input v-model="model" type="text" name="vehicle-form-model" id="vehicle-form-model" class="required">
-            <label for="vehicle-form-year">Année</label>
-            <input v-model="year" type="text" name="vehicle-form-year" id="vehicle-form-year" class="required">
-            <label for="vehicle-form-immat">Immatriculation</label>
-            <input v-model="immat" type="text" name="vehicle-form-immat" id="vehicle-form-immat" class="required">
-            <label for="vehicle-form-kilometers">Km</label>
-            <input v-model="kilometers" type="text" name="vehicle-form-kilometers" id="vehicle-form-kilometers" class="required">
-            <label for="vehicle-form-price">Prix marchand</label>
-            <input v-model="price" type="number" name="vehicle-form-price" id="vehicle-form-price" class="required">
-            <label for="vehicle-form-observations">Observations</label>
-            <input v-model="observations" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+            <label class="form-label" for="vehicle-form-brand">Marque</label>
+            <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="vehicle-form-brand" id="vehicle-form-brand">
+            <label class="form-label" for="vehicle-form-model">Modèle</label>
+            <input class="form-input required" v-model="model" type="text" name="vehicle-form-model" id="vehicle-form-model">
+            <label class="form-label" for="vehicle-form-year">Année</label>
+            <input class="form-input required" v-model="year" type="text" name="vehicle-form-year" id="vehicle-form-year">
+            <label class="form-label" for="vehicle-form-immat">Immatriculation</label>
+            <input class="form-input required" v-model="immat" type="text" name="vehicle-form-immat" id="vehicle-form-immat">
+            <label class="form-label" for="vehicle-form-kilometers">Km</label>
+            <input class="form-input required" v-model="kilometers" type="text" name="vehicle-form-kilometers" id="vehicle-form-kilometers">
+            <label class="form-label" for="vehicle-form-price">Prix marchand</label>
+            <input class="form-input required" v-model="price" type="number" name="vehicle-form-price" id="vehicle-form-price">
+            <label class="form-label" for="vehicle-form-observations">Observations</label>
+            <input class="form-input" v-model="observations" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button @click="editVehicle()">Modifier le véhicule</button>
+            <button class="add-button" @click="editVehicle()">Modifier le véhicule</button>
         </div>
     </div>
   </div>
@@ -104,7 +104,11 @@ export default {
 
 
 <style scoped>
+.add-box{
+  justify-content: flex-start;
+}
 .add-vehicle-form{
+  max-width: 400px;
   width: 80%;
   display: flex;
   flex-direction: column;
