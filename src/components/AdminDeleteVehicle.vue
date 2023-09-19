@@ -1,7 +1,7 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <img @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <img crossorigin="anonymous" @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
         <h2 class="add-box-title">Supprimer ce véhicule?</h2>
         <div v-if="error" class="error">{{ error }}</div>
         <div class="box-choice-button">

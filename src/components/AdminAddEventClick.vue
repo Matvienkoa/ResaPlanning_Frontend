@@ -1,8 +1,8 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-      <img @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
-      <img v-if="addMode === 'preparation' || addMode === 'slot'" @click="closeAddMode()" src="../assets/Icons/arrow-back.svg" alt="" class="arrow-back" />
+      <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+      <img crossorigin="anonymous" v-if="addMode === 'preparation' || addMode === 'slot'" @click="closeAddMode()" src="../assets/Icons/arrow-back.svg" alt="" class="arrow-back" />
       <div v-if="addMode === ''" class="add-choice-box">
         <h2 class="add-box-title">Ajouter un évènement le : {{moment(date).format('LL')}}</h2>
         <div class="box-choice-button">
@@ -40,7 +40,10 @@
         <div v-if="errorPrestation" class="error">{{ errorPrestation }}</div>
         <button class="add-presta-button" @click="addStep()">Ajouter la prestation</button>
         <div class="prestas-box">
-          <div class="presta-box" v-for="step in steps" :key="step">{{step}}<img class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/></div>
+          <div class="presta-box" v-for="step in steps" :key="step">
+            {{step}}
+            <img crossorigin="anonymous" class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/>
+          </div>
         </div>
         <div v-if="error" class="error">{{ error.message }}</div>
         <button class="add-button" @click="addPreparation()">Créer la préparation</button>
@@ -152,7 +155,8 @@ export default {
       })
       .then((res) => {
           if(res.status === 201) {
-              this.$store.state.addBox = "closed"
+            this.$store.commit('ADD_PREPARATION_TO_EVENTS_PLANNING', res.data)
+            this.$store.state.addBox = "closed"
           }
       })
       .catch((error) => {
@@ -193,7 +197,8 @@ export default {
       })
       .then((res) => {
           if(res.status === 201) {
-              this.$store.state.addBox = "closed"
+            this.$store.commit('ADD_SLOT_TO_EVENTS_PLANNING', res.data)
+            this.$store.state.addBox = "closed"
           }
       })
       .catch((error) => {
@@ -276,7 +281,7 @@ export default {
 }
 
 .second-title{
-  width: 100%;
+  width:90%;
   text-align: center;
   margin-bottom: 30px;
   margin-top: 20px;

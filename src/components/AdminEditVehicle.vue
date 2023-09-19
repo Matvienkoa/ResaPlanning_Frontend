@@ -1,21 +1,21 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
         <h2 class="add-box-title">Modifier le véhicule</h2>
         <div class="add-vehicle-form">
-            <label class="form-label" for="vehicle-form-brand">Marque</label>
+            <label class="form-label" for="vehicle-form-brand">Marque<span class="star">*</span></label>
             <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="vehicle-form-brand" id="vehicle-form-brand">
-            <label class="form-label" for="vehicle-form-model">Modèle</label>
-            <input class="form-input required" v-model="model" type="text" name="vehicle-form-model" id="vehicle-form-model">
-            <label class="form-label" for="vehicle-form-year">Année</label>
-            <input class="form-input required" v-model="year" type="text" name="vehicle-form-year" id="vehicle-form-year">
-            <label class="form-label" for="vehicle-form-immat">Immatriculation</label>
-            <input class="form-input required" v-model="immat" type="text" name="vehicle-form-immat" id="vehicle-form-immat">
-            <label class="form-label" for="vehicle-form-kilometers">Km</label>
-            <input class="form-input required" v-model="kilometers" type="text" name="vehicle-form-kilometers" id="vehicle-form-kilometers">
-            <label class="form-label" for="vehicle-form-price">Prix marchand</label>
-            <input class="form-input required" v-model="price" type="number" name="vehicle-form-price" id="vehicle-form-price">
+            <label class="form-label" for="vehicle-form-model">Modèle<span class="star">*</span></label>
+            <input class="form-input required" v-model="model" @input="cancelError()" type="text" name="vehicle-form-model" id="vehicle-form-model">
+            <label class="form-label" for="vehicle-form-year">Année<span class="star">*</span></label>
+            <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="vehicle-form-year" id="vehicle-form-year">
+            <label class="form-label" for="vehicle-form-immat">Immatriculation<span class="star">*</span></label>
+            <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="vehicle-form-immat" id="vehicle-form-immat">
+            <label class="form-label" for="vehicle-form-kilometers">Km<span class="star">*</span></label>
+            <input class="form-input required" v-model="kilometers" @input="cancelError()" type="text" name="vehicle-form-kilometers" id="vehicle-form-kilometers">
+            <label class="form-label" for="vehicle-form-price">Prix marchand<span class="star">*</span></label>
+            <input class="form-input required" v-model="price" @input="cancelError()" type="number" name="vehicle-form-price" id="vehicle-form-price">
             <label class="form-label" for="vehicle-form-observations">Observations</label>
             <input class="form-input" v-model="observations" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
             <div v-if="error" class="error">{{ error.message }}</div>

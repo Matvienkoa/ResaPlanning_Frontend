@@ -7,7 +7,7 @@
     <div class="home-customer-box">
       <router-link to="/customer/requests" class="home-menu-link">
         <div class="home-menu-link-img-box">
-          <img class="home-menu-link-img" src="../assets/images/menu-booking.jpg" alt="">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-booking.jpg" alt="">
         </div>
         <div class="home-menu-link-bloc">
           <p>Demande de réservation</p>
@@ -15,7 +15,7 @@
       </router-link>
       <router-link to="/customer/tracking" class="home-menu-link">
         <div class="home-menu-link-img-box">
-          <img class="home-menu-link-img" src="../assets/images/menu-detailing.jpg" alt="">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-detailing.jpg" alt="">
         </div>
         <div class="home-menu-link-bloc">
           <p>Statut de préparation</p>
@@ -23,7 +23,7 @@
       </router-link>
       <router-link to="/customer/showroom" class="home-menu-link">
         <div class="home-menu-link-img-box">
-          <img class="home-menu-link-img" src="../assets/images/menu-showroom.jpg" alt="">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-showroom.jpg" alt="">
         </div>
         <div class="home-menu-link-bloc">
           <p>Showroom</p>

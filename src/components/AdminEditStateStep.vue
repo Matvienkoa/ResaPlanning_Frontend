@@ -41,6 +41,9 @@ export default {
               this.closeEditStepBox()
           }
       })
+      .catch((error) => {
+          this.error = error.response.data;
+      })
     }
   }
 }

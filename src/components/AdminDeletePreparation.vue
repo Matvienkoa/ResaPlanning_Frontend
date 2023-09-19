@@ -34,6 +34,7 @@ export default {
       instance.delete(`/preparation/${this.preparationId}`)
       .then((res) => {
           if(res.status === 200) {
+              this.$store.commit('DELETE_PREPARATION_TO_EVENTS_PLANNING', this.preparationId)
               this.$store.commit('RESET_BOX');
           }
       })

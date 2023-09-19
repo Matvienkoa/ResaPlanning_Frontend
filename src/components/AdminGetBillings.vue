@@ -2,7 +2,7 @@
     <div class="get-back">
         <AdminInvoicePreparation v-if="getInvoiceBox === 'invoicePrep'" :preparationId="this.id" />
         <div class="get-box">
-            <img @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+            <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <div class="get-requests-box">
                 <div class="get-preps-box">
                     <div class="get-requests-title-box">
@@ -15,7 +15,7 @@
                             <p class="prep-request-info">{{prep.model}}</p>
                         </div>
                         <div @click="openInvoiceBox({mode: 'invoicePrep', id: prep.id})" class="invoice-icon-box">
-                          <img src="../assets/Icons/invoice-red.svg" alt="" class="invoice-icon" />
+                          <img crossorigin="anonymous" src="../assets/Icons/invoice-red.svg" alt="" class="invoice-icon" />
                         </div>
                     </div>
                 </div>
@@ -30,7 +30,7 @@
                             <p class="prep-request-info">{{prep.model}}</p>
                         </div>
                         <div class="invoice-icon-box billed">
-                          <img src="../assets/Icons/invoice-green.svg" alt="" class="invoice-icon" />
+                          <img crossorigin="anonymous" src="../assets/Icons/invoice-green.svg" alt="" class="invoice-icon" />
                         </div>
                     </div>
                 </div>

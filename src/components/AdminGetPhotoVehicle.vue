@@ -1,9 +1,9 @@
 <template>
   <div class="get-photo-back">
     <div class="get-photo-box">
-        <img @click="closeGetPhotoBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+        <img crossorigin="anonymous" @click="closeGetPhotoBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
         <div class="photo-main">
-            <img class="photo" :src="url" alt="">
+            <img crossorigin="anonymous" class="photo" :src="url" alt="">
         </div>
     </div>
   </div>

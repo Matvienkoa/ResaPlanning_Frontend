@@ -3,17 +3,17 @@
     <AdminEditSlot v-if="getEditBox === 'editSlot'" :slotId="this.slot" />
     <AdminDeleteSlot v-if="getDeleteBox === 'deleteSlot'" :slotId="this.slot" />
     <div class="get-box">
-      <img @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+      <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
       <h2 class="get-box-title">Créneau réservé à {{getCustomer.company}}</h2>
       <div class="get-infos-box">
         <p>Du {{moment(getSlot.start).format('LLL')}}</p>
         <p>Au {{moment(getSlot.end).format('LLL')}}</p>
         <p>Lieux de la prestation : {{getSlot.place}}</p>
         <div @click="openEditBox({mode: 'editSlot', id: this.id})" class="edit-icon-box">
-          <img src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
+          <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
         </div>
         <div @click="openDeleteBox({mode: 'deleteSlot', id: this.id})" class="delete-icon-box">
-          <img src="../assets/Icons/delete-2.svg" alt="" class="delete-icon" />
+          <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="delete-icon" />
         </div>
       </div>
       <div class="get-customer-box">

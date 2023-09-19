@@ -15,7 +15,7 @@
         <div class="account-admin-employees-title-box">
           <h2 class="account-admin-employees-title">Collaborateurs</h2>
           <div @click="openAddBox('addAccountEmployee')" class="add-icon-box">
-            <img src="../assets/Icons/add-2.svg" alt="" class="add-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/add-2.svg" alt="" class="add-icon">
           </div>
         </div>
         <div class="account-admin-employees-list">
@@ -31,10 +31,10 @@
             </div>
             <div class="account-admin-employee-actions">
               <div @click="openEditBox({id: employee.id, type: 'editAccountEmployee'})" class="edit-icon-box">
-                <img src="../assets/Icons/edit.svg" alt="" class="edit-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon">
               </div>
               <div @click="openDeleteBox({id: employee.id, type: 'deleteAccountEmployee'})" class="delete-icon-box">
-                <img src="../assets/Icons/delete-2.svg" alt="" class="delete-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="delete-icon">
               </div>
             </div>
           </div>
@@ -44,7 +44,7 @@
         <div class="account-admin-customers-title-box">
           <h2 class="account-admin-customers-title">Clients</h2>
           <div @click="openAddBox('addAccountCustomer')" class="add-icon-box">
-            <img src="../assets/Icons/add-2.svg" alt="" class="add-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/add-2.svg" alt="" class="add-icon">
           </div>
         </div>
         <div class="account-admin-customers-list">
@@ -65,10 +65,10 @@
             </div>
             <div class="account-admin-customer-actions">
               <div @click="openEditBox({id: customer.id, type: 'editAccountCustomer'})" class="edit-icon-box">
-                <img src="../assets/Icons/edit.svg" alt="" class="edit-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon">
               </div>
               <div @click="openDeleteBox({id: customer.id, type: 'deleteAccountCustomer'})" class="delete-icon-box">
-                <img src="../assets/Icons/delete-2.svg" alt="" class="delete-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="delete-icon">
               </div>
             </div>
           </div>

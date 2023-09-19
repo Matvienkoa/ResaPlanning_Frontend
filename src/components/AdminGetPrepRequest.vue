@@ -1,7 +1,7 @@
 <template>
     <div class="prepR-back">
         <div class="prepR-box">
-            <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+            <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <h2 class="get-box-title">Nouvelle demande de préparation</h2>
             <div class="prepR-customer-box">
                 <p>Client : {{getPrepRequest.company}} {{getPrepRequest.firstName}} {{getPrepRequest.lastName}}</p>
@@ -35,7 +35,10 @@
                 <div v-if="errorPrestation" class="error">{{ errorPrestation }}</div>
                 <button class="add-presta-button" @click="addStep()">Ajouter la prestation</button>
                 <div class="prestas-box">
-                    <div class="presta-box" v-for="step in steps" :key="step">{{step}}<div @click="deleteStep(step)">X</div></div>
+                    <div class="presta-box" v-for="step in steps" :key="step">
+                        {{step}}
+                        <img crossorigin="anonymous" class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/>
+                    </div>
                 </div>
                 <div v-if="error" class="error">{{ error.message }}</div>
                 <button class="add-button" @click="addPreparation()">Créer la préparation</button>
@@ -114,6 +117,7 @@ export default {
             })
             .then((res) => {
                 if(res.status === 201) {
+                    this.$store.commit('ADD_PREPARATION_TO_EVENTS_PLANNING', res.data)
                     instance.put(`/preprequest/validate/${this.id}`)
                     .then((res) => {
                         if(res.status === 201) {
@@ -152,9 +156,6 @@ export default {
     },
     created: function () {
         this.$store.dispatch('getPrepRequest', this.id)
-        .then((res) => {
-            console.log(res)
-        })
     },
 }
 </script>

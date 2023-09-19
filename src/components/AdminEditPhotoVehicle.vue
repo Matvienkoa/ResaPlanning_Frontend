@@ -3,7 +3,7 @@
     <div class="edit-photo-vehicle-box">
         <h2 class="add-box-title">Modifier la photo n°{{checkPhoto(numberPhoto)}}</h2>
         <div class="edit-photo-vehicle-form">
-            <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="vehicle-form-photo" id="vehicle-form-photo">
+            <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="vehicle-form-photo" id="vehicle-form-photo" class="required">
             <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
             <img crossorigin="anonymous" v-if="this.url === '' && this.numberPhoto ==='photo1'" :src="getVehicle.photo1" alt="" class="photo-selected">
             <img crossorigin="anonymous" v-if="this.url === '' && this.numberPhoto ==='photo2'" :src="getVehicle.photo2" alt="" class="photo-selected">
@@ -12,7 +12,7 @@
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
               <button class="valid-button" @click="editPhotoVehicle()">Modifier la photo</button>
-              <button class="delete-button" @click="closeEditBox()">Annuler</button>
+              <div class="cancel-button" @click="closeEditBox()">Annuler</div>
             </div>
         </div>
     </div>
@@ -135,5 +135,6 @@ export default {
 .photo-selected{
   width: 100%;
   object-fit: cover;
+  margin-top: 20px;
 }
 </style>

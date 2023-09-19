@@ -1,7 +1,7 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
         <h2 class="add-box-title">Modifier le compte collaborateur</h2>
         <div class="add-account-form">
             <label class="form-label" for="form-login">Login<span class="star">*</span></label>
@@ -15,9 +15,17 @@
               <label class="form-label-checkbox" for="form-privileges">Privilèges</label>
             </div>
             <label class="form-label" for="form-password">Mot de passe</label>
-            <input class="form-input" v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
+            <div class="home-form-password-box">
+              <input class="home-form-password-input" v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
+              <img crossorigin="anonymous" v-if="modePassword === 'hidden'" @click="showPassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye.svg">
+              <img crossorigin="anonymous" v-if="modePassword === 'visible'" @click="hidePassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye-slash.svg">
+            </div>
             <label class="form-label" for="form-password-2">Répéter le Mot de passe</label>
-            <input class="form-input" v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
+            <div class="home-form-password-box">
+              <input class="home-form-password-input" v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
+              <img crossorigin="anonymous" v-if="modePassword2 === 'hidden'" @click="showPassword2()" class="home-form-password-icon" alt="" src="../assets/Icons/eye.svg">
+              <img crossorigin="anonymous" v-if="modePassword2 === 'visible'" @click="hidePassword2()" class="home-form-password-icon" alt="" src="../assets/Icons/eye-slash.svg">
+            </div>
             <div v-if="error" class="error">{{ error.message }}</div>
             <button class="add-button" @click="editAccount()">Modifier le compte</button>
         </div>
@@ -40,13 +48,35 @@ export default {
       password2: "",
       firstName: "",
       lastName: "",
-      privileges: false
+      privileges: false,
+      modePassword: 'hidden',
+      modePassword2: 'hidden'
     }
   },
   computed: {
     ...mapGetters(['getEditBox', 'getAccount'])
   },
   methods: {
+    showPassword() {
+      this.modePassword = 'visible'
+      const input = document.getElementById('form-password')
+      input.type = 'text'
+    },
+    hidePassword() {
+      this.modePassword = 'hidden'
+      const input = document.getElementById('form-password')
+      input.type = 'password'
+    },
+    showPassword2() {
+      this.modePassword2 = 'visible'
+      const input = document.getElementById('form-password-2')
+      input.type = 'text'
+    },
+    hidePassword2() {
+      this.modePassword2 = 'hidden'
+      const input = document.getElementById('form-password-2')
+      input.type = 'password'
+    },
     closeEditBox() {
       this.$store.state.editBox = "closed"
     },
@@ -107,7 +137,30 @@ export default {
 }
 </script>
 
-
-<style>
-
+<style scoped>
+.home-form-password-box{
+  position: relative;
+  width: 100%;
+  height: 30px;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.home-form-password-input{
+  border-radius: 30px;
+  border: solid 1px rgb(184, 184, 184);
+  width: 90%;
+  height: 100%;
+  font-size: 1.2em;
+  padding-left: 5%;
+  padding-right: 15%;
+}
+.home-form-password-icon{
+  position: absolute;
+  height: 50%;
+  right: 4%;
+  top: 25%;
+  cursor: pointer;
+}
 </style>

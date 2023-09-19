@@ -5,8 +5,8 @@
     <div class="showroom-vehicle-admin-box">
       <div class="showroom-vehicle-admin-back-box">
         <div class="showroom-vehicle-admin-background"></div>
-        <img v-if="getVehicle.photo1" :src="getVehicle.photo1" alt="" class="showroom-vehicle-admin-back-img">
-        <img v-if="!getVehicle.photo1" src="../assets/images/back-vehicle.jpg" alt="" class="showroom-vehicle-admin-back-img">
+        <img crossorigin="anonymous" v-if="getVehicle.photo1" :src="getVehicle.photo1" alt="" class="showroom-vehicle-admin-back-img">
+        <img crossorigin="anonymous" v-if="!getVehicle.photo1" src="../assets/images/back-vehicle.jpg" alt="" class="showroom-vehicle-admin-back-img">
         <div class="showroom-vehicle-admin-title">
           <div class="title-white">{{getVehicle.brand}}</div><div class="title-green">{{getVehicle.model}}</div>
         </div>
@@ -33,16 +33,16 @@
       </div>
       <div class="showroom-vehicle-admin-photos-box">
         <div v-if="getVehicle.photo1" class="showroom-vehicle-admin-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo1})" :src="getVehicle.photo1" alt="" class="showroom-vehicle-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo1})" :src="getVehicle.photo1" alt="" class="showroom-vehicle-photo">
         </div>
         <div v-if="getVehicle.photo2" class="showroom-vehicle-admin-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo2})" :src="getVehicle.photo2" alt="" class="showroom-vehicle-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo2})" :src="getVehicle.photo2" alt="" class="showroom-vehicle-photo">
         </div>
         <div v-if="getVehicle.photo3" class="showroom-vehicle-admin-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo3})" :src="getVehicle.photo3" alt="" class="showroom-vehicle-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo3})" :src="getVehicle.photo3" alt="" class="showroom-vehicle-photo">
         </div>
         <div v-if="getVehicle.photo4" class="showroom-vehicle-admin-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo4})" :src="getVehicle.photo4" alt="" class="showroom-vehicle-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo4})" :src="getVehicle.photo4" alt="" class="showroom-vehicle-photo">
         </div>
       </div>
     </div>
@@ -81,5 +81,8 @@ export default {
 </script>
 
 <style scoped>
-
+.showroom-vehicle-admin-photos-box{
+  width: 90%;
+  justify-content: flex-start;
+}
 </style>

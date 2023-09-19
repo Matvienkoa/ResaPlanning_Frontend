@@ -13,7 +13,7 @@
     <AdminValidatePreparation v-if="getEditBox === 'validatePreparation'" :preparationId="this.id" />
     <AdminInvalidatePreparation v-if="getEditBox === 'invalidatePreparation'" :preparationId="this.id" />
     <div class="get-box">
-      <img @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+      <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
       <h2 class="get-box-title">Préparation du véhicule immatriculé {{getPreparation.immat}}</h2>
       <div v-if="getPreparation.state === 'planned'" class="get-box-state">
         <img src="../assets/Icons/in-time.svg" alt="" class="get-state-icon" /><p class="get-state-txt-in-time">En cours</p>
@@ -32,10 +32,10 @@
         <p>Observations : {{getPreparation.observationsDepot}}</p>
         <p>Informations client : {{getPreparation.observationsCustomer}}</p>
         <div @click="openEditBox({mode: 'editPreparation', id: this.id})" class="edit-icon-box">
-          <img src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
+          <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
         </div>
         <div @click="openDeleteBox({mode: 'deletePreparation', id: this.id})" class="delete-icon-box">
-          <img src="../assets/Icons/delete-2.svg" alt="" class="delete-icon" />
+          <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="delete-icon" />
         </div>
       </div>
       <div class="get-customer-box">
@@ -48,23 +48,23 @@
         <div v-for="step in getSteps" :key="step.id" class="step-box">
           <div v-if="step.state === 'planned'" @click="openEditStateStepBox({mode: 'editStateStep', id: step.id, state: step.state})" class="step-state-box-in-time">
             <div class="step-state-box-icon-in-time">
-              <img src="../assets/Icons/in-time.svg" alt="" class="step-state-icon" />
+              <img crossorigin="anonymous" src="../assets/Icons/in-time.svg" alt="" class="step-state-icon" />
             </div>
             <p class="step-state-txt-in-time">En cours</p>
           </div>
           <div v-if="step.state === 'completed'" @click="openEditStateStepBox({mode: 'editStateStep', id: step.id, state: step.state})" class="step-state-box-completed">
             <div class="step-state-box-icon-completed">
-              <img src="../assets/Icons/completed.svg" alt="" class="step-state-icon" />
+              <img crossorigin="anonymous" src="../assets/Icons/completed.svg" alt="" class="step-state-icon" />
             </div>
             <p class="step-state-txt-completed">Terminé</p>
           </div>
           <h3 class="step-state-type">{{step.type}}</h3>
           <div class="step-fonctions-box">
             <div @click="openEditStepBox({mode: 'editStep', id: step.id, type: step.type})" class="edit-step-icon-box">
-              <img src="../assets/Icons/edit.svg" alt="" class="step-edit-icon" />
+              <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="step-edit-icon" />
             </div>
             <div @click="openDeleteStepBox({mode: 'deleteStep', id: step.id})" class="delete-step-icon-box">
-              <img src="../assets/Icons/delete-2.svg" alt="" class="step-delete-icon" />
+              <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="step-delete-icon" />
             </div>
           </div>
         </div>
@@ -76,56 +76,56 @@
       <h2 class="second-title">Photos</h2>
       <div class="get-photos-box">
         <div v-if="getPreparation.photo1" class="get-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo1})" :src="getPreparation.photo1" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo1})" :src="getPreparation.photo1" alt="" class="get-photo">
           <div @click="openEditPhoto({number: 'photo1', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
-            <img src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo1', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
-            <img src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
           </div>
         </div>
         <div v-if="!getPreparation.photo1" class="get-photo-box">
-          <img src="../assets/images/1.jpg" alt="" class="get-no-photo">
-          <img @click="openAddPhoto({number: 'photo1', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
+          <img crossorigin="anonymous" src="../assets/images/1.jpg" alt="" class="get-no-photo">
+          <img crossorigin="anonymous" @click="openAddPhoto({number: 'photo1', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
         <div v-if="getPreparation.photo2" class="get-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo2})" :src="getPreparation.photo2" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo2})" :src="getPreparation.photo2" alt="" class="get-photo">
           <div @click="openEditPhoto({number: 'photo2', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
-            <img src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo2', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
-            <img src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
           </div>
         </div>
         <div v-if="!getPreparation.photo2" class="get-photo-box">
-          <img src="../assets/images/1.jpg" alt="" class="get-no-photo">
-          <img @click="openAddPhoto({number: 'photo2', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
+          <img crossorigin="anonymous" src="../assets/images/1.jpg" alt="" class="get-no-photo">
+          <img crossorigin="anonymous" @click="openAddPhoto({number: 'photo2', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
         <div v-if="getPreparation.photo3" class="get-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo3})" :src="getPreparation.photo3" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo3})" :src="getPreparation.photo3" alt="" class="get-photo">
           <div @click="openEditPhoto({number: 'photo3', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
-            <img src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo3', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
-            <img src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
           </div>
         </div>
         <div v-if="!getPreparation.photo3" class="get-photo-box">
-          <img src="../assets/images/1.jpg" alt="" class="get-no-photo">
-          <img @click="openAddPhoto({number: 'photo3', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
+          <img crossorigin="anonymous" src="../assets/images/1.jpg" alt="" class="get-no-photo">
+          <img crossorigin="anonymous" @click="openAddPhoto({number: 'photo3', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
         <div v-if="getPreparation.photo4" class="get-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo4})" :src="getPreparation.photo4" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo4})" :src="getPreparation.photo4" alt="" class="get-photo">
           <div @click="openEditPhoto({number: 'photo4', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
-            <img src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo4', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
-            <img src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
           </div>
         </div>
         <div v-if="!getPreparation.photo4" class="get-photo-box">
-          <img src="../assets/images/1.jpg" alt="" class="get-no-photo">
-          <img @click="openAddPhoto({number: 'photo4', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
+          <img crossorigin="anonymous" src="../assets/images/1.jpg" alt="" class="get-no-photo">
+          <img crossorigin="anonymous" @click="openAddPhoto({number: 'photo4', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
       </div>
       <div class="button-box">

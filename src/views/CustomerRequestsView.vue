@@ -18,20 +18,32 @@
           <div v-for="prep in getCustomerPrepRequestsPending" :key="prep.id" class="request-customer-box">
             <div class="request-customer-infos-box">
               <div class="request-customer-infos">
+                <p>Le {{moment(prep.createdAt).format('LL')}}</p>
                 <p>{{prep.brand}}</p>
                 <p>{{prep.model}}</p>
                 <p>{{prep.immat}}</p>
               </div>
-              <div class="request-customer-show">Voir</div>
-            </div>
-            <div class="request-customer-infos-hidden-box">
-              <div class="request-customer-infos-hidden">
-                <p>{{prep.steps}}</p>
-                <p>{{prep.year}}</p>
+              <div v-if="showModePrepRequestPending === 'closed' || prepRequestPendingSelected !== prep.id" class="request-customer-show-box">
+                <img crossorigin="anonymous" @click="openShowModePRP(prep.id)" src="../assets/Icons/arrow-down.svg" alt="" class="request-customer-show">
               </div>
-              <div class="request-customer-actions">
-                <img @click="openEditBox({type: 'editPrepRequest', id: prep.id})" src="../assets/Icons/edit.svg" alt="" class="request-customer-edit-icon">
-                <img @click="openDeleteBox({type: 'deletePrepRequest', id: prep.id})" src="../assets/Icons/delete.svg" alt="" class="request-customer-delete-icon">
+              <div v-if="showModePrepRequestPending === 'open' && prepRequestPendingSelected === prep.id" class="request-customer-show-box">
+                <img crossorigin="anonymous" @click="closeShowModePRP()" src="../assets/Icons/arrow-up.svg" alt="" class="request-customer-show">
+              </div>
+            </div>
+            <div v-if="showModePrepRequestPending === 'open' && prepRequestPendingSelected === prep.id" class="request-customer-infos-hidden-box">
+              <div class="request-customer-infos-hidden">
+                <p>Date de livraison souhaitée : {{moment(prep.deliveryDate).format('LL')}}</p>
+                <p>Etapes de préparation souhaitées : {{prep.steps}}</p>
+                <p>Année : {{prep.year}}</p>
+                <p>KM : {{prep.kilometer}}</p>
+                <p>Etat du véhicule : {{prep.condition}}</p>
+                <p>Observations : {{prep.observationsCustomer}}</p>
+              </div>
+              <div @click="openEditBox({type: 'editPrepRequest', id: prep.id})" class="request-customer-edit-icon-box">
+                <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="request-customer-edit-icon">
+              </div>
+              <div @click="openDeleteBox({type: 'deletePrepRequest', id: prep.id})" class="request-customer-delete-icon-box">
+                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="request-customer-delete-icon">
               </div>
             </div>
           </div>
@@ -41,20 +53,27 @@
           <div v-for="slot in getCustomerSlotRequestsPending" :key="slot.id" class="request-customer-box">
             <div class="request-customer-infos-box">
               <div class="request-customer-infos">
-                <p>{{slot.date}}</p>
-                <p>{{slot.place}}</p>
-                <p>{{slot.state}}</p>
-              </div>
-              <div class="request-customer-show">Voir</div>
-            </div>
-            <div class="request-customer-infos-hidden-box">
-              <div class="request-customer-infos-hidden">
+                <p>Le {{moment(slot.createdAt).format('LL')}}</p>
                 <p>{{slot.duration}}</p>
-                <p>{{slot.observationsCustomer}}</p>
+                <p>{{slot.date}}</p>
               </div>
-              <div class="request-customer-actions">
-                <img @click="openEditBox({type: 'editSlotRequest', id: slot.id})" src="../assets/Icons/edit.svg" alt="" class="request-customer-edit-icon" />
-                <img @click="openDeleteBox({type: 'deleteSlotRequest', id: slot.id})" src="../assets/Icons/delete.svg" alt="" class="request-customer-delete-icon" />
+              <div v-if="showModeSlotRequestPending === 'closed' || slotRequestPendingSelected !== slot.id" class="request-customer-show-box">
+                <img crossorigin="anonymous" @click="openShowModeSRP(slot.id)" src="../assets/Icons/arrow-down.svg" alt="" class="request-customer-show">
+              </div>
+              <div v-if="showModeSlotRequestPending === 'open' && slotRequestPendingSelected === slot.id" class="request-customer-show-box">
+                <img crossorigin="anonymous" @click="closeShowModeSRP()" src="../assets/Icons/arrow-up.svg" alt="" class="request-customer-show">
+              </div>
+            </div>
+            <div v-if="showModeSlotRequestPending === 'open' && slotRequestPendingSelected === slot.id" class="request-customer-infos-hidden-box">
+              <div class="request-customer-infos-hidden">
+                <p>Lieux : {{slot.place}}</p>
+                <p>Observations : {{slot.observationsCustomer}}</p>
+              </div>
+              <div @click="openEditBox({type: 'editSlotRequest', id: slot.id})" class="request-customer-edit-icon-box">
+                <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="request-customer-edit-icon">
+              </div>
+              <div @click="openDeleteBox({type: 'deleteSlotRequest', id: slot.id})" class="request-customer-delete-icon-box">
+                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="request-customer-delete-icon">
               </div>
             </div>
           </div>
@@ -64,19 +83,30 @@
           <div v-for="prep in getCustomerPrepRequestsRefused" :key="prep.id" class="request-customer-box">
             <div class="request-customer-infos-box">
               <div class="request-customer-infos">
+                <p>Le {{moment(prep.createdAt).format('LL')}}</p>
                 <p>{{prep.brand}}</p>
+                <p>{{prep.model}}</p>
                 <p>{{prep.immat}}</p>
-                <p>{{prep.state}}</p>
               </div>
-              <div class="request-customer-show">Voir</div>
+              <div v-if="showModePrepRequestRefused === 'closed' || prepRequestRefusedSelected !== prep.id" class="request-customer-show-box">
+                <img crossorigin="anonymous" @click="openShowModePRR(prep.id)" src="../assets/Icons/arrow-down.svg" alt="" class="request-customer-show">
+              </div>
+              <div v-if="showModePrepRequestRefused === 'open' && prepRequestRefusedSelected === prep.id" class="request-customer-show-box">
+                <img crossorigin="anonymous" @click="closeShowModePRR()" src="../assets/Icons/arrow-up.svg" alt="" class="request-customer-show">
+              </div>
             </div>
-            <div class="request-customer-infos-hidden-box">
+            <div v-if="showModePrepRequestRefused === 'open' && prepRequestRefusedSelected === prep.id" class="request-customer-infos-hidden-box">
               <div class="request-customer-infos-hidden">
-                <p>{{prep.observationsDepot}}</p>
-                <p>TEST</p>
+                <p>Date de livraison souhaitée : {{moment(prep.deliveryDate).format('LL')}}</p>
+                <p>Etapes de préparation souhaitées : {{prep.steps}}</p>
+                <p>Année : {{prep.year}}</p>
+                <p>KM : {{prep.kilometer}}</p>
+                <p>Etat du véhicule : {{prep.condition}}</p>
+                <p>Observations : {{prep.observationsCustomer}}</p>
+                <p>Motif du refus : {{prep.observationsDepot}}</p>
               </div>
-              <div class="request-customer-actions">
-                <img @click="openDeleteBox({type: 'deletePrepRequest', id: prep.id})" src="../assets/Icons/delete.svg" alt="" class="request-customer-delete-icon" />
+              <div @click="openDeleteBox({type: 'deletePrepRequest', id: prep.id})" class="request-customer-delete-icon-box">
+                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="request-customer-delete-icon">
               </div>
             </div>
           </div>
@@ -86,19 +116,25 @@
           <div v-for="slot in getCustomerSlotRequestsRefused" :key="slot.id" class="request-customer-box">
             <div class="request-customer-infos-box">
               <div class="request-customer-infos">
+                <p>Le {{moment(slot.createdAt).format('LL')}}</p>
+                <p>{{slot.duration}}</p>
                 <p>{{slot.date}}</p>
-                <p>{{slot.place}}</p>
-                <p>{{slot.state}}</p>
               </div>
-              <div class="request-customer-show">Voir</div>
+              <div v-if="showModeSlotRequestRefused === 'closed' || slotRequestRefusedSelected !== slot.id" class="request-customer-show-box">
+                <img crossorigin="anonymous" @click="openShowModeSRR(slot.id)" src="../assets/Icons/arrow-down.svg" alt="" class="request-customer-show">
+              </div>
+              <div v-if="showModeSlotRequestRefused === 'open' && slotRequestRefusedSelected === slot.id" class="request-customer-show-box">
+                <img crossorigin="anonymous" @click="closeShowModeSRR()" src="../assets/Icons/arrow-up.svg" alt="" class="request-customer-show">
+              </div>
             </div>
-            <div class="request-customer-infos-hidden-box">
+            <div v-if="showModeSlotRequestRefused === 'open' && slotRequestRefusedSelected === slot.id" class="request-customer-infos-hidden-box">
               <div class="request-customer-infos-hidden">
-                <p>{{slot.observationsDepot}}</p>
-                <p>TEST</p>
+                <p>Lieux : {{slot.place}}</p>
+                <p>Observations : {{slot.observationsCustomer}}</p>
+                <p>Motif du refus : {{slot.observationsDepot}}</p>
               </div>
-              <div class="request-customer-actions">
-                <img @click="openDeleteBox({type: 'deleteSlotRequest', id: slot.id})" src="../assets/Icons/delete.svg" alt="" class="request-customer-delete-icon" />
+              <div @click="openDeleteBox({type: 'deleteSlotRequest', id: slot.id})" class="request-customer-delete-icon-box">
+                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="request-customer-delete-icon">
               </div>
             </div>
           </div>
@@ -110,6 +146,8 @@
 <script>
 import Header from '@/components/Header.vue';
 import { mapGetters } from 'vuex';
+let moment = require('moment');
+moment.locale('fr');
 import CustomerAddRequest from '@/components/CustomerAddRequest.vue';
 import CustomerEditPrepRequest from '@/components/CustomerEditPrepRequest.vue';
 import CustomerDeletePrepRequest from '@/components/CustomerDeletePrepRequest.vue';
@@ -128,13 +166,54 @@ export default {
   },
   data() {
     return {
-      requestId: null
+      moment: moment,
+      requestId: null,
+      showModePrepRequestPending: "closed",
+      prepRequestPendingSelected: null,
+      showModeSlotRequestPending: "closed",
+      slotRequestPendingSelected: null,
+      showModePrepRequestRefused: "closed",
+      prepRequestRefusedSelected: null,
+      showModeSlotRequestRefused: "closed",
+      slotRequestRefusedSelected: null,
     }
   },
   computed: {
     ...mapGetters(['getAddBox', 'getEditBox', 'getDeleteBox', 'getCustomerPrepRequestsPending', 'getCustomerPrepRequestsRefused', 'getCustomerSlotRequestsPending', 'getCustomerSlotRequestsRefused', 'getProfile'])
   },
   methods: {
+    openShowModePRP(id) {
+      this.prepRequestPendingSelected = id
+      this.showModePrepRequestPending = 'open'
+    },
+    closeShowModePRP() {
+      this.prepRequestPendingSelected = null
+      this.showModePrepRequestPending = 'closed'
+    },
+    openShowModeSRP(id) {
+      this.slotRequestPendingSelected = id
+      this.showModeSlotRequestPending = 'open'
+    },
+    closeShowModeSRP() {
+      this.slotRequestPendingSelected = null
+      this.showModeSlotRequestPending = 'closed'
+    },
+    openShowModePRR(id) {
+      this.prepRequestRefusedSelected = id
+      this.showModePrepRequestRefused = 'open'
+    },
+    closeShowModePRR() {
+      this.prepRequestRefusedSelected = null
+      this.showModePrepRequestRefused = 'closed'
+    },
+    openShowModeSRR(id) {
+      this.slotRequestRefusedSelected = id
+      this.showModeSlotRequestRefused = 'open'
+    },
+    closeShowModeSRR() {
+      this.slotRequestRefusedSelected = null
+      this.showModeSlotRequestRefused = 'closed'
+    },
     openAddBox() {
         this.$store.state.addBox = 'addRequest'
     },
@@ -193,24 +272,74 @@ export default {
 .request-customer-infos-box{
   display: flex;
   justify-content: space-between;
+  align-items: center;
+  margin-left: 10px;
+}
+.request-customer-infos-box p{
+  margin-right: 10px;
 }
 .request-customer-infos-hidden-box{
+  position: relative;
   display: flex;
   justify-content: space-between;
+}
+.request-customer-infos-hidden{
+  margin-left: 10px;
+  display: flex;
+  flex-direction: column;
 }
 .request-customer-infos{
   display: flex;
 }
+
+.request-customer-show-box{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  margin-right: 10px;
+  background-color: #fff;
+}
+.request-customer-show{
+  height: 20px;
+}
 .request-customer-infos-hidden{
   display: flex;
 }
-.request-customer-actions{
+
+.request-customer-edit-icon-box{
+  position: absolute;
+  bottom: 3px;
+  right: 45px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: #fff;
 }
 .request-customer-edit-icon{
-  height: 20px;
+  height: 17px;
+}
+.request-customer-delete-icon-box{
+  position: absolute;
+  bottom: 3px;
+  right: 10px;
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  background-color: #fff;
 }
 .request-customer-delete-icon{
-  height: 20px;
+  height: 17px;
 }
 </style>

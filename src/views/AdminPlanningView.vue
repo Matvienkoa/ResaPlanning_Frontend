@@ -10,12 +10,18 @@
   <AdminDropSlot v-if="getDropBox === 'dropSlot'" :id="slot" :deltaD="deltaDay" :deltaM="deltaMm" />
   <AdminSizeSlot v-if="getSizeBox === 'sizeSlot'" :id="slot" :deltaD="deltaDay" :deltaM="deltaMm" />
   <AdminPlanningBanner url="/admin/home" />
-  <div class="main-page">
+  <div id="login-home" class="main-page">
+    <div id="spinner" class="spinner-off">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <div class="home-admin-title-box">
       <h1 class="home-admin-title">Mon Planning</h1>
     </div>
     <div class="planning-calendar-box">
-      <FullCalendar :options="calendarOptions" />
+      <FullCalendar ref="fullCalendar" :options="calendarOptions" />
     </div>
   </div>
 </template>
@@ -77,7 +83,7 @@ export default {
         locale: frLocale,
         selectable: true,
         editable: true,
-        allDaySlot: true,
+        allDaySlot: false,
         navLinks: true,
         weekNumbers: true,
         dateClick: this.openAddBox,
@@ -85,16 +91,31 @@ export default {
         eventClick: this.openGetPreparation,
         eventDrop: this.openDropBox,
         eventResize: this.openSizeBox,
-        events: []
+        events: [],
+        datesSet: this.getEventsByDate
       },
       deltaDay: null,
-      deltaMm: null
+      deltaMm: null,
     }
   },
   computed: {
-    ...mapGetters(['getAddBox', 'getGetBox', 'getDropBox', 'getSizeBox'])
+    ...mapGetters(['getAddBox', 'getGetBox', 'getDropBox', 'getSizeBox', 'getEventsPlanning'])
   },
   methods: {
+    getEventsByDate(date) {
+      console.log(date)
+      this.showSpinner()
+      this.calendarOptions.events = []
+      this.$store.dispatch('getPreparations', date)
+      .then((res) => {
+        this.setEvents(res)
+        this.$store.dispatch('getSlots', date)
+        .then((res) => {
+          this.setSlots(res)
+          this.hideSpinner()
+        })
+      })
+    },
     openDropBox(event) {
       console.log('drop', event)
       if(event.event._def.extendedProps.type === "preparation") {
@@ -176,29 +197,34 @@ export default {
           }
         )
       })
-    }
+    },
+    showSpinner() {
+        const spinner = document.getElementById('spinner');
+        spinner.classList.replace('spinner-off', 'lds-ring');
+        const body = document.getElementById('login-home');
+        body.classList.add('on');
+    },
+    hideSpinner() {
+        const spinner = document.getElementById('spinner');
+        spinner.classList.replace('lds-ring', 'spinner-off');
+        const body = document.getElementById('login-home');
+        body.classList.remove('on');
+    },
   },
   created: function () {
     this.$store.commit('RESET_BOX');
-    this.$store.dispatch('getPreparations')
-    .then((res) => {
-      this.setEvents(res)
-      this.$store.dispatch('getSlots')
-      .then((res) => {
-        this.setSlots(res)
-      })
-    })
+    // this.$store.dispatch('getPreparations', new Date())
+    // .then((res) => {
+    //   console.log(new Date())
+    //   this.setEvents(res)
+    //   this.$store.dispatch('getSlots', new Date())
+    //   .then((res) => {
+    //     this.setSlots(res)
+    //   })
+    // })
   },
   updated() {
-    this.calendarOptions.events = []
-    this.$store.dispatch('getPreparations')
-    .then((res) => {
-      this.setEvents(res)
-      this.$store.dispatch('getSlots')
-      .then((res) => {
-        this.setSlots(res)
-      })
-    })
+    this.calendarOptions.events = this.getEventsPlanning
   }
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <img @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
         <h2 class="add-box-title">Créer un client</h2>
         <div class="add-customer-form">
-            <label class="form-label" for="customer-form-company">Société</label>
+            <label class="form-label" for="customer-form-company">Société<span class="star">*</span></label>
             <input class="form-input required" v-model="company" @input="cancelError()" type="text" name="customer-form-company" id="customer-form-company">
             <label class="form-label" for="customer-form-lastName">Nom</label>
             <input class="form-input" v-model="firstName" type="text" name="customer-form-lastName" id="customer-form-lastName">
@@ -18,9 +18,9 @@
             <input class="form-input" v-model="zipCode" type="text" name="customer-form-zipCode" id="customer-form-zipCode">
             <label class="form-label" for="customer-form-city">Ville</label>
             <input class="form-input" v-model="city" type="text" name="customer-form-city" id="customer-form-city">
-            <label class="form-label" for="customer-form-phone">Téléphone</label>
+            <label class="form-label" for="customer-form-phone">Téléphone<span class="star">*</span></label>
             <input class="form-input required" v-model="phone" @input="cancelError()" type="text" name="customer-form-phone" id="customer-form-phone">
-            <label class="form-label" for="customer-form-mail">Mail</label>
+            <label class="form-label" for="customer-form-mail">Mail<span class="star">*</span></label>
             <input class="form-input required" v-model="mail" @input="cancelError()" type="text" name="customer-form-mail" id="customer-form-mail">
             <div v-if="error" class="error">{{ error.message }}</div>
             <button class="add-button" @click="addCustomer()">Créer le client</button>

@@ -71,6 +71,7 @@ export default {
       })
       .then((res) => {
           if(res.status === 201) {
+              this.$store.commit('EDIT_SLOT_TO_EVENTS_PLANNING', res.data)
               this.closeEditBox()
               this.$store.dispatch('getSlot', this.slotId)
           }

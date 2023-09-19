@@ -1,7 +1,7 @@
 <template>
     <div class="prepR-back">
         <div class="prepR-box">
-            <img @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+            <img crossorigin="anonymous" @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <h2 class="get-box-title">Refuser la demande de préparation</h2>
             <div class="prepR-customer-box">
                 <p>Client : {{getPrepRequest.company}} {{getPrepRequest.firstName}} {{getPrepRequest.lastName}}</p>

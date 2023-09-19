@@ -5,7 +5,7 @@
       <h1 class="home-admin-title">Menu Principal</h1>
     </div>
     <div class="home-admin-box">
-      <router-link to="/admin/accounts" class="home-menu-link">
+      <router-link v-if="getUser.role === 'admin'" to="/admin/accounts" class="home-menu-link">
         <div class="home-menu-link-img-box">
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-users.jpg" alt="">
         </div>
@@ -45,6 +45,8 @@
 <script>
 import HeaderHome from '@/components/HeaderHome.vue'
 
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'AdminHome',
   components: {
@@ -55,8 +57,31 @@ export default {
       
     }
   },
+  computed: {
+    ...mapGetters(['getUser'])
+  },
   methods: {
     
+  },
+  created: function () {
+    this.$store.dispatch('checkToken')
+    .then((res) => {
+      console.log(res)
+      if(res === 'expired') {
+        this.$router.push('/')
+      }
+    })
+    this.$store.dispatch('getProfile')
+    .then((res) => {
+      console.log(res)
+      if(res.data) {
+        if(res.data.role !== 'admin' && res.data.role !== 'employee') {
+          this.$router.push('/')
+        }
+      } else {
+        this.$router.push('/')
+      }
+    })
   }
 }
 </script>

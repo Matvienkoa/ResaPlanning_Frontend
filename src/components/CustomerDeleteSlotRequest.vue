@@ -4,8 +4,8 @@
             <h2 class="add-box-title">Supprimer la demande?</h2>
             <div v-if="error" class="error">{{ error }}</div>
             <div class="box-choice-button">
-              <button class="valid-button" @click="deleteSlotRequest()">Supprimer la demande</button>
-              <button class="delete-button" @click="closeDeleteBox()">Annuler</button>
+              <button class="valid-button" @click="deleteSlotRequest()">Oui</button>
+              <button class="delete-button" @click="closeDeleteBox()">Non</button>
             </div>
         </div>
     </div>

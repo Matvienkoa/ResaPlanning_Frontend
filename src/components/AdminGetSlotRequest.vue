@@ -1,7 +1,7 @@
 <template>
     <div class="prepR-back">
         <div class="prepR-box">
-            <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+            <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <h2 class="get-box-title">Nouvelle demande de créneau</h2>
             <div class="prepR-customer-box">
                 <p>Client : {{getSlotRequest.company}} {{getSlotRequest.firstName}} {{getSlotRequest.lastName}}</p>
@@ -80,6 +80,7 @@ export default {
             })
             .then((res) => {
                 if(res.status === 201) {
+                    this.$store.commit('ADD_SLOT_TO_EVENTS_PLANNING', res.data)
                     instance.put(`/slotrequest/validate/${this.id}`)
                     .then((res) => {
                         if(res.status === 201) {
@@ -111,9 +112,6 @@ export default {
     },
     created: function () {
         this.$store.dispatch('getSlotRequest', this.id)
-        .then((res) => {
-            console.log(res)
-        })
     },
 }
 </script>

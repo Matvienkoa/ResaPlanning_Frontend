@@ -1,7 +1,8 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-      <img @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+      <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+      <img crossorigin="anonymous" v-if="addMode === 'preparation' || addMode === 'slot'" @click="closeAddMode()" src="../assets/Icons/arrow-back.svg" alt="" class="arrow-back" />
       <div v-if="addMode === ''" class="add-choice-box">
         <h2 class="add-box-title">Quel type de demande?</h2>
         <div class="box-choice-button">
@@ -11,19 +12,19 @@
       </div>
       <div v-if="addMode === 'preparation'" class="add-preparation-box">
         <h2 class="second-title">Ajouter une préparation</h2>
-        <label class="form-label" for="preparation-form-deliveryDate">Date de livraison souhaitée</label>
+        <label class="form-label" for="preparation-form-deliveryDate">Date de livraison souhaitée<span class="star">*</span></label>
         <input class="form-input required" v-model="deliveryDate" @input="cancelError()" type="date" name="preparation-form-deliveryDate" id="preparation-form-deliveryDate">
-        <label class="form-label" for="preparation-form-brand">Marque</label>
+        <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
         <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
-        <label class="form-label" for="preparation-form-model">Modèle</label>
+        <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
         <input class="form-input required" v-model="model" @input="cancelError()" type="text" name="preparation-form-model" id="preparation-form-model">
-        <label class="form-label" for="preparation-form-year">Année</label>
+        <label class="form-label" for="preparation-form-year">Année<span class="star">*</span></label>
         <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
-        <label class="form-label" for="preparation-form-immat">Immatriculation</label>
+        <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
         <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
-        <label class="form-label" for="preparation-form-kilometers">Km</label>
+        <label class="form-label" for="preparation-form-kilometers">Km<span class="star">*</span></label>
         <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
-        <label class="form-label" for="preparation-form-condition">Etat du véhicule</label>
+        <label class="form-label" for="preparation-form-condition">Etat du véhicule<span class="star">*</span></label>
         <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
         <label class="form-label" for="vehicle-form-steps">Etapes souhaitées</label>
         <input class="form-input" v-model="steps" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
@@ -34,14 +35,14 @@
       </div>
       <div v-if="addMode=== 'slot'" class="add-slot-box">
         <h2 class="second-title">Ajouter un créneaux</h2>
-        <label class="form-label" for="preparation-form-date">Date souhaitée</label>
+        <label class="form-label" for="preparation-form-date">Date souhaitée<span class="star">*</span></label>
         <input class="form-input required" v-model="date" @input="cancelError()" type="date" name="preparation-form-date" id="preparation-form-date">
-        <label class="form-label" for="preparation-form-duration">Durée de l'intervention</label>
+        <label class="form-label" for="preparation-form-duration">Durée de l'intervention<span class="star">*</span></label>
         <select class="form-input required" @change="cancelError()" v-model="duration" name="preparation-form-duration" id="preparation-form-duration">
             <option value="half">Demi-Journée</option>
             <option value="day">Journée</option>
         </select>
-        <label class="form-label" for="preparation-form-place">Lieux</label>
+        <label class="form-label" for="preparation-form-place">Lieux<span class="star">*</span></label>
         <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsCustomer" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
@@ -83,6 +84,9 @@ export default {
     ...mapGetters(['getProfile'])
   },
   methods: {
+    closeAddMode() {
+      this.addMode = ''
+    },
     closeAddBox() {
       this.$store.state.addBox = "closed"
     },
@@ -171,6 +175,7 @@ export default {
 }
 .add-choice-box{
     width: 100%;
+    margin: auto;
     display: flex;
     flex-direction: column;
     align-items: center;

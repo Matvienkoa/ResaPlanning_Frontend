@@ -3,13 +3,13 @@
     <div class="logos-box"></div>
     <div class="back-box">
       <router-link class="link" :to="url">
-        <img class="back-icon" src="../assets/Icons/arrow-left.svg" alt="">
+        <img crossorigin="anonymous" class="back-icon" src="../assets/Icons/arrow-left.svg" alt="">
         <p class="back-txt">Retour</p>
       </router-link>
     </div>
     <div class="logout-box">
-      <img class="logout-icon" src="../assets/Icons/logout.svg" alt="">
-      <p class="logout-txt">Se Déconnecter</p>
+      <img crossorigin="anonymous" class="logout-icon" src="../assets/Icons/logout.svg" alt="">
+      <router-link to="/" @click="logOut()" class="logout-txt">Se Déconnecter</router-link>
     </div>
   </div>
 </template>
@@ -18,6 +18,11 @@
 export default {
   name: 'Header-view',
   props: ["url"],
+  methods: {
+    logOut: function() {
+      this.$store.commit("LOG_OUT");
+    }
+  },
 }
 </script>
 
@@ -72,6 +77,8 @@ export default {
   margin-left: 15px;
 }
 .logout-txt{
+  text-decoration: none;
   color: white;
+  cursor: pointer;
 }
 </style>

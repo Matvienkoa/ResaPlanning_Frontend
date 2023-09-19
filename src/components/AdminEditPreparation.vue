@@ -92,6 +92,7 @@ export default {
       })
       .then((res) => {
           if(res.status === 201) {
+              this.$store.commit('EDIT_PREPARATION_TO_EVENTS_PLANNING', res.data)
               this.closeEditBox()
               this.$store.dispatch('getPreparation', this.preparationId)
           }

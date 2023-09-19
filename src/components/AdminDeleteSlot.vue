@@ -34,6 +34,7 @@ export default {
       instance.delete(`/slot/${this.slotId}`)
       .then((res) => {
           if(res.status === 200) {
+              this.$store.commit('DELETE_SLOT_TO_EVENTS_PLANNING', this.slotId)
               this.$store.commit('RESET_BOX');
           }
       })

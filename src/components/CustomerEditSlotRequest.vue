@@ -1,17 +1,17 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-      <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+      <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
       <h2 class="add-box-title">Modifier la demande</h2>
       <div class="add-account-form">
-        <label class="form-label" for="preparation-form-date">Date souhaitée</label>
+        <label class="form-label" for="preparation-form-date">Date souhaitée<span class="star">*</span></label>
         <input class="form-input required" v-model="date" @input="cancelError()" type="date" name="preparation-form-date" id="preparation-form-date">
-        <label class="form-label" for="preparation-form-duration">Durée de l'intervention</label>
+        <label class="form-label" for="preparation-form-duration">Durée de l'intervention<span class="star">*</span></label>
         <select class="form-input required" @change="cancelError()" v-model="duration" name="preparation-form-duration" id="preparation-form-duration">
             <option value="half">Demi-Journée</option>
             <option value="day">Journée</option>
         </select>
-        <label class="form-label" for="preparation-form-place">Lieux</label>
+        <label class="form-label" for="preparation-form-place">Lieux<span class="star">*</span></label>
         <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsCustomer" type="text" name="vehicle-form-observations" id="vehicle-form-observations">

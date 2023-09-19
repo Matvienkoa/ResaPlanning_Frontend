@@ -1,6 +1,6 @@
 <template>
 <AdminEditCustomer v-if="getEditBox === 'editCustomer'" :id="customer" />
-<AdminDeleteCustomer v-if="getDeleteBox === 'deleteCustomer'" :id="customer" />
+<AdminDeleteCustomer v-if="getDeleteBox === 'deleteCustomer'" :id="customer" :account="account" />
 <AdminAddCustomer v-if="getAddBox === 'addCustomer'" />
   <Header url="/admin/home" />
   <div class="main-page">
@@ -11,28 +11,40 @@
       <div class="account-admin-customers">
         <div class="account-admin-customers-title-box">
           <h2 class="account-admin-customers-title">Mes Clients</h2>
-          <img @click="openAddBox('addCustomer')" src="../assets/Icons/add.svg" alt="" class="account-admin-customer-icon">
+          <img crossorigin="anonymous" @click="openAddBox('addCustomer')" src="../assets/Icons/add.svg" alt="" class="account-admin-customer-icon">
         </div>
         <div class="account-admin-customers-list">
           <div v-for="customer in getCustomers" :key="customer.id" class="account-admin-customer">
-            <div class="account-admin-customer-infos">
-              <div>Client N°{{ customer.id }}</div>
-              <div>{{ customer.company }}</div>
-              <div>{{ customer.firstName }}</div>
-              <div>{{ customer.lastName }}</div>
-            </div>
-            <div class="customer-infos-hidden-box">
-              <div class="customer-infos-hidden">
-                <div>{{ customer.adress }}</div>
-                <div>{{ customer.adress2 }}</div>
-                <div>{{ customer.zipCode }}</div>
-                <div>{{ customer.city }}</div>
-                <div>{{ customer.phone }}</div>
-                <div>{{ customer.mail }}</div>
+            <div class="account-admin-customer-infos-box">
+              <div class="account-admin-customer-infos">
+                <div class="customer-info">Client N°{{ customer.id }}</div>
+                <div class="customer-info slash">|</div>
+                <div class="customer-info">{{ customer.company }}</div>
+                <div v-if="customer.firstName || customer.lastName" class="customer-info slash">|</div>
+                <div v-if="customer.firstName" class="customer-info">{{ customer.firstName }}</div>
+                <div v-if="customer.lastName" class="customer-info">{{ customer.lastName }}</div>
               </div>
-              <div class="customer-actions-hidden">
-                <img @click="openEditBox({id: customer.id, mode: 'editCustomer'})" src="../assets/Icons/edit.svg" alt="" class="customer-edit-icon">
-                <img @click="openDeleteBox({id: customer.id, mode: 'deleteCustomer'})" src="../assets/Icons/delete.svg" alt="" class="customer-delete-icon">
+              <div v-if="showMode === 'closed' || customerSelected !== customer.id" class="account-admin-customer-show-box">
+                <img crossorigin="anonymous" @click="openShowMode(customer.id)" src="../assets/Icons/arrow-down.svg" alt="" class="account-admin-customer-show-icon">
+              </div>
+              <div v-if="showMode === 'open' && customerSelected === customer.id" class="account-admin-customer-show-box">
+                <img crossorigin="anonymous" @click="closeShowMode()" src="../assets/Icons/arrow-up.svg" alt="" class="account-admin-customer-show-icon">
+              </div>
+            </div>
+            <div v-if="showMode === 'open' && customerSelected === customer.id" class="customer-infos-hidden-box">
+              <div class="customer-infos-hidden">
+                <div v-if="customer.adress" class="customer-info">{{ customer.adress }}</div>
+                <div v-if="customer.adress2" class="customer-info">{{ customer.adress2 }}</div>
+                <div v-if="customer.zipCode" class="customer-info">{{ customer.zipCode }}</div>
+                <div v-if="customer.city" class="customer-info">{{ customer.city }}</div>
+                <div class="customer-info">{{ customer.phone }}</div>
+                <div class="customer-info">{{ customer.mail }}</div>
+              </div>
+              <div class="customer-edit-icon-box">
+                <img crossorigin="anonymous" @click="openEditBox({id: customer.id, mode: 'editCustomer'})" src="../assets/Icons/edit.svg" alt="" class="customer-edit-icon">
+              </div>
+              <div class="customer-delete-icon-box">
+                <img crossorigin="anonymous" @click="openDeleteBox({id: customer.id, account: customer.userId, mode: 'deleteCustomer'})" src="../assets/Icons/delete-2.svg" alt="" class="customer-delete-icon">
               </div>
             </div>
           </div>
@@ -61,12 +73,23 @@ export default {
   data() {
     return {
       customer: "",
+      account: "",
+      showMode: "closed",
+      customerSelected: null
     }
   },
   computed: {
     ...mapGetters(['getCustomers', 'getAddBox', 'getEditBox', 'getDeleteBox'])
   },
   methods: {
+    openShowMode(id) {
+      this.customerSelected = id
+      this.showMode = 'open'
+    },
+    closeShowMode() {
+      this.customerSelected = null
+      this.showMode = 'closed'
+    },
     openAddBox(type) {
       this.$store.state.addBox = type
     },
@@ -77,6 +100,7 @@ export default {
     openDeleteBox(data) {
       this.customer = data.id
       this.$store.state.deleteBox = data.mode
+      this.account = data.account
     },
   },
   created: function () {
@@ -126,10 +150,32 @@ export default {
   align-items: flex-start;
   margin-bottom: 10px;
 }
+.account-admin-customer-infos-box{
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
 .account-admin-customer-infos{
   display: flex;
 }
+.account-admin-customer-show-box{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  margin-right: 10px;
+  background-color: #fff;
+}
+.account-admin-customer-show-icon{
+  height: 20px;
+}
+
 .customer-infos-hidden-box{
+  position: relative;
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -137,17 +183,41 @@ export default {
 .customer-infos-hidden{
   display: flex;
   flex-direction: column;
+  margin-left: 15px;
 }
-.customer-actions-hidden{
+.customer-edit-icon-box{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
   display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  margin-right: 10px;
+  background-color: #fff;
+  position: absolute;
+  bottom: 3px;
+  right: 35px;
 }
 .customer-edit-icon{
+  height: 16px;
+}
+.customer-delete-icon-box{
+  height: 30px;
+  width: 30px;
   cursor: pointer;
-  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  margin-right: 10px;
+  background-color: #fff;
+  position: absolute;
+  bottom: 3px;
+  right: 0;
 }
 .customer-delete-icon{
-  cursor: pointer;
-  height: 20px;
+  height: 16px;
 }
 
 </style>

@@ -1,22 +1,22 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-      <img @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+      <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
       <h2 class="add-box-title">Modifier la demande</h2>
       <div class="add-account-form">
-        <label class="form-label" for="preparation-form-deliveryDate">Date de livraison souhaitée</label>
+        <label class="form-label" for="preparation-form-deliveryDate">Date de livraison souhaitée<span class="star">*</span></label>
         <input class="form-input required" v-model="deliveryDate" @input="cancelError()" type="date" name="preparation-form-deliveryDate" id="preparation-form-deliveryDate">
-        <label class="form-label" for="preparation-form-brand">Marque</label>
+        <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
         <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
-        <label class="form-label" for="preparation-form-model">Modèle</label>
+        <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
         <input class="form-input required" v-model="model" @input="cancelError()" type="text" name="preparation-form-model" id="preparation-form-model">
-        <label class="form-label" for="preparation-form-year">Année</label>
+        <label class="form-label" for="preparation-form-year">Année<span class="star">*</span></label>
         <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
-        <label class="form-label" for="preparation-form-immat">Immatriculation</label>
+        <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
         <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
-        <label class="form-label" for="preparation-form-kilometers">Km</label>
+        <label class="form-label" for="preparation-form-kilometers">Km<span class="star">*</span></label>
         <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
-        <label class="form-label" for="preparation-form-condition">Etat du véhicule</label>
+        <label class="form-label" for="preparation-form-condition">Etat du véhicule<span class="star">*</span></label>
         <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
         <label class="form-label" for="vehicle-form-steps">Etapes souhaitées</label>
         <input class="form-input" v-model="steps" type="text" name="vehicle-form-steps" id="vehicle-form-steps">

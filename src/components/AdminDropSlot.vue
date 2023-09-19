@@ -27,7 +27,8 @@ export default {
             moment: moment,
             error: "",
             start: "",
-            end: ""
+            end: "",
+            slot: ""
         }
     },
     computed: {
@@ -43,6 +44,7 @@ export default {
     },
     methods: {
         closeDropBox() {
+            this.$store.commit('EDIT_SLOT_TO_EVENTS_PLANNING', this.slot)
             this.$store.state.dropBox = "closed"
         },
         dropSlot() {
@@ -52,7 +54,8 @@ export default {
             })
             .then((res) => {
                 if(res.status === 201) {
-                    this.closeDropBox()
+                    this.$store.commit('EDIT_SLOT_TO_EVENTS_PLANNING', res.data)
+                    this.$store.state.dropBox = "closed"
                 }
             })
             .catch((error) => {
@@ -64,6 +67,7 @@ export default {
         this.$store.dispatch('getSlot', this.id)
         .then((res) => {
             console.log(res.data)
+            this.slot = res.data
             this.start = res.data.start
             this.end = res.data.end
         })

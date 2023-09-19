@@ -13,16 +13,16 @@
           <router-link v-for="vehicle in getVehicles" :key="vehicle.id" :to="{name: 'CustomerShowroomVehicle', params: {id: vehicle.id}}" class="showroom-customer-vehicle">
             <div class="showroom-customer-vehicle-img-box">
               <img crossorigin="anonymous" v-if="vehicle.photo1" :src="vehicle.photo1" alt="" class="showroom-customer-vehicle-img">
+              <img crossorigin="anonymous" v-if="!vehicle.photo1 && vehicle.photo2" :src="vehicle.photo2" alt="" class="showroom-customer-vehicle-img">
+              <img crossorigin="anonymous" v-if="!vehicle.photo1 && !vehicle.photo2 && vehicle.photo3" :src="vehicle.photo3" alt="" class="showroom-customer-vehicle-img">
+              <img crossorigin="anonymous" v-if="!vehicle.photo1 && !vehicle.photo2 && !vehicle.photo3 && vehicle.photo4" :src="vehicle.photo4" alt="" class="showroom-customer-vehicle-img">
+              <div v-if="!vehicle.photo1 && !vehicle.photo2 && !vehicle.photo3 && !vehicle.photo4" class="showroom-customer-vehicle-no-photo-back"></div>
+              <img crossorigin="anonymous" v-if="!vehicle.photo1 && !vehicle.photo2 && !vehicle.photo3 && !vehicle.photo4" src="../assets/images/back-vehicle.jpg" alt="" class="showroom-customer-vehicle-no-photo">
             </div>
             <div class="showroom-customer-vehicle-infos-box">
-              <div class="showroom-customer-vehicle-model-box">
-                <div class="showroom-customer-vehicle-brand">{{vehicle.brand}}</div>
-                <div class="showroom-customer-vehicle-model">{{vehicle.model}}</div>
-              </div>
-              <div class="showroom-customer-vehicle-options-box">
-                <div class="showroom-customer-vehicle-option">{{vehicle.year}}</div>
-                <div class="showroom-customer-vehicle-option">{{vehicle.kilometers}}</div>
-              </div>
+              <p class="showroom-customer-vehicle-title">{{vehicle.brand}} {{vehicle.model}}</p>
+              <p class="showroom-customer-vehicle-year">{{vehicle.year}}</p>
+              <p class="showroom-customer-vehicle-price">{{vehicle.price}} €</p>
             </div>
           </router-link>
         </div>
@@ -98,12 +98,16 @@ export default {
   flex-direction: column;
   margin-left: 1.66%;
   margin-right: 1.66%;
+  margin-bottom: 20px;
+  text-decoration: none;
+  box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+  border-radius: 20px;
+  overflow: hidden;
 }
 .showroom-customer-vehicle-img-box{
+  position: relative;
   width: 100%;
   height: 60%;
-  overflow: hidden;
-  border-radius: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -114,6 +118,41 @@ export default {
   object-fit: cover;
   object-position: center;
 }
-
+.showroom-customer-vehicle-no-photo{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.4;
+}
+.showroom-customer-vehicle-no-photo-back{
+  width: 100%;
+  height: 100%;
+  position: absolute;
+  background: black;
+}
+.showroom-customer-vehicle-infos-box{
+  width: 100%;
+  height: 40%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin-left: 10px;
+}
+.showroom-customer-vehicle-title{
+  color: black;
+  font-weight: 600;
+  margin-bottom: 5px;
+}
+.showroom-customer-vehicle-year{
+  color: rgb(153, 153, 153);
+  font-weight: 600;
+  margin-bottom: 15px;
+}
+.showroom-customer-vehicle-price{
+  color: black;
+  font-weight: 600;
+  font-size: 1.2em;
+}
 
 </style>

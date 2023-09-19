@@ -13,15 +13,15 @@
         <label class="home-form-label" for="password-input">Mot de Passe</label>
         <div class="home-form-password-box">
           <input class="home-form-password-input form-login-input required" @input="cancelError()" @keyup.enter="signIn()" v-model="password" type="password" id="password-input">
-          <img v-if="modePassword === 'hidden'" @click="showPassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye.svg">
-          <img v-if="modePassword === 'visible'" @click="hidePassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye-slash.svg">
+          <img crossorigin="anonymous" v-if="modePassword === 'hidden'" @click="showPassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye.svg">
+          <img crossorigin="anonymous" v-if="modePassword === 'visible'" @click="hidePassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye-slash.svg">
         </div>
         <div v-if="error" class="error">{{ error.message }}</div>
         <button @click="signIn()" id="button-login">Connexion</button>
       </div>
-      <img src="../assets/images/wave-trans.svg" alt="" class="wave">
+      <img crossorigin="anonymous" src="../assets/images/wave-trans.svg" alt="" class="wave">
     </div>
-    <img class="home-back" alt="" src="../assets/images/1.jpg">
+    <img crossorigin="anonymous" class="home-back" alt="" src="../assets/images/1.jpg">
   </div>
 </template>
 
@@ -98,6 +98,27 @@ export default {
       })
       this.error = ''
     },
+  },
+  created: function() {
+    this.$store.dispatch('checkToken')
+    .then((res) => {
+      if(res === 'expired') {
+        this.error = {message: 'Votre session a expiré, veuillez vous reconnecter'}
+      }
+      if(res === 'valid') {
+        this.$store.dispatch('getProfile')
+        .then((res) => {
+          if (res.data.role === "admin" || res.data.role === "employee") {
+            this.$router.push("/admin/home");
+            console.log('admin ou employee')
+          }
+          if (res.data.role === "customer") {
+            this.$router.push("/customer/home");
+            console.log('customer')
+          }
+        })
+      }
+    })
   }
 }
 </script>

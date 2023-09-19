@@ -23,9 +23,11 @@ export default createStore({
     invoiceBox: "closed",
     photoBox: "closed",
     preparations: [],
+    preparationsPlanning: [],
     preparation: "",
     steps: [],
     slots: [],
+    slotsPlanning: [],
     slot: "",
     events: [],
     vehicles: [],
@@ -43,7 +45,8 @@ export default createStore({
     preparationsCustomerPlanned: [],
     preparationsCustomerCompleted: [],
     preparationsBilling: [],
-    preparationsBilled: []
+    preparationsBilled: [],
+    eventsPlanning: []
   },
   getters: {
     getUser: (state) => {
@@ -165,9 +168,18 @@ export default createStore({
     },
     getPreparationsBilled: (state) => {
       return state.preparationsBilled
+    },
+    getEventsPlanning: (state) => {
+      return state.eventsPlanning
     }
   },
   mutations: {
+    LOG_OUT: function (state) {
+      state.user = "",
+      state.profile = "",
+      state.account = "",
+      localStorage.removeItem('token');
+    },
     RESET_BOX: function (state) {
       state.addBox = "closed";
       state.deleteBox = "closed";
@@ -231,7 +243,7 @@ export default createStore({
       state.customer = customer
     },
     UPDATE_CUSTOMERS: function (state, customer) {
-      state.customers.push(customer)
+      state.customers.unshift(customer)
     },
     SET_CUSTOMERS_WITHOUT_ACCOUNT: function (state, customers) {
       let cwa = [];
@@ -240,19 +252,58 @@ export default createStore({
           cwa.push(customer)
         }
       })
+      function SortTime(a, b) {
+        let da = a.company.toLowerCase();
+        let db = b.company.toLowerCase();
+        return (db < da) ? 1 : -1;
+      }
+      cwa.sort(SortTime)
       state.customersWithoutAccount = cwa
     },
     SET_PREPARATIONS: function (state, preparations) {
       state.preparations = preparations
-      // preparations.forEach(prep => {
-      //   state.events.push(
-      //     {
-      //       title: prep.immat,
-      //       start: prep.start,
-      //       end: prep.end
-      //     }
-      //   )
-      // })
+      preparations.forEach(prep => {
+        state.eventsPlanning.push(
+          {
+            title: prep.immat + ' ' + prep.brand + ' ' + prep.model,
+            start: prep.start,
+            end: prep.end,
+            eventId: prep.id,
+            type: 'preparation'
+          }
+        )
+      })
+    },
+    ADD_PREPARATION_TO_EVENTS_PLANNING: function (state, prep) {
+      state.eventsPlanning.push(
+        {
+          title: prep.immat + ' ' + prep.brand + ' ' + prep.model,
+          start: prep.start,
+          end: prep.end,
+          eventId: prep.id,
+          type: 'preparation'
+        }
+      )
+    },
+    EDIT_PREPARATION_TO_EVENTS_PLANNING: function (state, modifiedPrep) {
+      const prepIndex = state.eventsPlanning.findIndex(
+        e => e.eventId === modifiedPrep.id && e.type === "preparation")
+      state.eventsPlanning[prepIndex] = 
+      {
+        title: modifiedPrep.immat + ' ' + modifiedPrep.brand + ' ' + modifiedPrep.model,
+        start: modifiedPrep.start,
+        end: modifiedPrep.end,
+        eventId: modifiedPrep.id,
+        type: 'preparation'
+      }
+      state.eventsPlanning = [...state.eventsPlanning]
+    },
+    DELETE_PREPARATION_TO_EVENTS_PLANNING: function (state, prep) {
+      const prepIndex = state.eventsPlanning.findIndex(
+        e => e.eventId === prep && e.type === "preparation")
+      if (prepIndex !== -1) {
+        state.eventsPlanning.splice(prepIndex, 1);
+      }
     },
     SET_PREPARATION: function (state, preparation) {
       state.preparation = preparation
@@ -262,6 +313,54 @@ export default createStore({
     },
     SET_SLOTS: function (state, slots) {
       state.slots = slots
+      slots.forEach(slot => {
+        state.eventsPlanning.push(
+          {
+            title: slot.place,
+            start: slot.start,
+            end: slot.end,
+            eventId: slot.id,
+            backgroundColor: 'rgb(255,0,0)',
+            borderColor: 'rgb(255,0,0)',
+            type: 'slot'
+          }
+        )
+      })
+    },
+    ADD_SLOT_TO_EVENTS_PLANNING: function (state, slot) {
+      state.eventsPlanning.push(
+        {
+          title: slot.place,
+          start: slot.start,
+          end: slot.end,
+          eventId: slot.id,
+          backgroundColor: 'rgb(255,0,0)',
+          borderColor: 'rgb(255,0,0)',
+          type: 'slot'
+        }
+      )
+    },
+    EDIT_SLOT_TO_EVENTS_PLANNING: function (state, modifiedSlot) {
+      const slotIndex = state.eventsPlanning.findIndex(
+        e => e.eventId === modifiedSlot.id && e.type === "slot")
+      state.eventsPlanning[slotIndex] =
+      {
+        title: modifiedSlot.place,
+        start: modifiedSlot.start,
+        end: modifiedSlot.end,
+        eventId: modifiedSlot.id,
+        backgroundColor: 'rgb(255,0,0)',
+        borderColor: 'rgb(255,0,0)',
+        type: 'slot'
+      }
+      state.eventsPlanning = [...state.eventsPlanning]
+    },
+    DELETE_SLOT_TO_EVENTS_PLANNING: function (state, slot) {
+      const slotIndex = state.eventsPlanning.findIndex(
+        e => e.eventId === slot && e.type === "slot")
+      if (slotIndex !== -1) {
+        state.eventsPlanning.splice(slotIndex, 1);
+      }
     },
     SET_SLOT: function (state, slot) {
       state.slot = slot
@@ -279,6 +378,11 @@ export default createStore({
       state.customerSlotRequestsRefused = []
       state.prepRequests = requests.preps
       state.slotRequests = requests.slots
+      function SortTime(a, b) {
+        let da = a.createdAt;
+        let db = b.createdAt;
+        return (db > da) ? 1 : -1;
+      }
       requests.preps.forEach(prep => {
         if(prep.state === 'pending') {
           state.customerPrepRequestsPending.push(prep)
@@ -295,6 +399,10 @@ export default createStore({
           state.customerSlotRequestsRefused.push(slot)
         }
       })
+      state.customerPrepRequestsPending.sort(SortTime)
+      state.customerPrepRequestsRefused.sort(SortTime)
+      state.customerSlotRequestsPending.sort(SortTime)
+      state.customerSlotRequestsRefused.sort(SortTime)
     },
     SET_PREP_REQUEST: function (state, request) {
       state.prepRequest = request
@@ -313,9 +421,23 @@ export default createStore({
     SET_PREPARATIONS_COMPLETED: function (state, preparations) {
       state.preparationsBilling = preparations.billing
       state.preparationsBilled = preparations.billed
+    },
+    RESET_EVENTS_PLANNING: function (state) {
+      state.eventsPlanning = []
     }
   },
   actions: {
+    checkToken: () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const tokenLSV = jwt_decode(token);
+        if (Date.now() >= tokenLSV.exp * 1000) {
+          return 'expired'
+        } else {
+          return 'valid'
+        }
+      }
+    },
     login: ({ commit }, userInfos) => {
       return new Promise((resolve, reject) => {
         instance.post('/auth/login', userInfos)
@@ -340,6 +462,7 @@ export default createStore({
           if (userId) {
             instance.get(`/account/${userId}`)
               .then(function (response) {
+                commit('SET_USER', response.data)
                 if (response.data.role === 'customer') {
                   instance.get(`/customer/user/${response.data.id}`)
                     .then((res) => {
@@ -468,16 +591,17 @@ export default createStore({
         });
       })
     },
-    getPreparations: ({ commit }) => {
+    getPreparations: ({ commit }, date) => {
       return new Promise((resolve, reject) => {
-        instance.get('/preparation/')
-        .then((response) => {
-          commit('SET_PREPARATIONS', response.data)
-          resolve(response)
-        })
-        .catch(function (error) {
-          reject(error)
-        });
+        commit('RESET_EVENTS_PLANNING')
+        instance.get(`/preparation/start/${date.start}/end/${date.end}`)
+          .then((response) => {
+            commit('SET_PREPARATIONS', response.data)
+            resolve(response)
+          })
+          .catch(function (error) {
+            reject(error)
+          });
       })
     },
     getPreparation: ({ commit }, preparation) => {
@@ -496,9 +620,9 @@ export default createStore({
           });
       })
     },
-    getSlots: ({ commit }) => {
+    getSlots: ({ commit }, date) => {
       return new Promise((resolve, reject) => {
-        instance.get('/slot/')
+        instance.get(`/slot/start/${date.start}/end/${date.end}`)
         .then((response) => {
           commit('SET_SLOTS', response.data)
           resolve(response)

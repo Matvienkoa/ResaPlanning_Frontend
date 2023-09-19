@@ -14,9 +14,11 @@
                     <div class="home-tracking-prep-infos">
                         <p>{{prep.brand}}</p>
                         <p>{{prep.model}}</p>
-                        <p>{{prep.state}}</p>
+                        <p>{{prep.immat}}</p>
                     </div>
-                    <img src="../assets/Icons/eye.svg" alt="" class="home-tracking-prep-icon" />
+                    <div class="home-tracking-prep-icon-box">
+                        <img crossorigin="anonymous" src="../assets/Icons/eye.svg" alt="" class="home-tracking-prep-icon" />
+                    </div>
                 </div>
             </div>
             <div class="requests-customer-pending-box">
@@ -27,9 +29,11 @@
                     <div class="home-tracking-prep-infos">
                         <p>{{prep.brand}}</p>
                         <p>{{prep.model}}</p>
-                        <p>{{prep.state}}</p>
+                        <p>{{prep.immat}}</p>
                     </div>
-                    <img src="../assets/Icons/eye.svg" alt="" class="home-tracking-prep-icon" />
+                    <div class="home-tracking-prep-icon-box">
+                        <img crossorigin="anonymous" src="../assets/Icons/eye.svg" alt="" class="home-tracking-prep-icon" />
+                    </div>
                 </div>
             </div>
         </div>
@@ -81,8 +85,22 @@ export default {
 }
 .home-tracking-prep-infos{
     display: flex;
+    margin-left: 10px;
+}
+.home-tracking-prep-infos p{
+    margin-right: 10px;
+}
+.home-tracking-prep-icon-box{
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    border-radius: 30px;
+    margin-right: 10px;
 }
 .home-tracking-prep-icon{
-    height: 20px;
+    height: 18px;
 }
 </style>

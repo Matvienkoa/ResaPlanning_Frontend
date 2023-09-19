@@ -1,8 +1,9 @@
 <template>
   <div class="add-back">
     <div class="add-box">
-        <img @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
+        <img crossorigin="anonymous" @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
         <h2 class="add-box-title">Supprimer ce client?</h2>
+        <h3 v-if="account === null || account === undefined" class="second-title">Le compte utilisateur associé sera également supprimé</h3>
         <div v-if="error" class="error">{{ error }}</div>
         <div class="box-choice-button">
             <button class="valid-button" @click="deleteCustomer()">Oui</button>
@@ -17,7 +18,7 @@ import instance from '@/axios';
 
 export default {
     name: 'AdminDeleteCustomer',
-    props: ["id"],
+    props: ["id", "account"],
     data() {
         return {
             error: "",

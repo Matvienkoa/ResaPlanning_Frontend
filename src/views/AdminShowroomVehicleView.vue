@@ -10,8 +10,8 @@
     <div class="showroom-vehicle-admin-box">
       <div class="showroom-vehicle-admin-back-box">
         <div class="showroom-vehicle-admin-background"></div>
-        <img v-if="getVehicle.photo1" :src="getVehicle.photo1" alt="" class="showroom-vehicle-admin-back-img">
-        <img v-if="!getVehicle.photo1" src="../assets/images/back-vehicle.jpg" alt="" class="showroom-vehicle-admin-back-img">
+        <img crossorigin="anonymous" v-if="getVehicle.photo1" :src="getVehicle.photo1" alt="" class="showroom-vehicle-admin-back-img">
+        <img crossorigin="anonymous" v-if="!getVehicle.photo1" src="../assets/images/back-vehicle.jpg" alt="" class="showroom-vehicle-admin-back-img">
         <div class="showroom-vehicle-admin-title">
           <div class="title-white">{{getVehicle.brand}}</div><div class="title-green">{{getVehicle.model}}</div>
         </div>
@@ -26,8 +26,12 @@
             <div class="subtitle-green">{{getVehicle.price}}</div><div class="subtitle-white">€</div>
           </div>
         </div>
-        <img @click="openEditBox('editVehicle')" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-admin-edit-icon">
-        <img @click="openDeleteBox('deleteVehicle')" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-admin-delete-icon">
+        <div @click="openEditBox('editVehicle')" class="showroom-vehicle-admin-edit-icon-box">
+          <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-admin-edit-icon">
+        </div>
+        <div @click="openDeleteBox('deleteVehicle')" class="showroom-vehicle-admin-delete-icon-box">
+          <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-admin-delete-icon">
+        </div>
       </div>
       <div class="showroom-vehicle-admin-infos-box">
         <p>Marque : {{getVehicle.brand}}</p>
@@ -40,40 +44,64 @@
       </div>
       <div class="showroom-vehicle-admin-photos-box">
         <div v-if="getVehicle.photo1" class="showroom-vehicle-admin-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo1})" :src="getVehicle.photo1" alt="" class="showroom-vehicle-photo">
-          <img @click="openEditPhoto({number: 'photo1', type: 'editPhotoVehicle'})" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
-          <img @click="openDeletePhoto({number: 'photo1', type: 'deletePhotoVehicle'})" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-delete-icon">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo1})" :src="getVehicle.photo1" alt="" class="showroom-vehicle-photo">
+          <div @click="openEditPhoto({number: 'photo1', type: 'editPhotoVehicle'})" class="showroom-vehicle-edit-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
+          </div>
+          <div @click="openDeletePhoto({number: 'photo1', type: 'deletePhotoVehicle'})" class="showroom-vehicle-delete-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-delete-icon">
+          </div>
         </div>
         <div v-if="!getVehicle.photo1" class="showroom-vehicle-admin-photo-box">
-          <img src="../assets/images/1.jpg" alt="" class="showroom-vehicle-no-photo">
-          <img @click="openAddPhoto({number: 'photo1', type: 'addPhotoVehicle'})" src="../assets/Icons/add-photo.svg" alt="" class="showroom-vehicle-add-icon">
+          <img crossorigin="anonymous" src="../assets/images/1.jpg" alt="" class="showroom-vehicle-no-photo">
+          <div @click="openAddPhoto({number: 'photo1', type: 'addPhotoVehicle'})" class="showroom-vehicle-add-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/add-photo.svg" alt="" class="showroom-vehicle-add-icon">
+          </div>
         </div>
         <div v-if="getVehicle.photo2" class="showroom-vehicle-admin-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo2})" :src="getVehicle.photo2" alt="" class="showroom-vehicle-photo">
-          <img @click="openEditPhoto({number: 'photo2', type: 'editPhotoVehicle'})" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
-          <img @click="openDeletePhoto({number: 'photo2', type: 'deletePhotoVehicle'})" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-delete-icon">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo2})" :src="getVehicle.photo2" alt="" class="showroom-vehicle-photo">
+          <div @click="openEditPhoto({number: 'photo2', type: 'editPhotoVehicle'})" class="showroom-vehicle-edit-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
+          </div>
+          <div @click="openDeletePhoto({number: 'photo2', type: 'deletePhotoVehicle'})" class="showroom-vehicle-delete-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-delete-icon">
+          </div>
         </div>
         <div v-if="!getVehicle.photo2" class="showroom-vehicle-admin-photo-box">
-          <img src="../assets/images/1.jpg" alt="" class="showroom-vehicle-no-photo">
-          <img @click="openAddPhoto({number: 'photo2', type: 'addPhotoVehicle'})" src="../assets/Icons/add-photo.svg" alt="" class="showroom-vehicle-add-icon">
+          <img crossorigin="anonymous" src="../assets/images/1.jpg" alt="" class="showroom-vehicle-no-photo">
+          <div @click="openAddPhoto({number: 'photo2', type: 'addPhotoVehicle'})" class="showroom-vehicle-add-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/add-photo.svg" alt="" class="showroom-vehicle-add-icon">
+          </div>
         </div>
         <div v-if="getVehicle.photo3" class="showroom-vehicle-admin-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo3})" :src="getVehicle.photo3" alt="" class="showroom-vehicle-photo">
-          <img @click="openEditPhoto({number: 'photo3', type: 'editPhotoVehicle'})" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
-          <img @click="openDeletePhoto({number: 'photo3', type: 'deletePhotoVehicle'})" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-delete-icon">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo3})" :src="getVehicle.photo3" alt="" class="showroom-vehicle-photo">
+          <div @click="openEditPhoto({number: 'photo3', type: 'editPhotoVehicle'})" class="showroom-vehicle-edit-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
+          </div>
+          <div @click="openDeletePhoto({number: 'photo3', type: 'deletePhotoVehicle'})" class="showroom-vehicle-delete-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-delete-icon">
+          </div>
         </div>
         <div v-if="!getVehicle.photo3" class="showroom-vehicle-admin-photo-box">
-          <img src="../assets/images/1.jpg" alt="" class="showroom-vehicle-no-photo">
-          <img @click="openAddPhoto({number: 'photo3', type: 'addPhotoVehicle'})" src="../assets/Icons/add-photo.svg" alt="" class="showroom-vehicle-add-icon">
+          <img crossorigin="anonymous" src="../assets/images/1.jpg" alt="" class="showroom-vehicle-no-photo">
+          <div @click="openAddPhoto({number: 'photo3', type: 'addPhotoVehicle'})" class="showroom-vehicle-add-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/add-photo.svg" alt="" class="showroom-vehicle-add-icon">
+          </div>
         </div>
         <div v-if="getVehicle.photo4" class="showroom-vehicle-admin-photo-box">
-          <img @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo4})" :src="getVehicle.photo4" alt="" class="showroom-vehicle-photo">
-          <img @click="openEditPhoto({number: 'photo4', type: 'editPhotoVehicle'})" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
-          <img @click="openDeletePhoto({number: 'photo4', type: 'deletePhotoVehicle'})" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-delete-icon">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo4})" :src="getVehicle.photo4" alt="" class="showroom-vehicle-photo">
+          <div @click="openEditPhoto({number: 'photo4', type: 'editPhotoVehicle'})" class="showroom-vehicle-edit-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
+          </div>
+          <div @click="openDeletePhoto({number: 'photo4', type: 'deletePhotoVehicle'})" class="showroom-vehicle-delete-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-delete-icon">
+          </div>
         </div>
         <div v-if="!getVehicle.photo4" class="showroom-vehicle-admin-photo-box">
-          <img src="../assets/images/1.jpg" alt="" class="showroom-vehicle-no-photo">
-          <img @click="openAddPhoto({number: 'photo4', type: 'addPhotoVehicle'})" src="../assets/Icons/add-photo.svg" alt="" class="showroom-vehicle-add-icon">
+          <img crossorigin="anonymous" src="../assets/images/1.jpg" alt="" class="showroom-vehicle-no-photo">
+          <div @click="openAddPhoto({number: 'photo4', type: 'addPhotoVehicle'})" class="showroom-vehicle-add-icon-box">
+            <img crossorigin="anonymous" src="../assets/Icons/add-photo.svg" alt="" class="showroom-vehicle-add-icon">
+          </div>
         </div>
       </div>
     </div>
@@ -211,25 +239,44 @@ export default {
   color: white;
   margin: 0 2px;
 }
-.showroom-vehicle-admin-edit-icon{
+.showroom-vehicle-admin-edit-icon-box{
+  height: 40px;
+  width: 40px;
   cursor: pointer;
-  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
   position: absolute;
-  bottom: 0;
-  right: 40px;
+  bottom: 10px;
+  right: 60px;
+  background-color: white;
+}
+.showroom-vehicle-admin-edit-icon{
+  height: 20px;
+}
+.showroom-vehicle-admin-delete-icon-box{
+  height: 40px;
+  width: 40px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  background-color: white;
 }
 .showroom-vehicle-admin-delete-icon{
-  cursor: pointer;
   height: 20px;
-  position: absolute;
-  bottom: 0;
-  right: 10px;
 }
 
 .showroom-vehicle-admin-infos-box{
-  width: 100%;
+  width: 90%;
   display: flex;
   flex-direction: column;
+  margin-top: 20px;
 }
 
 .showroom-vehicle-admin-photos-box{
@@ -247,6 +294,9 @@ export default {
   border-radius: 20px;
   overflow: hidden;
   margin: 2%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .showroom-vehicle-photo{
   cursor: zoom-in;
@@ -255,33 +305,59 @@ export default {
   object-fit: cover;
 }
 .showroom-vehicle-no-photo{
+  position: absolute;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  opacity: 0.6;
+  opacity: 0.5;
+}
+.showroom-vehicle-edit-icon-box{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
+  position: absolute;
+  z-index: 1;
+  bottom: 2%;
+  right: 15%;
+  background-color: white;
 }
 .showroom-vehicle-edit-icon{
-  width: 20px;
+  width: 17px;
+}
+.showroom-vehicle-delete-icon-box{
+  height: 30px;
+  width: 30px;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 30px;
   position: absolute;
   z-index: 1;
-  top: 2%;
-  right: 15%;
-  cursor: pointer;
+  bottom: 2%;
+  right: 2%;
+  background-color: white;
 }
 .showroom-vehicle-delete-icon{
-  width: 20px;
-  position: absolute;
-  z-index: 1;
-  top: 2%;
-  right: 2%;
+  height: 17px;
+}
+.showroom-vehicle-add-icon-box{
   cursor: pointer;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60px;
+  width: 60px;
+  border-radius: 30px;
+  background-color: white;
 }
 .showroom-vehicle-add-icon{
-  position: absolute;
-  z-index: 1;
-  top: 40%;
-  left: 40%;
-  height: 20%;
-  cursor: pointer;
+  height: 30px;
 }
 </style>

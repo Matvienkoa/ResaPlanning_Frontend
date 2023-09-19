@@ -27,7 +27,8 @@ export default {
             moment: moment,
             error: "",
             start: "",
-            end: ""
+            end: "",
+            preparation: ""
         }
     },
     computed: {
@@ -39,6 +40,7 @@ export default {
     },
     methods: {
         closeSizeBox() {
+            this.$store.commit('EDIT_PREPARATION_TO_EVENTS_PLANNING', this.preparation)
             this.$store.state.sizeBox = "closed"
         },
         sizePreparation() {
@@ -48,7 +50,8 @@ export default {
             })
             .then((res) => {
                 if(res.status === 201) {
-                    this.closeSizeBox()
+                    this.$store.commit('EDIT_PREPARATION_TO_EVENTS_PLANNING', res.data)
+                    this.$store.state.sizeBox = "closed"
                 }
             })
             .catch((error) => {
@@ -60,6 +63,7 @@ export default {
         this.$store.dispatch('getPreparation', this.id)
         .then((res) => {
             console.log(res.data)
+            this.preparation = res.data
             this.start = res.data.start
             this.end = res.data.end
         })

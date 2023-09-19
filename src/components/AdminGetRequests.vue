@@ -5,7 +5,7 @@
       <AdminGetSlotRequest v-if="getEditBox === 'showSlotRequest'" :id="this.requestId" />
       <AdminRefuseSlotRequest v-if="getDeleteBox === 'refuseSlotRequest'" :id="this.requestId" />
         <div class="get-box">
-            <img @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+            <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <div class="get-requests-box">
               <div class="get-preps-box">
                 <div class="get-requests-title-box">
@@ -14,16 +14,17 @@
                 <h3 v-if="getPrepRequestsPending.length === 0" class="no-request">Aucune nouvelle demande pour le moment</h3>
                 <div class="prep-request" v-for="prepR in getPrepRequestsPending" :key="prepR.id">
                   <div class="prep-request-infos">
+                    <p class="prep-request-info">Le {{moment(prepR.createdAt).format('LL')}}</p>
                     <p class="prep-request-info">{{prepR.company}}</p>
                     <p class="prep-request-info">{{prepR.firstName}}</p>
                     <p class="prep-request-info">{{prepR.lastName}}</p>
                   </div>
                   <div class="prep-request-actions">
                     <div @click="openEditBox({mode: 'showPrepRequest', id: prepR.id})" class="requests-icon-box">
-                      <img class="requests-icon" src="../assets/Icons/eye-green.svg" alt="" />
+                      <img crossorigin="anonymous" class="requests-icon" src="../assets/Icons/eye-green.svg" alt="" />
                     </div>
                     <div @click="openDeleteBox({mode: 'refusePrepRequest', id: prepR.id})" class="requests-icon-box">
-                      <img class="requests-icon" src="../assets/Icons/refuse.svg" alt="" />
+                      <img crossorigin="anonymous" class="requests-icon" src="../assets/Icons/refuse.svg" alt="" />
                     </div>
                   </div>
                 </div>
@@ -35,16 +36,17 @@
                 <h3 v-if="getSlotRequestsPending.length === 0" class="no-request">Aucune nouvelle demande pour le moment</h3>
                 <div class="slot-request" v-for="slotR in getSlotRequestsPending" :key="slotR.id">
                   <div class="slot-request-infos">
+                    <p class="slot-request-info">Le {{moment(slotR.createdAt).format('LL')}}</p>
                     <p class="slot-request-info">{{slotR.company}}</p>
                     <p class="slot-request-info">{{slotR.firstName}}</p>
                     <p class="slot-request-info">{{slotR.lastName}}</p>
                   </div>
                   <div class="slot-request-actions">
                     <div @click="openEditBox({mode: 'showSlotRequest', id: slotR.id})" class="requests-icon-box">
-                      <img class="requests-icon" src="../assets/Icons/eye-green.svg" alt="" />
+                      <img crossorigin="anonymous" class="requests-icon" src="../assets/Icons/eye-green.svg" alt="" />
                     </div>
                     <div @click="openDeleteBox({mode: 'refuseSlotRequest', id: slotR.id})" class="requests-icon-box">
-                      <img class="requests-icon" src="../assets/Icons/refuse.svg" alt="" />
+                      <img crossorigin="anonymous" class="requests-icon" src="../assets/Icons/refuse.svg" alt="" />
                     </div>
                   </div>
                 </div>
@@ -56,6 +58,8 @@
 
 <script>
 import { mapGetters } from 'vuex';
+let moment = require('moment');
+moment.locale('fr');
 
 import AdminGetPrepRequest from '@/components/AdminGetPrepRequest.vue';
 import AdminRefusePrepRequest from '@/components/AdminRefusePrepRequest.vue';
@@ -72,6 +76,7 @@ export default {
   },
   data() {
     return {
+      moment: moment,
       requestId: null
     }
   },
