@@ -6,7 +6,7 @@
     <AdminDeleteStep v-if="getDeleteBox === 'deleteStep'" :preparationId="this.id" :stepId="step" />
     <AdminEditStateStep v-if="getStepBox === 'editStateStep'" :preparationId="this.id" :stepId="step" :stepState="state" />
     <AdminAddStep v-if="getAddBox === 'addStep'" :preparationId="this.id" />
-    <AdminGetPhotoPreparation v-if="getPhotoBox === 'getPhoto'" :url="this.urlPhoto" />
+    <AdminGetPhotoPreparation v-if="getPhotoBox === 'getPhoto'" :url="this.urlPhoto" :numberPhoto="this.numberPhoto" />
     <AdminAddPhotoPreparation v-if="getAddBox === 'addPhotoPreparation'" :preparationId="this.id" :numberPhoto="this.numberPhoto" />
     <AdminEditPhotoPreparation v-if="getEditBox === 'editPhotoPreparation'" :preparationId="this.id" :numberPhoto="this.numberPhoto" />
     <AdminDeletePhotoPreparation v-if="getDeleteBox === 'deletePhotoPreparation'" :preparationId="this.id" :numberPhoto="this.numberPhoto" />
@@ -22,6 +22,7 @@
         <img src="../assets/Icons/completed.svg" alt="" class="get-state-icon" /><p class="get-state-txt-completed">Terminée</p>
       </div>
       <div class="get-infos-box">
+        <p>Réalisée par : {{getPreparation.maker}}</p>
         <p>Du {{moment(getPreparation.start).format('LLL')}}</p>
         <p>Au {{moment(getPreparation.end).format('LLL')}}</p>
         <p>Marque : {{getPreparation.brand}}</p>
@@ -29,8 +30,10 @@
         <p>Annéee : {{getPreparation.year}}</p>
         <p>KM : {{getPreparation.kilometer}}</p>
         <p>Etat du véhicule : {{getPreparation.condition}}</p>
-        <p>Observations : {{getPreparation.observationsDepot}}</p>
-        <p>Informations client : {{getPreparation.observationsCustomer}}</p>
+        <p v-if="getPreparation.observationsDepot">Observations : {{getPreparation.observationsDepot}}</p>
+        <p v-if="!getPreparation.observationsDepot">Observations : Non renseigné</p>
+        <p v-if="getPreparation.observationsCustomer">Informations client : {{getPreparation.observationsCustomer}}</p>
+        <p v-if="!getPreparation.observationsCustomer">Informations client : Non renseigné</p>
         <div @click="openEditBox({mode: 'editPreparation', id: this.id})" class="edit-icon-box">
           <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
         </div>
@@ -39,9 +42,9 @@
         </div>
       </div>
       <div class="get-customer-box">
-        <p>Client : {{getCustomer.company}} {{getCustomer.firstName}} {{getCustomer.lastName}}</p>
-        <p>Adresse : {{getCustomer.adress}} {{getCustomer.adress2}} {{getCustomer.zipCode}} {{getCustomer.city}}</p>
-        <p>Contact : {{getCustomer.phone}} {{getCustomer.mail}}</p>
+        <p>Client : {{getPreparation.company}} {{getPreparation.firstName}} {{getPreparation.lastName}}</p>
+        <p>Adresse : {{getPreparation.adress}} {{getPreparation.adress2}} {{getPreparation.zipCode}} {{getPreparation.city}}</p>
+        <p>Contact : {{getPreparation.phone}} {{getPreparation.mail}}</p>
       </div>
       <div class="get-steps-box">
         <h2 class="second-title">Etapes de préparations</h2>
@@ -76,7 +79,7 @@
       <h2 class="second-title">Photos</h2>
       <div class="get-photos-box">
         <div v-if="getPreparation.photo1" class="get-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo1})" :src="getPreparation.photo1" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo1, number: 'photo1'})" :src="getPreparation.photo1" alt="" class="get-photo">
           <div @click="openEditPhoto({number: 'photo1', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
@@ -89,7 +92,7 @@
           <img crossorigin="anonymous" @click="openAddPhoto({number: 'photo1', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
         <div v-if="getPreparation.photo2" class="get-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo2})" :src="getPreparation.photo2" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo2, number: 'photo2'})" :src="getPreparation.photo2" alt="" class="get-photo">
           <div @click="openEditPhoto({number: 'photo2', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
@@ -102,7 +105,7 @@
           <img crossorigin="anonymous" @click="openAddPhoto({number: 'photo2', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
         <div v-if="getPreparation.photo3" class="get-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo3})" :src="getPreparation.photo3" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo3, number: 'photo3'})" :src="getPreparation.photo3" alt="" class="get-photo">
           <div @click="openEditPhoto({number: 'photo3', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
@@ -115,7 +118,7 @@
           <img crossorigin="anonymous" @click="openAddPhoto({number: 'photo3', type: 'addPhotoPreparation'})" src="../assets/Icons/add-photo.svg" alt="" class="get-photo-add-icon">
         </div>
         <div v-if="getPreparation.photo4" class="get-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo4})" :src="getPreparation.photo4" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo4, number: 'photo4'})" :src="getPreparation.photo4" alt="" class="get-photo">
           <div @click="openEditPhoto({number: 'photo4', type: 'editPhotoPreparation'})" class="get-photo-edit-icon-box">
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
@@ -178,20 +181,19 @@ export default {
       step: null,
       type: "",
       state: "",
-      customer: null,
       preparation: null,
       numberPhoto: "",
       urlPhoto: ""
     }
   },
   computed: {
-    ...mapGetters(['getPreparation', 'getSteps', 'getCustomers','getCustomer', 'getStepBox', 'getEditBox', 'getAddBox', 'getDeleteBox', 'getPhotoBox'])
+    ...mapGetters(['getPreparation', 'getSteps', 'getStepBox', 'getEditBox', 'getAddBox', 'getDeleteBox', 'getPhotoBox'])
   },
   methods: {
     openPhotoBox(data) {
       this.urlPhoto = data.url
       this.$store.state.photoBox = data.mode
-      console.log('ok')
+      this.numberPhoto = data.number
     },
     openEditBox(data) {
       this.preparation = data.id
@@ -235,14 +237,11 @@ export default {
     }
   },
   created: function () {
-    this.$store.dispatch('getCustomers');
+    // this.$store.dispatch('getCustomers');
     this.$store.dispatch('getPreparation', this.id)
-    .then((res) => {
-      this.$store.dispatch('getCustomer', res.data.customerId)
-    })
-  },
-  updated() {
-    
+    // .then((res) => {
+    //   this.$store.dispatch('getCustomer', res.data.customerId)
+    // })
   }
 }
 </script>

@@ -8,18 +8,25 @@
           <option v-if="getCustomers.length === 0" disabled selected value="">Aucun client trouvé</option>
           <option v-for="customer in getCustomers" :key="customer.id" :value="customer.id">{{customer.company}}</option>
       </select>
+      <label class="form-label" for="preparation-form-duration">Durée de l'intervention<span class="star">*</span></label>
+        <select class="form-input required" @change="cancelError()" v-model="duration" name="preparation-form-duration" id="preparation-form-duration">
+            <option value="half">Demi-Journée</option>
+            <option value="day">Journée</option>
+        </select>
       <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
       <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
       <label class="form-label" for="preparation-form-endDate">Date de fin<span class="star">*</span></label>
       <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
       <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
       <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-      <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
-      <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+      <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+      <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
       <label class="form-label" for="preparation-form-place">Lieux<span class="star">*</span></label>
       <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
       <label class="form-label" for="vehicle-form-observations">Observations</label>
       <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+      <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+      <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
       <div v-if="error" class="error">{{ error.message }}</div>
       <div class="box-choice-button">
         <button class="valid-button" @click="editSlot()">Modifier</button>
@@ -49,7 +56,9 @@ export default {
       endDate: "",
       startTime: "",
       endTime: "",
-      place: ""
+      place: "",
+      maker: "",
+      duration: ""
     }
   },
   computed: {
@@ -67,7 +76,9 @@ export default {
         startDate: this.startDate,
         endDate: this.endDate,
         startTime: this.startTime,
-        endTime: this.endTime
+        endTime: this.endTime,
+        maker: this.maker,
+        duration: this.duration
       })
       .then((res) => {
           if(res.status === 201) {
@@ -107,6 +118,8 @@ export default {
       this.endTime = moment(res.data.end).format('LT')
       this.place = res.data.place
       this.observationsDepot = res.data.observationsDepot
+      this.maker = res.data.maker
+      this.duration = res.data.duration
     })
   },
 }

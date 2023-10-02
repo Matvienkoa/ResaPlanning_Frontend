@@ -1,7 +1,7 @@
 <template>
 <AdminEditVehicle v-if="getEditBox === 'editVehicle'" />
 <AdminDeleteVehicle v-if="getDeleteBox === 'deleteVehicle'" />
-<AdminGetPhotoVehicle v-if="getPhotoBox === 'getPhoto'" :url="this.urlPhoto" />
+<AdminGetPhotoVehicle v-if="getPhotoBox === 'getPhoto'" :url="this.urlPhoto" :numberPhoto="this.numberPhoto" />
 <AdminEditPhotoVehicle v-if="getEditBox === 'editPhotoVehicle'" :numberPhoto="this.numberPhoto" />
 <AdminAddPhotoVehicle v-if="getAddBox === 'addPhotoVehicle'" :numberPhoto="this.numberPhoto" />
 <AdminDeletePhotoVehicle v-if="getDeleteBox === 'deletePhotoVehicle'" :numberPhoto="this.numberPhoto" />
@@ -23,7 +23,7 @@
             <div class="subtitle-green">{{getVehicle.kilometers}}</div><div class="subtitle-white">KM</div>
           </div>
           <div class="showroom-vehicle-admin-subtitle">
-            <div class="subtitle-green">{{getVehicle.price}}</div><div class="subtitle-white">€</div>
+            <div class="subtitle-green">{{getVehicle.marketPrice/100}}</div><div class="subtitle-white">€</div>
           </div>
         </div>
         <div @click="openEditBox('editVehicle')" class="showroom-vehicle-admin-edit-icon-box">
@@ -39,12 +39,17 @@
         <p>Année : {{getVehicle.year}}</p>
         <p>KM : {{getVehicle.kilometers}}</p>
         <p>Immat : {{getVehicle.immat}}</p>
-        <p>Observations : {{getVehicle.observations}}</p>
-        <p>Prix de vente : {{getVehicle.price}} €</p>
+        <p v-if="getVehicle.observations">Observations : {{getVehicle.observations}}</p>
+        <p>Prix Marchand : {{getVehicle.marketPrice/100}} €</p>
+        <p>Prix Public : {{getVehicle.publicPrice/100}} €</p>
+        <p>Prix d'achat : {{getVehicle.purchasePrice/100}} €</p>
+        <p v-if="getVehicle.frevos">FREVOS : {{getVehicle.frevos}}</p>
+        <p v-if="getVehicle.frevosPrice">Montant FREVOS : {{getVehicle.frevosPrice/100}} €</p>
+        <p v-if="getVehicle.firstHand === 'yes'">Première main</p>
       </div>
       <div class="showroom-vehicle-admin-photos-box">
         <div v-if="getVehicle.photo1" class="showroom-vehicle-admin-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo1})" :src="getVehicle.photo1" alt="" class="showroom-vehicle-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo1, number: 'photo1'})" :src="getVehicle.photo1" alt="" class="showroom-vehicle-photo">
           <div @click="openEditPhoto({number: 'photo1', type: 'editPhotoVehicle'})" class="showroom-vehicle-edit-icon-box">
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
           </div>
@@ -59,7 +64,7 @@
           </div>
         </div>
         <div v-if="getVehicle.photo2" class="showroom-vehicle-admin-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo2})" :src="getVehicle.photo2" alt="" class="showroom-vehicle-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo2, number: 'photo2'})" :src="getVehicle.photo2" alt="" class="showroom-vehicle-photo">
           <div @click="openEditPhoto({number: 'photo2', type: 'editPhotoVehicle'})" class="showroom-vehicle-edit-icon-box">
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
           </div>
@@ -74,7 +79,7 @@
           </div>
         </div>
         <div v-if="getVehicle.photo3" class="showroom-vehicle-admin-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo3})" :src="getVehicle.photo3" alt="" class="showroom-vehicle-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo3, number: 'photo3'})" :src="getVehicle.photo3" alt="" class="showroom-vehicle-photo">
           <div @click="openEditPhoto({number: 'photo3', type: 'editPhotoVehicle'})" class="showroom-vehicle-edit-icon-box">
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
           </div>
@@ -89,7 +94,7 @@
           </div>
         </div>
         <div v-if="getVehicle.photo4" class="showroom-vehicle-admin-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo4})" :src="getVehicle.photo4" alt="" class="showroom-vehicle-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getVehicle.photo4, number: 'photo4'})" :src="getVehicle.photo4" alt="" class="showroom-vehicle-photo">
           <div @click="openEditPhoto({number: 'photo4', type: 'editPhotoVehicle'})" class="showroom-vehicle-edit-icon-box">
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
           </div>
@@ -142,6 +147,7 @@ export default {
     openPhotoBox(data) {
       this.urlPhoto = data.url
       this.$store.state.photoBox = data.mode
+      this.numberPhoto = data.number
     },
     openEditBox(type) {
       this.$store.state.editBox = type
@@ -165,6 +171,22 @@ export default {
   created: function () {
     this.$store.commit('RESET_BOX');
     this.$store.dispatch('getVehicle', this.$route.params.id);
+    this.$store.dispatch('checkToken')
+    .then((res) => {
+      if(res === 'expired') {
+        this.$router.push('/')
+      }
+    })
+    this.$store.dispatch('getProfile')
+    .then((res) => {
+      if(res.data) {
+        if(res.data.role !== 'admin') {
+          this.$router.push('/')
+        }
+      } else {
+        this.$router.push('/')
+      }
+    })
   }
 }
 </script>

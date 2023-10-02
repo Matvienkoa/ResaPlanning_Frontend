@@ -62,7 +62,6 @@ export default {
     created: function () {
         this.$store.dispatch('getSlot', this.id)
         .then((res) => {
-            console.log(res.data)
             this.slot = res.data
             this.start = res.data.start
             this.end = res.data.end

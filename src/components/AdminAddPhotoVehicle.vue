@@ -69,8 +69,8 @@ export default {
                 this.$store.dispatch('getVehicle', this.$route.params.id);
             }
         })
-        .catch((error) => {
-            this.error = error.response.data;
+        .catch(() => {
+            this.error = {message: "Une erreur est survenue. Le fichier n'est pas au bon format ou dépasse la taille limite"}
             const emptyInput = document.querySelectorAll('.required');
             emptyInput.forEach(input => {
                 if(input.value === "") {

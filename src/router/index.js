@@ -9,6 +9,8 @@ import AdminShowroom from '../views/AdminShowroomView.vue'
 import AdminShowroomVehicle from '../views/AdminShowroomVehicleView.vue'
 import AdminCustomers from '../views/AdminCustomersView.vue'
 
+import EmployeePlanning from '../views/EmployeePlanningView.vue'
+
 import CustomerHome from '../views/CustomerHomeView.vue'
 import CustomerRequests from '../views/CustomerRequestsView.vue'
 import CustomerTracking from '../views/CustomerTracking.vue'
@@ -27,19 +29,16 @@ const routes = [
     name: 'AdminHome',
     component: AdminHome
   },
-
   {
     path: '/admin/accounts',
     name: 'AdminAccounts',
     component: AdminAccounts
   },
-
   {
     path: '/admin/planning',
     name: 'AdminPlanning',
     component: AdminPlanning
   },
-
   {
     path: '/admin/showroom',
     name: 'AdminShowroom',
@@ -50,11 +49,16 @@ const routes = [
     name: 'AdminShowroomVehicle',
     component: AdminShowroomVehicle
   },
-
   {
     path: '/admin/customers',
     name: 'AdminCustomers',
     component: AdminCustomers
+  },
+
+  {
+    path: '/employee/planning',
+    name: 'EmployeePlanning',
+    component: EmployeePlanning
   },
 
   {

@@ -66,7 +66,6 @@ export default {
     created: function () {
         this.$store.dispatch('getPreparation', this.id)
         .then((res) => {
-            console.log(res.data)
             this.preparation = res.data
             this.start = res.data.start
             this.end = res.data.end

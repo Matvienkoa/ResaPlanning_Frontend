@@ -1,20 +1,28 @@
 <template>
   <div class="edit-photo-preparation-back">
     <div class="edit-photo-preparation-box">
-        <h2 class="add-box-title">Modifier la photo n°{{checkPhoto(numberPhoto)}}</h2>
-        <div class="edit-photo-preparation-form">
-            <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="edit-photo-preparation-form-photo" id="edit-photo-preparation-form-photo" class="required">
-            <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
-            <img crossorigin="anonymous" v-if="this.url === '' && this.numberPhoto ==='photo1'" :src="getPreparation.photo1" alt="" class="photo-selected">
-            <img crossorigin="anonymous" v-if="this.url === '' && this.numberPhoto ==='photo2'" :src="getPreparation.photo2" alt="" class="photo-selected">
-            <img crossorigin="anonymous" v-if="this.url === '' && this.numberPhoto ==='photo3'" :src="getPreparation.photo3" alt="" class="photo-selected">
-            <img crossorigin="anonymous" v-if="this.url === '' && this.numberPhoto ==='photo4'" :src="getPreparation.photo4" alt="" class="photo-selected">
-            <div v-if="error" class="error">{{ error.message }}</div>
-            <div class="box-choice-button">
-              <button class="valid-button" @click="editPhotoPreparation()">Modifier la photo</button>
-              <div class="cancel-button" @click="closeEditBox()">Annuler</div>
-            </div>
+      <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+      <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
+      <h2 class="add-box-title">Modifier la photo n°{{checkPhoto(numberPhoto)}}</h2>
+      <div class="edit-photo-preparation-form">
+        <input @change="onFileSelected" ref="photo" @input="cancelError(), resetData()" type="file" name="edit-photo-preparation-form-photo" id="edit-photo-preparation-form-photo" class="required">
+        <button @click="startCamera()">Prendre une photo</button>
+        <img crossorigin="anonymous" v-if="this.getActualPhoto" :src="this.getActualPhoto" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.url === '' && !this.getActualPhoto && this.numberPhoto ==='photo1'" :src="getPreparation.photo1" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.url === '' && !this.getActualPhoto && this.numberPhoto ==='photo2'" :src="getPreparation.photo2" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.url === '' && !this.getActualPhoto && this.numberPhoto ==='photo3'" :src="getPreparation.photo3" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.url === '' && !this.getActualPhoto && this.numberPhoto ==='photo4'" :src="getPreparation.photo4" alt="" class="photo-selected">
+        <div v-if="error" class="error">{{ error.message }}</div>
+        <div v-if="this.photo" class="box-choice-button">
+          <button class="valid-button" @click="editPhotoPreparation()">Modifier la photo</button>
+          <div class="cancel-button" @click="closeEditBox()">Annuler</div>
         </div>
+        <div v-if="this.photoCamera" class="box-choice-button">
+          <button class="add-button" @click="editPhotoShootPreparation()">Ajouter la photo</button>
+          <div class="cancel-button" @click="closeEditBox()">Annuler</div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -23,20 +31,33 @@
 import { mapGetters } from 'vuex';
 import instance from '@/axios';
 
+import Camera from '@/components/Camera.vue';
+
 export default {
   name: 'AdminEditPhotoPreparation',
   props: ["numberPhoto", 'preparationId'],
+  components: {
+    Camera
+  },
   data() {
     return {
       error: "",
       photo: "",
+      photoCamera: "",
       url: ""
     }
   },
   computed: {
-    ...mapGetters(['getEditBox', 'getPreparation'])
+    ...mapGetters(['getEditBox', 'getPreparation', 'getCamera', 'getActualPhoto'])
   },
   methods: {
+    handlePhotoCapture(file) {
+      this.photoCamera = file
+    },
+    startCamera() {
+      this.$store.state.camera = true;
+      this.resetData()
+    },
     checkPhoto(photo) {
       let number = ""
       switch (photo) {
@@ -55,9 +76,19 @@ export default {
       }
       return number
     },
+    resetData() {
+      this.photo = ""
+      this.photoCamera = ""
+      this.url = ""
+      this.$store.state.actualPhoto = ""
+    },
     onFileSelected(event) {
-        this.photo = event.target.files[0];
+      this.photo = event.target.files[0];
+      if(event.target.files[0]) {
         this.url = URL.createObjectURL(event.target.files[0])
+      }
+      this.$store.state.actualPhoto = ""
+      this.photoCamera = ""
     },
     closeEditBox() {
       this.$store.state.editBox = "closed"
@@ -73,8 +104,29 @@ export default {
                 this.$store.dispatch('getPreparation', this.preparationId)
             }
         })
-        .catch((error) => {
-            this.error = error.response.data;
+        .catch(() => {
+            this.error = {message: "Une erreur est survenue. Le fichier n'est pas au bon format ou dépasse la taille limite"}
+            const emptyInput = document.querySelectorAll('.required');
+            emptyInput.forEach(input => {
+                if(input.value === "") {
+                    input.classList.add('empty')
+                }
+            })
+        })
+    },
+    editPhotoShootPreparation() {
+        const formData = new FormData();
+        formData.append('numberPhoto', this.numberPhoto)
+        formData.append('photo', this.photoCamera)
+        instance.put(`/preparation/photo/${this.preparationId}`, formData)
+        .then((res) => {
+            if(res.status === 201) {
+                this.closeEditBox();
+                this.$store.dispatch('getPreparation', this.preparationId)
+            }
+        })
+        .catch(() => {
+            this.error = {message: "Une erreur est survenue. Le fichier n'est pas au bon format ou dépasse la taille limite"}
             const emptyInput = document.querySelectorAll('.required');
             emptyInput.forEach(input => {
                 if(input.value === "") {
@@ -92,6 +144,9 @@ export default {
       })
       this.error = ''
     },
+  },
+  created() {
+    this.$store.state.actualPhoto = ""
   }
 }
 </script>

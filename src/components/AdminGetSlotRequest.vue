@@ -12,19 +12,27 @@
                 <p>Date souhaitée : {{moment(getSlotRequest.date).format('LL')}}</p>
                 <p>Lieux : {{getSlotRequest.place}}</p>
                 <p>Durée de l'intervention : {{checkDuration(getSlotRequest.duration)}}</p>
-                <p>Observations client : {{getSlotRequest.observationsCustomer}}</p>
+                <p v-if="getSlotRequest.observationsCustomer">Observations client : {{getSlotRequest.observationsCustomer}}</p>
+                <p v-if="!getSlotRequest.observationsCustomer">Observations client : non renseigné</p>
             </div>
             <div class="add-preparation-form">
+                <label class="form-label" for="preparation-form-duration">Durée de l'intervention<span class="star">*</span></label>
+                <select class="form-input required" @change="cancelError()" v-model="duration" name="preparation-form-duration" id="preparation-form-duration">
+                    <option value="half">Demi-Journée</option>
+                    <option value="day">Journée</option>
+                </select>
                 <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
                 <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
                 <label class="form-label" for="preparation-form-endDate">Date de fin<span class="star">*</span></label>
                 <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
                 <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
                 <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-                <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
-                <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+                <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+                <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
                 <label class="form-label" for="vehicle-form-observations">Observations</label>
                 <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+                <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+                <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
                 <div v-if="error" class="error">{{ error.message }}</div>
                 <button class="add-button" @click="addSlot()">Créer le créneaux</button>
             </div>
@@ -47,9 +55,11 @@ export default {
             error: "",
             startDate: "",
             endDate: "",
-            startTime: "",
+            startTime: "09:00",
             endTime: "",
-            observationsDepot: ""
+            observationsDepot: "",
+            maker: "",
+            duration: ""
         }
     },
     computed: {
@@ -71,12 +81,15 @@ export default {
         addSlot() {
             instance.post('/slot/', {
                 observationsDepot: this.observationsDepot,
+                observationsCustomer: this.getSlotRequest.observationsCustomer,
                 customerId: this.getSlotRequest.customerId,
                 startDate: this.startDate,
                 endDate: this.endDate,
                 startTime: this.startTime,
                 endTime: this.endTime,
-                place: this.getSlotRequest.place
+                place: this.getSlotRequest.place,
+                maker: this.maker,
+                duration: this.duration
             })
             .then((res) => {
                 if(res.status === 201) {
@@ -112,6 +125,11 @@ export default {
     },
     created: function () {
         this.$store.dispatch('getSlotRequest', this.id)
+        .then((res) => {
+            this.startDate = moment(res.data.date).format('YYYY-MM-DD')
+            this.endDate = moment(res.data.date).format('YYYY-MM-DD')
+            this.duration = res.data.duration
+        })
     },
 }
 </script>

@@ -7,19 +7,20 @@
                 <p class="back-txt">Retour</p>
             </router-link>
         </div>
-        <div @click="openGetBox('getRequests')" class="banner-item">
+        <div v-if="getUser.role === 'admin' || (getUser.role === 'employee' && getProfile.privileges === 'yes')" @click="openGetBox('getRequests')" class="banner-item">
             Demandes <img crossorigin="anonymous" src="../assets/Icons/notification.svg" alt="" v-if="getPrepRequestsPending.length > 0 || getSlotRequestsPending.length > 0" class="notification" />
         </div>
-        <div @click="openGetBox('getBillings')" class="banner-item">
+        <div v-if="getUser.role === 'admin'" @click="openGetBox('getBillings')" class="banner-item">
             Facturation
         </div>
         <div class="banner-events-box">
-          <div class="banner-event-prep">Préparation</div>
           <div class="banner-event-slot">Créneau</div>
+          <div class="banner-event-prep-planned">Préparation en cours</div>
+          <div class="banner-event-prep-completed">Préparation terminée</div>
         </div>
         <div class="logout-box">
             <img crossorigin="anonymous" class="logout-icon" src="../assets/Icons/logout.svg" alt="">
-            <p class="logout-txt">Se Déconnecter</p>
+            <router-link to="/" @click="logOut()" class="logout-txt">Se Déconnecter</router-link>
         </div>
     </div>
 </template>
@@ -31,18 +32,18 @@ export default {
     name: 'AdminPlanningBanner',
     props: ["url"],
     computed: {
-        ...mapGetters(['getPrepRequestsPending', 'getSlotRequestsPending'])
+        ...mapGetters(['getPrepRequestsPending', 'getSlotRequestsPending', 'getUser', 'getProfile'])
     },
     methods: {
-        openGetBox(data) {
-            this.$store.state.getBox = data
-        }
+      openGetBox(data) {
+          this.$store.state.getBox = data
+      },
+      logOut: function() {
+        this.$store.commit("LOG_OUT");
+      }
     },
     created: function () {
         this.$store.dispatch('getRequestsPending')
-        .then((res) => {
-            console.log(res)
-        })
     }
 }
 </script>
@@ -105,18 +106,25 @@ export default {
   color: white;
   padding-top: 20px;
   border-top: 3px solid #383838;
+  font-size: 0.9em;
 }
-.banner-event-prep{
+.banner-event-prep-planned{
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: rgb(55,136,216);
+  background-color: orange;
   margin-bottom: 10px;
+}
+.banner-event-prep-completed{
+  padding: 5px 10px;
+  border-radius: 5px;
+  background-color: green;
+  margin-bottom: 20px;
 }
 .banner-event-slot{
   padding: 5px 10px;
   border-radius: 5px;
-  background-color: red;
-  margin-bottom: 20px;
+  background-color: rgb(55,136,216);
+  margin-bottom: 10px;
 }
 .logout-box{
   position: absolute;
@@ -134,6 +142,8 @@ export default {
   margin-left: 15px;
 }
 .logout-txt{
+  text-decoration: none;
   color: white;
+  cursor: pointer;
 }
 </style>

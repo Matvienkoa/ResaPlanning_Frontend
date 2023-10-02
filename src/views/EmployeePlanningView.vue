@@ -1,6 +1,5 @@
 <template>
   <AdminGetRequests v-if="getGetBox === 'getRequests'" />
-  <AdminGetBillings v-if="getGetBox === 'getBillings'" />
   <AdminAddEventClick v-if="getAddBox === 'addEventClick'" :date="dateSelected" :day="allDay" />
   <AdminAddEventSelect v-if="getAddBox === 'addEventSelect'" :startD="startDate" :endD="endDate" :day="allDay" />
   <AdminGetPreparation v-if="getGetBox === 'getPreparation'" :id="preparation" />
@@ -36,7 +35,6 @@ import { mapGetters } from 'vuex';
 
 import AdminPlanningBanner from '@/components/AdminPlanningBanner.vue';
 import AdminGetRequests from '@/components/AdminGetRequests.vue';
-import AdminGetBillings from '@/components/AdminGetBillings.vue';
 
 import AdminAddEventClick from '@/components/AdminAddEventClick.vue';
 import AdminAddEventSelect from '@/components/AdminAddEventSelect.vue';
@@ -49,11 +47,10 @@ import AdminDropSlot from '@/components/AdminDropSlot.vue';
 import AdminSizeSlot from '@/components/AdminSizeSlot.vue';
 
 export default {
-  name: 'AdminPlanning',
+  name: 'EmployeePlanning',
   components: {
     AdminPlanningBanner,
     AdminGetRequests,
-    AdminGetBillings,
     FullCalendar,
     AdminAddEventClick,
     AdminAddEventSelect,
@@ -164,25 +161,14 @@ export default {
       this.allDay = date.allDay
       this.$store.state.addBox = 'addEventSelect'
     },
-    checkColor(state) {
-      let color = "";
-      if(state === 'planned') {
-        color = 'orange'
-      } else {
-        color = 'green'
-      }
-      return color;
-    },
     setEvents(res) {
       res.data.forEach(prep => {
         this.calendarOptions.events.push(
           {
-            title: prep.maker + ' ' + prep.immat + ' ' + prep.brand + ' ' + prep.model,
+            title: prep.immat + ' ' + prep.brand + ' ' + prep.model,
             start: prep.start,
             end: prep.end,
             eventId: prep.id,
-            backgroundColor: this.checkColor(prep.state),
-            borderColor: this.checkColor(prep.state),
             type: 'preparation'
           }
         )
@@ -192,10 +178,12 @@ export default {
       res.data.forEach(slot => {
         this.calendarOptions.events.push(
           {
-            title: slot.maker + ' ' + slot.place,
+            title: slot.place,
             start: slot.start,
             end: slot.end,
             eventId: slot.id,
+            backgroundColor: 'rgb(255,0,0)',
+            borderColor: 'rgb(255,0,0)',
             type: 'slot'
           }
         )

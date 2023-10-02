@@ -10,14 +10,25 @@
             </div>
             <div class="prepR-infos-box">
                 <p>Date de livraison souhaitée : {{moment(getPrepRequest.deliveryDate).format('LL')}}</p>
-                <p>Marque : {{getPrepRequest.brand}}</p>
-                <p>Modèle : {{getPrepRequest.model}}</p>
-                <p>Année : {{getPrepRequest.year}}</p>
-                <p>Etat : {{getPrepRequest.condition}}</p>
-                <p>Immatriculation : {{getPrepRequest.immat}}</p>
-                <p>KM : {{getPrepRequest.kilomter}}</p>
-                <p>Préparations souhaitées : {{getPrepRequest.steps}}</p>
-                <p>Observations client : {{getPrepRequest.observationsCustomer}}</p>
+                <p v-if="getPrepRequest.brand">Marque : {{getPrepRequest.brand}}</p>
+                <p v-if="!getPrepRequest.brand">Marque : Non renseigné</p>
+                <p v-if="getPrepRequest.model">Modèle : {{getPrepRequest.model}}</p>
+                <p v-if="!getPrepRequest.model">Modèle : Non renseigné</p>
+                <p v-if="getPrepRequest.year">Année : {{getPrepRequest.year}}</p>
+                <p v-if="!getPrepRequest.year">Année : Non renseigné</p>
+                <p v-if="getPrepRequest.condition">Etat : {{getPrepRequest.condition}}</p>
+                <p v-if="!getPrepRequest.condition">Etat : Non renseigné</p>
+                <p v-if="getPrepRequest.immat">Immatriculation / N° de série : {{getPrepRequest.immat}}</p>
+                <p v-if="!getPrepRequest.immat">Immatriculation / N° de série : Non renseigné</p>
+                <p v-if="getPrepRequest.kilometer">KM : {{getPrepRequest.kilometer}}</p>
+                <p v-if="!getPrepRequest.kilometer">KM : Non renseigné</p>
+                <p v-if="getPrepRequest.steps">Préparations souhaitées : {{getPrepRequest.steps}}</p>
+                <p v-if="!getPrepRequest.steps">Préparations souhaitées : Non renseigné</p>
+                <p v-if="getPrepRequest.observationsCustomer">Observations client : {{getPrepRequest.observationsCustomer}}</p>
+                <p v-if="!getPrepRequest.observationsCustomer">Observations client : Non renseigné</p>
+            </div>
+            <div v-if="getPrepRequest.photo" class="prepR-photo-box">
+                <img crossorigin="anonymous" :src="getPrepRequest.photo" alt="" class="prepR-photo">
             </div>
             <div class="add-preparation-form">
                 <label class="form-label" for="vehicle-form-observations">Motifs du refus<span class="star">*</span></label>

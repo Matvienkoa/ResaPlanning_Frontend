@@ -25,6 +25,7 @@
                 <div class="requests-customer-pending-title-box">
                     <h2 class="requests-customer-pending-title">Preparations Terminées</h2>
                 </div>
+                <input @change="updatePrepCompleted()" type="month" v-model="month" name="" id="">
                 <div @click="openGetBox(prep.id)" v-for="prep in getPreparationsCustomerCompleted" :key="prep.id" class="home-tracking-prep-box">
                     <div class="home-tracking-prep-infos">
                         <p>{{prep.brand}}</p>
@@ -44,6 +45,8 @@
 import Header from '@/components/Header.vue';
 import CustomerGetPreparation from '@/components/CustomerGetPreparation.vue';
 import { mapGetters } from 'vuex';
+let moment = require('moment');
+moment.locale('fr');
 
 export default {
     name: 'CustomerTracking',
@@ -53,20 +56,42 @@ export default {
     },
     data() {
         return {
-            preparation: null
+            preparation: null,
+            moment: moment,
+            month: moment(new Date()).format('yyyy-MM')
         }
     },
     computed: {
         ...mapGetters(['getPreparationsCustomerPlanned', 'getPreparationsCustomerCompleted', 'getGetBox'])
     },
     methods: {
+        updatePrepCompleted() {
+            this.$store.dispatch('getPreparationsCustomerCompleted', moment(this.month).format())
+        },
         openGetBox(id) {
             this.preparation = id
             this.$store.state.getBox = 'getCustomerPreparation'
         }
     },
     created: function () {
-        this.$store.dispatch('getPreparationsCustomer');
+        this.$store.dispatch('getPreparationsCustomerPlanned')
+        this.$store.dispatch('getPreparationsCustomerCompleted', new Date())
+        this.$store.dispatch('checkToken')
+        .then((res) => {
+            if(res === 'expired') {
+                this.$router.push('/')
+            }
+        })
+        this.$store.dispatch('getProfile')
+        .then((res) => {
+            if(res.data) {
+                if(res.data.role !== 'admin' && res.data.role !== 'customer') {
+                    this.$router.push('/')
+                }
+            } else {
+                this.$router.push('/')
+            }
+        })
     }
 }
 </script>

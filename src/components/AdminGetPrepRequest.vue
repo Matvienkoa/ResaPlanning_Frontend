@@ -10,14 +10,25 @@
             </div>
             <div class="prepR-infos-box">
                 <p>Date de livraison souhaitée : {{moment(getPrepRequest.deliveryDate).format('LL')}}</p>
-                <p>Marque : {{getPrepRequest.brand}}</p>
-                <p>Modèle : {{getPrepRequest.model}}</p>
-                <p>Année : {{getPrepRequest.year}}</p>
-                <p>Etat : {{getPrepRequest.condition}}</p>
-                <p>Immatriculation : {{getPrepRequest.immat}}</p>
-                <p>KM : {{getPrepRequest.kilomter}}</p>
-                <p>Préparations souhaitées : {{getPrepRequest.steps}}</p>
-                <p>Observations client : {{getPrepRequest.observationsCustomer}}</p>
+                <p v-if="getPrepRequest.brand">Marque : {{getPrepRequest.brand}}</p>
+                <p v-if="!getPrepRequest.brand">Marque : Non renseigné</p>
+                <p v-if="getPrepRequest.model">Modèle : {{getPrepRequest.model}}</p>
+                <p v-if="!getPrepRequest.model">Modèle : Non renseigné</p>
+                <p v-if="getPrepRequest.year">Année : {{getPrepRequest.year}}</p>
+                <p v-if="!getPrepRequest.year">Année : Non renseigné</p>
+                <p v-if="getPrepRequest.condition">Etat : {{getPrepRequest.condition}}</p>
+                <p v-if="!getPrepRequest.condition">Etat : Non renseigné</p>
+                <p v-if="getPrepRequest.immat">Immatriculation / N° de série : {{getPrepRequest.immat}}</p>
+                <p v-if="!getPrepRequest.immat">Immatriculation / N° de série : Non renseigné</p>
+                <p v-if="getPrepRequest.kilometer">KM : {{getPrepRequest.kilometer}}</p>
+                <p v-if="!getPrepRequest.kilometer">KM : Non renseigné</p>
+                <p v-if="getPrepRequest.steps">Préparations souhaitées : {{getPrepRequest.steps}}</p>
+                <p v-if="!getPrepRequest.steps">Préparations souhaitées : Non renseigné</p>
+                <p v-if="getPrepRequest.observationsCustomer">Observations client : {{getPrepRequest.observationsCustomer}}</p>
+                <p v-if="!getPrepRequest.observationsCustomer">Observations client : Non renseigné</p>
+            </div>
+            <div v-if="getPrepRequest.photo" class="prepR-photo-box">
+                <img crossorigin="anonymous" :src="getPrepRequest.photo" alt="" class="prepR-photo">
             </div>
             <div class="add-preparation-form">
                 <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
@@ -26,8 +37,21 @@
                 <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
                 <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
                 <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-                <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
-                <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+                <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+                <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+                <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
+                <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
+                <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
+                <input class="form-input required" v-model="model" @input="cancelError()" type="text" name="preparation-form-model" id="preparation-form-model">
+                <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
+                <p class="form-password-infos">Ou numéro de série du véhicule</p>
+                <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
+                <label class="form-label" for="preparation-form-year">Année<span class="star">*</span></label>
+                <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
+                <label class="form-label" for="preparation-form-kilometers">Km<span class="star">*</span></label>
+                <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
+                <label class="form-label" for="preparation-form-condition">Etat du véhicule<span class="star">*</span></label>
+                <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
                 <label class="form-label" for="vehicle-form-observations">Observations</label>
                 <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
                 <label class="form-label" for="vehicle-form-steps">Ajouter une étape de préparation</label>
@@ -40,6 +64,8 @@
                         <img crossorigin="anonymous" class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/>
                     </div>
                 </div>
+                <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+                <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
                 <div v-if="error" class="error">{{ error.message }}</div>
                 <button class="add-button" @click="addPreparation()">Créer la préparation</button>
             </div>
@@ -63,11 +89,18 @@ export default {
             errorPrestation: "",
             startDate: "",
             endDate: "",
-            startTime: "",
+            startTime: "09:00",
             endTime: "",
             observationsDepot: "",
             prestation: "",
             steps: [],
+            brand: "",
+            model: "",
+            immat: "",
+            year: "",
+            kilometer: "",
+            condition: "",
+            maker: ""
         }
     },
     computed: {
@@ -100,12 +133,12 @@ export default {
         },
         addPreparation() {
             instance.post('/preparation/', {
-                brand: this.getPrepRequest.brand,
-                model: this.getPrepRequest.model,
-                year: this.getPrepRequest.year,
-                immat: this.getPrepRequest.immat,
-                kilometer: this.getPrepRequest.kilometer,
-                condition: this.getPrepRequest.condition,
+                brand: this.brand,
+                model: this.model,
+                year: this.year,
+                immat: this.immat,
+                kilometer: this.kilometer,
+                condition: this.condition,
                 observationsCustomer: this.getPrepRequest.observationsCustomer,
                 observationsDepot: this.observationsDepot,
                 customerId: this.getPrepRequest.customerId,
@@ -113,7 +146,8 @@ export default {
                 endDate: this.endDate,
                 startTime: this.startTime,
                 endTime: this.endTime,
-                steps: this.steps
+                steps: this.steps,
+                maker: this.maker
             })
             .then((res) => {
                 if(res.status === 201) {
@@ -156,6 +190,14 @@ export default {
     },
     created: function () {
         this.$store.dispatch('getPrepRequest', this.id)
+        .then((res) => {
+            this.brand = res.data.brand
+            this.model = res.data.model
+            this.immat = res.data.immat
+            this.year = res.data.year
+            this.condition = res.data.condition
+            this.kilometer = res.data.kilometer
+        })
     },
 }
 </script>
@@ -211,6 +253,21 @@ export default {
 .prepR-infos-box p{
   margin-left: 10px;
   margin-right: 10px;
+}
+.prepR-photo-box{
+    width: 90%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgb(240, 240, 240);
+    padding: 0.4em 0;
+    border-radius: 10px;
+    margin-bottom: 20px;
+}
+.prepR-photo{
+    width: 80%;
+    height: 80%;
+    object-fit: contain;
 }
 .add-preparation-form{
   width: 80%;

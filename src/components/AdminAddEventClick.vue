@@ -19,8 +19,8 @@
         </select>
         <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
         <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-        <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
-        <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+        <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+        <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
         <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
         <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
         <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
@@ -28,6 +28,7 @@
         <label class="form-label" for="preparation-form-year">Année<span class="star">*</span></label>
         <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
         <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
+        <p class="form-password-infos">Ou numéro de série du véhicule</p>
         <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
         <label class="form-label" for="preparation-form-kilometers">Km<span class="star">*</span></label>
         <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
@@ -45,6 +46,8 @@
             <img crossorigin="anonymous" class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/>
           </div>
         </div>
+        <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+        <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
         <div v-if="error" class="error">{{ error.message }}</div>
         <button class="add-button" @click="addPreparation()">Créer la préparation</button>
       </div>
@@ -55,14 +58,21 @@
             <option v-if="getCustomers.length === 0" disabled selected value="">Aucun client trouvé</option>
             <option v-for="customer in getCustomers" :key="customer.id" :value="customer.id">{{customer.company}}</option>
         </select>
+        <label class="form-label" for="preparation-form-duration">Durée de l'intervention<span class="star">*</span></label>
+        <select class="form-input required" @change="cancelError()" v-model="duration" name="preparation-form-duration" id="preparation-form-duration">
+            <option value="half">Demi-Journée</option>
+            <option value="day">Journée</option>
+        </select>
         <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
         <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-        <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
-        <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+        <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+        <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
         <label class="form-label" for="preparation-form-place">Lieux<span class="star">*</span></label>
         <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+        <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+        <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
         <div v-if="error" class="error">{{ error.message }}</div>
         <button class="add-button" @click="addSlot()">Créer le créneaux</button>
       </div>
@@ -93,12 +103,14 @@ export default {
       kilometer: "",
       condition: "",
       observationsDepot: "",
-      startTime: "",
+      startTime: "09:00",
       endTime: "",
       allDay: this.day,
       prestation: "",
       steps: [],
-      place: ""
+      place: "",
+      maker: "",
+      duration: ""
     }
   },
   computed: {
@@ -151,7 +163,8 @@ export default {
         endDate: this.date,
         startTime: this.startTime,
         endTime: this.endTime,
-        steps: this.steps
+        steps: this.steps,
+        maker: this.maker
       })
       .then((res) => {
           if(res.status === 201) {
@@ -194,6 +207,8 @@ export default {
         endDate: this.date,
         startTime: this.startTime,
         endTime: this.endTime,
+        maker: this.maker,
+        duration: this.duration
       })
       .then((res) => {
           if(res.status === 201) {

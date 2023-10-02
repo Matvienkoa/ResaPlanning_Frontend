@@ -14,7 +14,9 @@
               <input v-model="privileges" type="checkbox" name="form-privileges" id="form-privileges">
               <label class="form-label-checkbox" for="form-privileges">Privilèges</label>
             </div>
+            <p class="form-password-infos">Les privilèges donnent accès aux demandes des clients</p>
             <label class="form-label" for="form-password">Mot de passe</label>
+            <p class="form-password-infos">Compris entre 8 et 30 caractères avec au minimum 1 Majuscule, 1 Minuscule et 1 Chiffre</p>
             <div class="home-form-password-box">
               <input class="home-form-password-input" v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
               <img crossorigin="anonymous" v-if="modePassword === 'hidden'" @click="showPassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye.svg">
@@ -125,7 +127,6 @@ export default {
   created: function () {
     this.$store.dispatch('getAccount', this.id)
     .then((account) => {
-      console.log(account)
         this.login = account.login
         this.firstName = account.infos.firstName
         this.lastName = account.infos.lastName

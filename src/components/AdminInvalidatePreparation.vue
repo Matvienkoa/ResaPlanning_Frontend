@@ -34,6 +34,7 @@ export default {
       instance.put(`/preparation/invalidate/${this.preparationId}`)
       .then((res) => {
           if(res.status === 201) {
+            this.$store.commit('EDIT_PREPARATION_TO_EVENTS_PLANNING', res.data)
             this.$store.dispatch('getPreparation', this.preparationId)
             .then(() => this.closeEditBox())
           }

@@ -110,11 +110,9 @@ export default {
         .then((res) => {
           if (res.data.role === "admin" || res.data.role === "employee") {
             this.$router.push("/admin/home");
-            console.log('admin ou employee')
           }
           if (res.data.role === "customer") {
             this.$router.push("/customer/home");
-            console.log('customer')
           }
         })
       }

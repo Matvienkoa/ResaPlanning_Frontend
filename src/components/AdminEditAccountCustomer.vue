@@ -7,6 +7,7 @@
             <label class="form-label" for="form-login">Login<span class="star">*</span></label>
             <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
             <label class="form-label" for="form-password">Mot de passe</label>
+            <p class="form-password-infos">Compris entre 8 et 30 caractères avec au minimum 1 Majuscule, 1 Minuscule et 1 Chiffre</p>
             <div class="home-form-password-box">
               <input class="home-form-password-input" v-model="password" @input="cancelError()" type="password" name="form-password" id="form-password">
               <img crossorigin="anonymous" v-if="modePassword === 'hidden'" @click="showPassword()" class="home-form-password-icon" alt="" src="../assets/Icons/eye.svg">
@@ -123,7 +124,6 @@ export default {
   created: function () {
     this.$store.dispatch('getAccount', this.id)
     .then((account) => {
-        console.log(account)
         this.login = account.login
         if(account.afc === 'yes') {
           this.afc = true

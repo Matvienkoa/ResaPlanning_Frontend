@@ -46,7 +46,9 @@ export default createStore({
     preparationsCustomerCompleted: [],
     preparationsBilling: [],
     preparationsBilled: [],
-    eventsPlanning: []
+    eventsPlanning: [],
+    camera: false,
+    actualPhoto: ""
   },
   getters: {
     getUser: (state) => {
@@ -171,6 +173,12 @@ export default createStore({
     },
     getEventsPlanning: (state) => {
       return state.eventsPlanning
+    },
+    getCamera: (state) => {
+      return state.camera
+    },
+    getActualPhoto: (state) => {
+      return state.actualPhoto
     }
   },
   mutations: {
@@ -262,38 +270,71 @@ export default createStore({
     },
     SET_PREPARATIONS: function (state, preparations) {
       state.preparations = preparations
+      function checkColor(state) {
+        let color = "";
+        if (state === 'planned') {
+          color = 'orange'
+        } else {
+          color = 'green'
+        }
+        return color;
+      }
       preparations.forEach(prep => {
         state.eventsPlanning.push(
           {
-            title: prep.immat + ' ' + prep.brand + ' ' + prep.model,
+            title: prep.maker + ' ' + prep.immat + ' ' + prep.brand + ' ' + prep.model,
             start: prep.start,
             end: prep.end,
             eventId: prep.id,
+            backgroundColor: checkColor(prep.state),
+            borderColor: checkColor(prep.state),
             type: 'preparation'
           }
         )
       })
     },
     ADD_PREPARATION_TO_EVENTS_PLANNING: function (state, prep) {
+      function checkColor(state) {
+        let color = "";
+        if (state === 'planned') {
+          color = 'orange'
+        } else {
+          color = 'green'
+        }
+        return color;
+      }
       state.eventsPlanning.push(
         {
-          title: prep.immat + ' ' + prep.brand + ' ' + prep.model,
+          title: prep.maker + ' ' + prep.immat + ' ' + prep.brand + ' ' + prep.model,
           start: prep.start,
           end: prep.end,
           eventId: prep.id,
+          backgroundColor: checkColor(prep.state),
+          borderColor: checkColor(prep.state),
           type: 'preparation'
         }
       )
     },
     EDIT_PREPARATION_TO_EVENTS_PLANNING: function (state, modifiedPrep) {
+      function checkColor(state) {
+        let color = "";
+        if (state === 'planned') {
+          color = 'orange'
+        } else {
+          color = 'green'
+        }
+        return color;
+      }
       const prepIndex = state.eventsPlanning.findIndex(
         e => e.eventId === modifiedPrep.id && e.type === "preparation")
       state.eventsPlanning[prepIndex] = 
       {
-        title: modifiedPrep.immat + ' ' + modifiedPrep.brand + ' ' + modifiedPrep.model,
+        title: modifiedPrep.maker + ' ' + modifiedPrep.immat + ' ' + modifiedPrep.brand + ' ' + modifiedPrep.model,
         start: modifiedPrep.start,
         end: modifiedPrep.end,
         eventId: modifiedPrep.id,
+        backgroundColor: checkColor(modifiedPrep.state),
+        borderColor: checkColor(modifiedPrep.state),
         type: 'preparation'
       }
       state.eventsPlanning = [...state.eventsPlanning]
@@ -316,12 +357,10 @@ export default createStore({
       slots.forEach(slot => {
         state.eventsPlanning.push(
           {
-            title: slot.place,
+            title: slot.maker + ' ' + slot.place,
             start: slot.start,
             end: slot.end,
             eventId: slot.id,
-            backgroundColor: 'rgb(255,0,0)',
-            borderColor: 'rgb(255,0,0)',
             type: 'slot'
           }
         )
@@ -330,12 +369,10 @@ export default createStore({
     ADD_SLOT_TO_EVENTS_PLANNING: function (state, slot) {
       state.eventsPlanning.push(
         {
-          title: slot.place,
+          title: slot.maker + ' ' + slot.place,
           start: slot.start,
           end: slot.end,
           eventId: slot.id,
-          backgroundColor: 'rgb(255,0,0)',
-          borderColor: 'rgb(255,0,0)',
           type: 'slot'
         }
       )
@@ -345,12 +382,10 @@ export default createStore({
         e => e.eventId === modifiedSlot.id && e.type === "slot")
       state.eventsPlanning[slotIndex] =
       {
-        title: modifiedSlot.place,
+        title: modifiedSlot.maker + ' ' + modifiedSlot.place,
         start: modifiedSlot.start,
         end: modifiedSlot.end,
         eventId: modifiedSlot.id,
-        backgroundColor: 'rgb(255,0,0)',
-        borderColor: 'rgb(255,0,0)',
         type: 'slot'
       }
       state.eventsPlanning = [...state.eventsPlanning]
@@ -414,13 +449,17 @@ export default createStore({
       state.prepRequestsPending = requests.preps
       state.slotRequestsPending = requests.slots
     },
-    SET_PREPARATIONS_CUSTOMER: function (state, preparations) {
-      state.preparationsCustomerPlanned = preparations.prepsPlanned
-      state.preparationsCustomerCompleted = preparations.prepsCompleted
+    SET_PREPARATIONS_CUSTOMER_PLANNED: function (state, preparations) {
+      state.preparationsCustomerPlanned = preparations
     },
-    SET_PREPARATIONS_COMPLETED: function (state, preparations) {
-      state.preparationsBilling = preparations.billing
-      state.preparationsBilled = preparations.billed
+    SET_PREPARATIONS_CUSTOMER_COMPLETED: function (state, preparations) {
+      state.preparationsCustomerCompleted = preparations
+    },
+    SET_PREPARATIONS_COMPLETED_NO_BILLED: function (state, prep) {
+      state.preparationsBilling = prep
+    },
+    SET_PREPARATIONS_COMPLETED_BILLED: function (state, prep) {
+      state.preparationsBilled = prep
     },
     RESET_EVENTS_PLANNING: function (state) {
       state.eventsPlanning = []
@@ -728,7 +767,7 @@ export default createStore({
           });
       })
     },
-    getPreparationsCustomer: ({ commit }) => {
+    getPreparationsCustomerPlanned: ({ commit }) => {
       const token = localStorage.getItem("token");
       if (token) {
         const decodedToken = jwt_decode(token, 'RANDOM_TOKEN_SECRET');
@@ -739,7 +778,7 @@ export default createStore({
               .then((res) => {
                 instance.get(`/preparation/customer/${res.data.id}`)
                   .then((preps) => {
-                    commit('SET_PREPARATIONS_CUSTOMER', preps.data);
+                    commit('SET_PREPARATIONS_CUSTOMER_PLANNED', preps.data);
                     resolve(preps)
                   })
               })
@@ -750,17 +789,50 @@ export default createStore({
         })
       }
     },
-    getPreparationsCompleted: ({ commit }) => {
+    getPreparationsCustomerCompleted: ({ commit }, date) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwt_decode(token, 'RANDOM_TOKEN_SECRET');
+        const userId = decodedToken.userId;
+        return new Promise((resolve, reject) => {
+          if (userId) {
+            instance.get(`/customer/user/${userId}`)
+              .then((res) => {
+                instance.get(`/preparation/customer/${res.data.id}/date/${date}`)
+                  .then((preps) => {
+                    commit('SET_PREPARATIONS_CUSTOMER_COMPLETED', preps.data);
+                    resolve(preps)
+                  })
+              })
+              .catch(function (error) {
+                reject(error)
+              });
+          }
+        })
+      }
+    },
+    getPreparationsCompletedNoBilled: ({ commit }) => {
       return new Promise((resolve, reject) => {
-        instance.get('/billings')
+        instance.get(`/billings/nobilled/`)
         .then((res) => {
-          console.log(res)
-          commit('SET_PREPARATIONS_COMPLETED', res.data)
+          commit('SET_PREPARATIONS_COMPLETED_NO_BILLED', res.data)
           resolve(res)
         })
         .catch(function (error) {
           reject(error)
         });
+      })
+    },
+    getPreparationsCompletedBilled: ({ commit }, date) => {
+      return new Promise((resolve, reject) => {
+        instance.get(`/billings/billed/${date}`)
+          .then((res) => {
+            commit('SET_PREPARATIONS_COMPLETED_BILLED', res.data)
+            resolve(res)
+          })
+          .catch(function (error) {
+            reject(error)
+          });
       })
     }
   },

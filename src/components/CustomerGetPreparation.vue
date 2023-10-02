@@ -1,6 +1,6 @@
 <template>
   <div class="get-back">
-    <AdminGetPhotoPreparation v-if="getPhotoBox === 'getPhoto'" :url="this.urlPhoto" />
+    <AdminGetPhotoPreparation v-if="getPhotoBox === 'getPhoto'" :url="this.urlPhoto" :numberPhoto="this.numberPhoto" />
     <div class="get-box">
       <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
       <h2 class="get-box-title">Préparation du véhicule immatriculé {{getPreparation.immat}}</h2>
@@ -11,14 +11,17 @@
         <img crossorigin="anonymous" src="../assets/Icons/completed.svg" alt="" class="get-state-icon" /><p class="get-state-txt-completed">Terminée</p>
       </div>
       <div class="get-infos-box">
-        <p>Prévue pour le {{moment(getPreparation.end).format('LL')}}</p>
+        <p v-if="getPreparation.state === 'planned'">Prévue pour le {{moment(getPreparation.end).format('LL')}}</p>
+        <p v-if="getPreparation.state === 'completed'">Livrée le {{moment(getPreparation.end).format('LL')}}</p>
         <p>Marque : {{getPreparation.brand}}</p>
         <p>Modèle : {{getPreparation.model}}</p>
         <p>Annéee : {{getPreparation.year}}</p>
         <p>KM : {{getPreparation.kilometer}}</p>
         <p>Etat du véhicule : {{getPreparation.condition}}</p>
-        <p>Observations : {{getPreparation.observationsDepot}}</p>
-        <p>Informations client : {{getPreparation.observationsCustomer}}</p>
+        <p v-if="getPreparation.observationsDepot">Observations : {{getPreparation.observationsDepot}}</p>
+        <p v-if="!getPreparation.observationsDepot">Observations : non renseigné</p>
+        <p v-if="getPreparation.observationsCustomer">Informations client : {{getPreparation.observationsCustomer}}</p>
+        <p v-if="!getPreparation.observationsCustomer">Informations client : non renseigné</p>
       </div>
       <div class="get-steps-box">
         <h2 class="second-title">Etapes de préparations</h2>
@@ -42,16 +45,16 @@
       <h2 v-if="checkPhotos() > 0" class="second-title">Photos</h2>
       <div v-if="checkPhotos() > 0" class="get-photos-box">
         <div v-if="getPreparation.photo1" class="get-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo1})" :src="getPreparation.photo1" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo1, number: 'photo1'})" :src="getPreparation.photo1" alt="" class="get-photo">
         </div>
         <div v-if="getPreparation.photo2" class="get-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo2})" :src="getPreparation.photo2" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo2, number: 'photo2'})" :src="getPreparation.photo2" alt="" class="get-photo">
         </div>
         <div v-if="getPreparation.photo3" class="get-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo3})" :src="getPreparation.photo3" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo3, number: 'photo3'})" :src="getPreparation.photo3" alt="" class="get-photo">
         </div>
         <div v-if="getPreparation.photo4" class="get-photo-box">
-          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo4})" :src="getPreparation.photo4" alt="" class="get-photo">
+          <img crossorigin="anonymous" @click="openPhotoBox({mode:'getPhoto', url: getPreparation.photo4, number: 'photo4'})" :src="getPreparation.photo4" alt="" class="get-photo">
         </div>
       </div>
     </div>
@@ -73,7 +76,8 @@ export default {
   data() {
     return {
       moment: moment,
-      urlPhoto: ""
+      urlPhoto: "",
+      numberPhoto: ""
     }
   },
   computed: {
@@ -99,6 +103,7 @@ export default {
     openPhotoBox(data) {
       this.urlPhoto = data.url
       this.$store.state.photoBox = data.mode
+      this.numberPhoto = data.number
     },
     closeGetBox() {
       this.$store.state.getBox = "closed"

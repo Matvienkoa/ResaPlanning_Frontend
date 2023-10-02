@@ -22,7 +22,7 @@
             <div class="showroom-customer-vehicle-infos-box">
               <p class="showroom-customer-vehicle-title">{{vehicle.brand}} {{vehicle.model}}</p>
               <p class="showroom-customer-vehicle-year">{{vehicle.year}}</p>
-              <p class="showroom-customer-vehicle-price">{{vehicle.price}} €</p>
+              <p class="showroom-customer-vehicle-price">{{vehicle.marketPrice/100}} €</p>
             </div>
           </router-link>
         </div>
@@ -40,19 +40,27 @@ export default {
   components: {
     Header
   },
-  data() {
-    return {
-      
-    }
-  },
   computed: {
     ...mapGetters(['getVehicles'])
   },
-  methods: {
-
-  },
   created: function () {
     this.$store.dispatch('getVehicles');
+    this.$store.dispatch('checkToken')
+    .then((res) => {
+      if(res === 'expired') {
+        this.$router.push('/')
+      }
+    })
+    this.$store.dispatch('getProfile')
+    .then((res) => {
+      if(res.data) {
+        if(res.data.role !== 'admin' && res.data.role !== 'customer') {
+          this.$router.push('/')
+        }
+      } else {
+        this.$router.push('/')
+      }
+    })
   }
 }
 </script>

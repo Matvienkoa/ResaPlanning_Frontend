@@ -13,13 +13,16 @@
 
 <script>
 import instance from '@/axios';
+let moment = require('moment');
+moment.locale('fr');
 
 export default {
   name: 'AdminInvoicePreparation',
-  props: ['preparationId'],
+  props: ['preparationId', 'month'],
   data() {
     return {
-      error: ""
+      error: "",
+      moment: moment,
     }
   },
   methods: {
@@ -30,7 +33,8 @@ export default {
       instance.put(`/preparation/invoice/${this.preparationId}`)
       .then((res) => {
           if(res.status === 201) {
-              this.$store.dispatch('getPreparationsCompleted')
+              this.$store.dispatch('getPreparationsCompletedBilled', moment(this.month).format())
+              this.$store.dispatch('getPreparationsCompletedNoBilled')
               .then(() => {
                 this.closeInvoiceBox()
               })

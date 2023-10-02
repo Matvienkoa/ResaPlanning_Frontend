@@ -24,7 +24,7 @@
             <div class="showroom-admin-vehicle-infos-box">
               <p class="showroom-admin-vehicle-title">{{vehicle.brand}} {{vehicle.model}}</p>
               <p class="showroom-admin-vehicle-year">{{vehicle.year}}</p>
-              <p class="showroom-admin-vehicle-price">{{vehicle.price}} €</p>
+              <p class="showroom-admin-vehicle-price">{{vehicle.marketPrice/100}} €</p>
             </div>
           </router-link>
         </div>
@@ -60,6 +60,22 @@ export default {
   created: function () {
     this.$store.commit('RESET_BOX');
     this.$store.dispatch('getVehicles');
+    this.$store.dispatch('checkToken')
+    .then((res) => {
+      if(res === 'expired') {
+        this.$router.push('/')
+      }
+    })
+    this.$store.dispatch('getProfile')
+    .then((res) => {
+      if(res.data) {
+        if(res.data.role !== 'admin') {
+          this.$router.push('/')
+        }
+      } else {
+        this.$router.push('/')
+      }
+    })
   }
 }
 </script>

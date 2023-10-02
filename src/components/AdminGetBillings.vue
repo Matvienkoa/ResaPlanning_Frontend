@@ -1,6 +1,6 @@
 <template>
     <div class="get-back">
-        <AdminInvoicePreparation v-if="getInvoiceBox === 'invoicePrep'" :preparationId="this.id" />
+        <AdminInvoicePreparation v-if="getInvoiceBox === 'invoicePrep'" :preparationId="this.id" :month="this.month" />
         <div class="get-box">
             <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <div class="get-requests-box">
@@ -23,6 +23,7 @@
                     <div class="get-requests-title-box">
                         <h2 class="get-requests-title">Préparations facturées</h2>
                     </div>
+                    <input @change="updatePrepBilled()" type="month" v-model="month" name="" id="">
                     <div class="prep-request" v-for="prep in getPreparationsBilled" :key="prep.id">
                         <div class="prep-request-infos">
                             <p class="prep-request-info">{{prep.immat}}</p>
@@ -41,23 +42,30 @@
 
 <script>
 import { mapGetters } from 'vuex';
+let moment = require('moment');
+moment.locale('fr');
 
 import AdminInvoicePreparation from '@/components/AdminInvoicePreparation.vue';
 
 export default {
-    name: 'AdminGetBillings',
-    components: {
-        AdminInvoicePreparation
-    },
-    data() {
-        return {
-            id: null
-        }
+  name: 'AdminGetBillings',
+  components: {
+    AdminInvoicePreparation
+  },
+  data() {
+    return {
+        id: null,
+        moment: moment,
+        month: moment(new Date()).format('yyyy-MM')
+    }
   },
   computed: {
     ...mapGetters(['getPreparationsBilling', 'getPreparationsBilled', 'getInvoiceBox'])
   },
   methods: {
+    updatePrepBilled() {
+      this.$store.dispatch('getPreparationsCompletedBilled', moment(this.month).format())
+    },
     openInvoiceBox(data) {
         this.id = data.id
         this.$store.state.invoiceBox = data.mode
@@ -67,7 +75,8 @@ export default {
     }
   },
   created: function () {
-        this.$store.dispatch('getPreparationsCompleted')
+      this.$store.dispatch('getPreparationsCompletedBilled', new Date())
+      this.$store.dispatch('getPreparationsCompletedNoBilled')
     }
 }
 </script>

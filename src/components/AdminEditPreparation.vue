@@ -14,8 +14,8 @@
             <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
             <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
             <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-            <label class="form-label" for="preparation-form-endTime">Heure de fin<span class="star">*</span></label>
-            <input class="form-input required" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+            <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
+            <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
             <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
             <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
             <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
@@ -23,6 +23,7 @@
             <label class="form-label" for="preparation-form-year">Année<span class="star">*</span></label>
             <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
             <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
+            <p class="form-password-infos">Ou numéro de série du véhicule</p>
             <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
             <label class="form-label" for="preparation-form-kilometers">Km<span class="star">*</span></label>
             <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
@@ -30,6 +31,8 @@
             <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
             <label class="form-label" for="vehicle-form-observations">Observations</label>
             <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
+            <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+            <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
               <button class="valid-button" @click="editPreparation()">Modifier la préparation</button>
@@ -65,7 +68,8 @@ export default {
       endDate: "",
       startTime: "",
       endTime: "",
-      prestation: ""
+      prestation: "",
+      maker: ""
     }
   },
   computed: {
@@ -88,7 +92,8 @@ export default {
         startDate: this.startDate,
         endDate: this.endDate,
         startTime: this.startTime,
-        endTime: this.endTime
+        endTime: this.endTime,
+        maker: this.maker
       })
       .then((res) => {
           if(res.status === 201) {
@@ -133,6 +138,7 @@ export default {
       this.kilometer = res.data.kilometer
       this.condition = res.data.condition
       this.observationsDepot = res.data.observationsDepot
+      this.maker = res.data.maker
     })
   },
 }

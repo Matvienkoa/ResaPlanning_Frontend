@@ -10,14 +10,15 @@
         <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
         <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
         <input class="form-input required" v-model="model" @input="cancelError()" type="text" name="preparation-form-model" id="preparation-form-model">
-        <label class="form-label" for="preparation-form-year">Année<span class="star">*</span></label>
-        <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
+        <label class="form-label" for="preparation-form-year">Année</label>
+        <input class="form-input" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
         <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
+        <p class="form-password-infos">Ou numéro de série du véhicule</p>
         <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
-        <label class="form-label" for="preparation-form-kilometers">Km<span class="star">*</span></label>
-        <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
-        <label class="form-label" for="preparation-form-condition">Etat du véhicule<span class="star">*</span></label>
-        <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
+        <label class="form-label" for="preparation-form-kilometers">Km</label>
+        <input class="form-input" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
+        <label class="form-label" for="preparation-form-condition">Etat du véhicule</label>
+        <input class="form-input" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
         <label class="form-label" for="vehicle-form-steps">Etapes souhaitées</label>
         <input class="form-input" v-model="steps" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
         <label class="form-label" for="vehicle-form-observations">Observations</label>
@@ -102,7 +103,6 @@ export default {
   created: function () {
     this.$store.dispatch('getPrepRequest', this.id)
     .then((res) => {
-        console.log(res)
         this.brand = res.data.brand
         this.model = res.data.model
         this.year = res.data.year

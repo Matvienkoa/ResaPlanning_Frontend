@@ -11,11 +11,24 @@
             <label class="form-label" for="vehicle-form-year">Année<span class="star">*</span></label>
             <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="vehicle-form-year" id="vehicle-form-year">
             <label class="form-label" for="vehicle-form-immat">Immatriculation<span class="star">*</span></label>
+            <p class="form-password-infos">Ou numéro de série du véhicule</p>
             <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="vehicle-form-immat" id="vehicle-form-immat">
             <label class="form-label" for="vehicle-form-kilometers">Km<span class="star">*</span></label>
             <input class="form-input required" v-model="kilometers" @input="cancelError()" type="text" name="vehicle-form-kilometers" id="vehicle-form-kilometers">
-            <label class="form-label" for="vehicle-form-price">Prix marchand<span class="star">*</span></label>
-            <input class="form-input required" v-model="price" @input="cancelError()" type="number" name="vehicle-form-price" id="vehicle-form-price">
+            <label class="form-label" for="vehicle-form-marketPrice">Prix marchand<span class="star">*</span></label>
+            <input class="form-input required" v-model="marketPrice" @input="cancelError()" type="number" name="vehicle-form-marketPrice" id="vehicle-form-marketPrice">
+            <label class="form-label" for="vehicle-form-publicPrice">Prix Public<span class="star">*</span></label>
+            <input class="form-input required" v-model="publicPrice" @input="cancelError()" type="number" name="vehicle-form-publicPrice" id="vehicle-form-publicPrice">
+            <label class="form-label" for="vehicle-form-purchasePrice">Prix d'Achat<span class="star">*</span></label>
+            <input class="form-input required" v-model="purchasePrice" @input="cancelError()" type="number" name="vehicle-form-purchasePrice" id="vehicle-form-purchasePrice">
+            <label class="form-label" for="vehicle-form-frevos">FREVOS</label>
+            <input class="form-input" v-model="frevos" type="text" name="vehicle-form-frevos" id="vehicle-form-frevos">
+            <label class="form-label" for="vehicle-form-frevosPrice">Montant FREVOS</label>
+            <input class="form-input" v-model="frevosPrice" type="number" name="vehicle-form-frevosPrice" id="vehicle-form-frevosPrice">
+            <div class="custom-checkbox">
+              <input v-model="firstHand" type="checkbox" name="form-firstHand" id="form-firstHand">
+              <label class="form-label-checkbox" for="form-firstHand">Première Main</label>
+            </div>
             <label class="form-label" for="vehicle-form-observations">Observations</label>
             <input class="form-input" v-model="observations" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
             <label class="form-label" for="vehicle-form-photos">Photos</label>
@@ -47,7 +60,12 @@ export default {
       year: "",
       immat: "",
       kilometers: "",
-      price: null,
+      marketPrice: null,
+      publicPrice: null,
+      purchasePrice: null,
+      frevos: "",
+      frevosPrice: null,
+      firstHand: false,
       observations: "",
       photos: [],
       url1: "",
@@ -78,6 +96,13 @@ export default {
     closeAddBox() {
       this.$store.state.addBox = "closed"
     },
+    checkBox(data) {
+      if(data === true) {
+        return 'yes'
+      } else {
+        return 'no'
+      }
+    },
     addVehicle() {
       const formData = new FormData();
       formData.append('brand', this.brand)
@@ -85,7 +110,12 @@ export default {
       formData.append('year', this.year)
       formData.append('immat', this.immat)
       formData.append('kilometers', this.kilometers)
-      formData.append('price', this.price)
+      formData.append('marketPrice', this.marketPrice)
+      formData.append('publicPrice', this.publicPrice)
+      formData.append('purchasePrice', this.purchasePrice)
+      formData.append('frevos', this.frevos)
+      formData.append('frevosPrice', this.frevosPrice)
+      formData.append('firstHand', this.checkBox(this.firstHand))
       formData.append('observations', this.observations)
       for (let i = 0; i < this.photos.length; i++) {
         formData.append('photos', this.photos[i]);

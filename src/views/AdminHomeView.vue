@@ -13,7 +13,7 @@
           <p>Gestion des comptes utilisateurs</p>
         </div>
       </router-link>
-      <router-link to="/admin/planning" class="home-menu-link">
+      <router-link v-if="getUser.role === 'admin'" to="/admin/planning" class="home-menu-link">
         <div class="home-menu-link-img-box">
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-planning.jpg" alt="">
         </div>
@@ -21,7 +21,15 @@
           <p>Planning</p>
         </div>
       </router-link>
-      <router-link to="/admin/customers" class="home-menu-link">
+      <router-link v-if="getUser.role === 'employee'" to="/employee/planning" class="home-menu-link">
+        <div class="home-menu-link-img-box">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-planning.jpg" alt="">
+        </div>
+        <div class="home-menu-link-bloc">
+          <p>Planning</p>
+        </div>
+      </router-link>
+      <router-link v-if="getUser.role === 'admin'" to="/admin/customers" class="home-menu-link">
         <div class="home-menu-link-img-box">
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-customers.jpg" alt="">
         </div>
@@ -29,7 +37,7 @@
           <p>Clients</p>
         </div>
       </router-link>
-      <router-link to="/admin/showroom" class="home-menu-link">
+      <router-link v-if="getUser.role === 'admin'" to="/admin/showroom" class="home-menu-link">
         <div class="home-menu-link-img-box">
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-showroom.jpg" alt="">
         </div>
@@ -66,14 +74,12 @@ export default {
   created: function () {
     this.$store.dispatch('checkToken')
     .then((res) => {
-      console.log(res)
       if(res === 'expired') {
         this.$router.push('/')
       }
     })
     this.$store.dispatch('getProfile')
     .then((res) => {
-      console.log(res)
       if(res.data) {
         if(res.data.role !== 'admin' && res.data.role !== 'employee') {
           this.$router.push('/')

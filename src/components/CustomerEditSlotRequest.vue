@@ -84,7 +84,6 @@ export default {
   created: function () {
     this.$store.dispatch('getSlotRequest', this.id)
     .then((res) => {
-        console.log(res)
         this.duration = res.data.duration
         this.place = res.data.place
         this.observationsCustomer = res.data.observationsCustomer

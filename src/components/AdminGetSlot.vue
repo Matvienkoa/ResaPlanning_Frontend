@@ -4,11 +4,18 @@
     <AdminDeleteSlot v-if="getDeleteBox === 'deleteSlot'" :slotId="this.slot" />
     <div class="get-box">
       <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
-      <h2 class="get-box-title">Créneau réservé à {{getCustomer.company}}</h2>
+      <h2 class="get-box-title">Créneau réservé à {{getSlot.company}}</h2>
       <div class="get-infos-box">
+        <p>Réalisé par : {{getSlot.maker}}</p>
+        <p v-if="getSlot.duration === 'day'">Durée de l'intervention : Journée entière</p>
+        <p v-if="getSlot.duration === 'half'">Durée de l'intervention : Demie Journée</p>
         <p>Du {{moment(getSlot.start).format('LLL')}}</p>
         <p>Au {{moment(getSlot.end).format('LLL')}}</p>
         <p>Lieux de la prestation : {{getSlot.place}}</p>
+        <p v-if="getSlot.observationsCustomer">Informations client : {{getSlot.observationsCustomer}}</p>
+        <p v-if="!getSlot.observationsCustomer">Informations client : Non renseigné</p>
+        <p v-if="getSlot.observationsDepot">Observations : {{getSlot.observationsDepot}}</p>
+        <p v-if="!getSlot.observationsDepot">Observations : Non renseigné</p>
         <div @click="openEditBox({mode: 'editSlot', id: this.id})" class="edit-icon-box">
           <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
         </div>
@@ -17,9 +24,9 @@
         </div>
       </div>
       <div class="get-customer-box">
-        <p>Client : {{getCustomer.company}} {{getCustomer.firstName}} {{getCustomer.lastName}}</p>
-        <p>Adresse : {{getCustomer.adress}} {{getCustomer.adress2}} {{getCustomer.zipCode}} {{getCustomer.city}}</p>
-        <p>Contact : {{getCustomer.phone}} {{getCustomer.mail}}</p>
+        <p>Client : {{getSlot.company}} {{getSlot.firstName}} {{getSlot.lastName}}</p>
+        <p>Adresse : {{getSlot.adress}} {{getSlot.adress2}} {{getSlot.zipCode}} {{getSlot.city}}</p>
+        <p>Contact : {{getSlot.phone}} {{getSlot.mail}}</p>
       </div>
     </div>
   </div>
@@ -42,12 +49,11 @@ export default {
   data() {
     return {
       moment: moment,
-      slot: null,
-      customer: ""
+      slot: null
     }
   },
   computed: {
-    ...mapGetters(['getSlot', 'getCustomers', 'getCustomer', 'getEditBox', 'getDeleteBox'])
+    ...mapGetters(['getSlot', 'getEditBox', 'getDeleteBox'])
   },
   methods: {
     openEditBox(data) {
@@ -63,11 +69,7 @@ export default {
     },
   },
   created: function () {
-    this.$store.dispatch('getCustomers');
     this.$store.dispatch('getSlot', this.id)
-    .then((res) => {
-      this.$store.dispatch('getCustomer', res.data.customerId)
-    })
   }
 }
 </script>

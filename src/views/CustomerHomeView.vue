@@ -5,7 +5,7 @@
       <h1 class="home-admin-title">Menu Principal</h1>
     </div>
     <div class="home-customer-box">
-      <router-link to="/customer/requests" class="home-menu-link">
+      <router-link v-if="getUser.afc === 'yes'" to="/customer/requests" class="home-menu-link">
         <div class="home-menu-link-img-box">
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-booking.jpg" alt="">
         </div>
@@ -13,7 +13,7 @@
           <p>Demande de réservation</p>
         </div>
       </router-link>
-      <router-link to="/customer/tracking" class="home-menu-link">
+      <router-link v-if="getUser.afc === 'yes'" to="/customer/tracking" class="home-menu-link">
         <div class="home-menu-link-img-box">
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-detailing.jpg" alt="">
         </div>
@@ -21,7 +21,7 @@
           <p>Statut de préparation</p>
         </div>
       </router-link>
-      <router-link to="/customer/showroom" class="home-menu-link">
+      <router-link v-if="getUser.millenium === 'yes'" to="/customer/showroom" class="home-menu-link">
         <div class="home-menu-link-img-box">
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-showroom.jpg" alt="">
         </div>
@@ -36,18 +36,33 @@
 <script>
 import HeaderHome from '@/components/HeaderHome.vue'
 
+import { mapGetters } from 'vuex';
+
 export default {
   name: 'CustomerHome',
   components: {
     HeaderHome,
   },
-  data() {
-    return {
-      
-    }
+  computed: {
+    ...mapGetters(['getUser'])
   },
-  methods: {
-    
+  created: function () {
+    this.$store.dispatch('checkToken')
+    .then((res) => {
+      if(res === 'expired') {
+        this.$router.push('/')
+      }
+    })
+    this.$store.dispatch('getProfile')
+    .then((res) => {
+      if(res.data) {
+        if(res.data.role !== 'admin' && res.data.role !== 'customer') {
+          this.$router.push('/')
+        }
+      } else {
+        this.$router.push('/')
+      }
+    })
   }
 }
 </script>
