@@ -60,7 +60,7 @@ export default {
 }
 .invalidate-preparation-box{
   position: relative;
-  width: 100%;
+  width: 95%;
   max-width: 500px;
   min-height: 40%;
   max-height: 50%;

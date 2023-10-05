@@ -61,10 +61,10 @@ export default {
 }
 .invoice-box{
   position: relative;
-  width: 60%;
-  max-width: 600px;
-  min-height: 50%;
-  max-height: 90%;
+  width: 95%;
+  max-width: 500px;
+  min-height: 40%;
+  max-height: 95%;
   background: white;
   display: flex;
   flex-direction: column;

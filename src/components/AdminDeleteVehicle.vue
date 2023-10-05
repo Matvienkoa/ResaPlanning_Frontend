@@ -1,6 +1,6 @@
 <template>
-  <div class="add-back">
-    <div class="add-box">
+  <div class="delete-back">
+    <div class="delete-box">
         <img crossorigin="anonymous" @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
         <h2 class="add-box-title">Supprimer ce véhicule?</h2>
         <div v-if="error" class="error">{{ error }}</div>
@@ -47,11 +47,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.add-vehicle-form{
-  width: 80%;
-  display: flex;
-  flex-direction: column;
-}
-</style>

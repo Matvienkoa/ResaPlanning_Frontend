@@ -104,19 +104,20 @@ export default {
 
 <style scoped>
 .get-box{
-    position: relative;
-    width: 60%;
-    max-width: 800px;
-    min-height: 70%;
-    max-height: 90%;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    overflow-y: auto;
-    z-index: 7;
-    border-radius: 10px;
+  position: relative;
+  width: 95%;
+  max-width: 800px;
+  min-height: 40%;
+  max-height: 95%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  overflow-y: auto;
+  z-index: 7;
+  border-radius: 10px;
+  padding-bottom: 2em;
 }
 .get-requests-box{
   width: 90%;
@@ -135,24 +136,29 @@ export default {
   border-bottom: 3px solid #c0c0c0;
   display: flex;
   align-items: center;
-  margin-bottom: 15px;
+  padding-bottom: 5px;
   margin-top: 15px;
+  margin-bottom: 15px;
 }
 .get-requests-title{
-  font-size: 1.3em;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2em;
 }
 .prep-request, .slot-request{
   width: 100%;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 10px;
-  background-color: rgb(236, 236, 236);
+  margin-bottom: 15px;
+  background-color: rgb(245, 245, 245);
   border-radius: 10px;
   padding: 0.4em 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 .prep-request-infos, .slot-request-infos{
   display: flex;
+  flex-wrap: wrap;
+  margin-right: 10px;
 }
 .prep-request-info, .slot-request-info{
   margin-left: 5px;

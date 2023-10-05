@@ -242,10 +242,10 @@ export default {
   width: 120px;
   height: 35px;
   border-radius: 30px;
-  background: rgb(70, 137, 217);
+  background: green;
   color: white;
   font-size: 1.1em;
-  border: solid 2px rgb(70, 137, 217);
+  border: solid 2px green;
   cursor: pointer;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
@@ -254,10 +254,10 @@ export default {
   width: 120px;
   height: 35px;
   border-radius: 30px;
-  background: red;
+  background: rgb(55,136,216);
   color: white;
   font-size: 1.1em;
-  border: solid 2px red;
+  border: solid 2px rgb(55,136,216);
   cursor: pointer;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
@@ -265,8 +265,8 @@ export default {
   width:160px;
   height: 25px;
   border-radius: 10px;
-  background: rgb(5, 122, 255);
-  border: solid 2px rgb(5, 122, 255);
+  background: rgb(55,136,216);
+  border: solid 2px rgb(55,136,216);
   color: white;
   font-size: 0.9em;
   cursor: pointer;
@@ -300,6 +300,8 @@ export default {
   text-align: center;
   margin-bottom: 30px;
   margin-top: 20px;
+  font-family: 'catamaran', sans-serif;
+  line-height: 1.1em;
 }
 .arrow-back{
   position: absolute;
@@ -311,18 +313,16 @@ export default {
 </style>
 
 <style scoped>
-.add-box{
-  justify-content: flex-start;
-}
 .add-choice-box{
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .add-preparation-box, .add-slot-box{
   width: 80%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
 }

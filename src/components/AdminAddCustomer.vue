@@ -2,7 +2,7 @@
   <div class="add-back">
     <div class="add-box">
         <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
-        <h2 class="add-box-title">Créer un client</h2>
+        <h2 class="add-box-title">Créer un nouveau client</h2>
         <div class="add-customer-form">
             <label class="form-label" for="customer-form-company">Société<span class="star">*</span></label>
             <input class="form-input required" v-model="company" @input="cancelError()" type="text" name="customer-form-company" id="customer-form-company">
@@ -97,9 +97,6 @@ export default {
 
 
 <style scoped>
-.add-box{
-  justify-content: flex-start;
-}
 .add-customer-form{
   width: 80%;
   max-width: 400px;

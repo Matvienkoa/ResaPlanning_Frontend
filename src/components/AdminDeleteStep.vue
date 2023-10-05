@@ -55,9 +55,9 @@ export default {
 }
 .delete-step-box{
   position: relative;
-  width: 100%;
+  width: 95%;
   max-width: 500px;
-  min-height: 40%;
+  min-height: 30%;
   max-height: 50%;
   background: white;
   display: flex;

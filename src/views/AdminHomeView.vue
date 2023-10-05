@@ -10,7 +10,7 @@
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-users.jpg" alt="">
         </div>
         <div class="home-menu-link-bloc">
-          <p>Gestion des comptes utilisateurs</p>
+          <p>Comptes d'accès</p>
         </div>
       </router-link>
       <router-link v-if="getUser.role === 'admin'" to="/admin/planning" class="home-menu-link">
@@ -101,14 +101,16 @@ export default {
 }
 .home-admin-title-box{
   width: 100%;
-  height: 40px;
-  border-bottom: 3px solid #c0c0c0;
+  height: 60px;
+  border-bottom: 3px solid #c90200;
   display: flex;
   align-items: center;
 }
 .home-admin-title{
-  font-size: 1.4em;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2.1em;
   margin-left: 30px;
+  text-transform: uppercase;
 }
 .home-admin-box{
   width: 100%;
@@ -117,8 +119,8 @@ export default {
   flex-wrap: wrap;
 }
 .home-menu-link{
-  width: 200px;
-  height: 250px;
+  width: 230px;
+  height: 280px;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin: 20px;
   display: flex;
@@ -143,9 +145,22 @@ export default {
   align-items: center;
 }
 .home-menu-link-bloc p{
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 1.8em;
   text-align: center;
-  font-weight: 600;
-  color: black;
+  font-weight: 500;
+  color: #2c3e50;
+  text-transform: uppercase;
+}
+@media (max-width: 768px) {
+  .main-page{
+    margin-left: unset;
+  }
+  .home-admin-box{
+    justify-content: center;
+    margin-bottom: 60px;
+  }
+  
 }
 </style>
 

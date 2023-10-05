@@ -87,6 +87,7 @@ export default {
   align-items: center;
   flex-direction: column;
   padding-top: 1em;
+  padding-bottom: 4em;
 }
 .showroom-admin{
   width: 95%;
@@ -99,7 +100,11 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid black;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
+}
+.showroom-admin-title{
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2em;
 }
 .showroom-admin-icon{
   width: 20px;
@@ -115,6 +120,7 @@ export default {
 }
 .showroom-admin-vehicle{
   width: 30%;
+  min-width: 250px;
   max-width: 300px;
   height: 300px;
   display: flex;
@@ -160,23 +166,46 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 10px;
+  margin-left: 15px;
 }
 .showroom-admin-vehicle-title{
-  color: black;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2em;
+  color: #2c3e50;
   font-weight: 600;
   margin-bottom: 5px;
 }
 .showroom-admin-vehicle-year{
+  font-family: 'catamaran', sans-serif;
   color: rgb(153, 153, 153);
   font-weight: 600;
-  margin-bottom: 15px;
-}
-.showroom-admin-vehicle-price{
-  color: black;
-  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1em;
   font-size: 1.2em;
 }
+.showroom-admin-vehicle-price{
+  font-family: 'trumpSoftPro', sans-serif;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 2em;
+  line-height: 1em;
+}
 
-
+@media (max-width: 1024px) {
+  .showroom-admin-vehicles-box{
+    justify-content: center;
+  }
+  .showroom-admin-vehicle{
+    width: 45%;
+    min-width: 240px;
+    max-width: 300px;
+  }
+}
+@media (max-width: 480px) {
+  .showroom-admin-vehicle{
+    width: 90%;
+    min-width: 240px;
+    max-width: 300px;
+  }
+}
 </style>

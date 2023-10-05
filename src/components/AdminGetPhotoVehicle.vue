@@ -135,8 +135,8 @@ export default {
 }
 .get-photo-box{
   position: relative;
-  width: 100%;
-  max-width: 800px;
+  width: 90%;
+  max-width: 1000px;
   height: 90%;
   background: white;
   display: flex;
@@ -148,16 +148,16 @@ export default {
   border-radius: 10px;
 }
 .photo-main{
-    height: 90%;
-    width: 85%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  height: 90%;
+  width: 85%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .photo{
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 .arrow-car-left{
   position: absolute;
@@ -172,5 +172,34 @@ export default {
   top: 50%;
   width: 30px;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .photo-main{
+    height: 85%;
+    margin-bottom: 40px;
+  }
+  .arrow-car-left{
+    left: 43%;
+    top: unset;
+    bottom: 2%;
+  }
+  .arrow-car-right{
+    top: unset;
+    bottom: 2%;
+    right: 43%;
+  }
+}
+@media (max-width: 480px) {
+  .get-photo-box{
+    width: 95%;
+    height: 95%;
+  }
+  .arrow-car-left{
+    left: 35%;
+  }
+  .arrow-car-right{
+    right: 35%;
+  }
 }
 </style>

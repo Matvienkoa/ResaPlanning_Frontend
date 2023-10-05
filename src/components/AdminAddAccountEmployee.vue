@@ -2,9 +2,9 @@
   <div class="add-back">
     <div class="add-box">
         <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
-        <h2 class="add-box-title">Créer un compte collaborateur</h2>
+        <h2 class="add-box-title">Créer un compte d'accès collaborateur</h2>
         <div class="add-account-form">
-            <label class="form-label" for="form-login">Login<span class="star">*</span></label>
+            <label class="form-label" for="form-login">Identifiant<span class="star">*</span></label>
             <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
             <label class="form-label" for="form-lastName">Nom</label>
             <input class="form-input" v-model="lastName" type="text" name="form-lastName" id="form-lastName">
@@ -14,7 +14,7 @@
               <input v-model="privileges" type="checkbox" name="form-privileges" id="form-privileges">
               <label class="form-label-checkbox" for="form-privileges">Privilèges</label>
             </div>
-            <p class="form-password-infos">Les privilèges donnent accès aux demandes des clients</p>
+            <p class="form-privileges-infos">Les privilèges donnent accès aux demandes des clients</p>
             <label class="form-label" for="form-password">Mot de passe<span class="star">*</span></label>
             <p class="form-password-infos">Compris entre 8 et 30 caractères avec au minimum 1 Majuscule, 1 Minuscule et 1 Chiffre</p>
             <div class="home-form-password-box">
@@ -139,15 +139,15 @@ export default {
 }
 .add-box{
   position: relative;
-  width: 60%;
-  max-width: 600px;
+  width: 70%;
+  max-width: 900px;
   min-height: 50%;
   max-height: 90%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-y: auto;
   z-index: 7;
   border-radius: 10px;
@@ -158,6 +158,8 @@ export default {
   text-align: center;
   margin-bottom: 20px;
   margin-top: 30px;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2.3em;
 }
 .close-add{
   position: absolute;
@@ -173,13 +175,22 @@ export default {
   flex-direction: column;
 }
 .form-label{
-  margin-bottom: 5px;
+  margin-bottom: 2px;
   margin-left: 5px;
   font-weight: 600;
+  font-family: 'catamaran', sans-serif;
+  font-size: 1.2em;
+  line-height: 1.1em;
 }
 .form-password-infos{
   color: #979797;
   margin-bottom: 5px;
+  margin-left: 5px;
+  font-size: 0.8em;
+}
+.form-privileges-infos{
+  color: #979797;
+  margin-bottom: 20px;
   margin-left: 5px;
   font-size: 0.8em;
 }
@@ -190,17 +201,19 @@ export default {
   padding-left: 5%;
   padding-right: 5%;
   font-size: 1.2em;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 .form-input:focus{
   outline: none;
 }
 .custom-checkbox{
-  margin-bottom: 20px;
+  margin-bottom: 5px;
   margin-top: 10px;
 }
 .form-label-checkbox{
   font-weight: 600;
+  font-family: 'catamaran', sans-serif;
+  font-size: 1.2em;
 }
 .custom-checkbox input[type="checkbox"] {
   display: none;
@@ -214,7 +227,7 @@ export default {
   content: "";
   position: absolute;
   left: 0;
-  top: -5px;
+  top: 0;
   width: 25px; /* Largeur de la case à cocher personnalisée */
   height: 25px; /* Hauteur de la case à cocher personnalisée */
   border: solid 1px rgb(184, 184, 184);
@@ -222,22 +235,38 @@ export default {
   border-radius: 20px;
 }
 .custom-checkbox input[type="checkbox"]:checked + label::before {
-  background-color: rgb(198,238,0); /* Couleur de fond de la case à cocher cochée */
+  background-color: #c90200; /* Couleur de fond de la case à cocher cochée */
   border-color: rgb(184, 184, 184); /* Couleur de bordure de la case à cocher cochée */
 }
 .add-button{
+  font-family: 'catamaran', sans-serif;
   margin: auto;
   width: 200px;
   height: 35px;
   border-radius: 30px;
-  background: rgb(198,238,0);
+  background: #c90200;
   color: white;
   margin-top: 20px;
   font-size: 1.1em;
-  border: solid 2px rgb(198,238,0);
+  border: solid 2px #c90200;
   cursor: pointer;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
   margin-bottom: 40px;
+}
+@media (max-width: 768px) {
+  .add-box{
+    width: 90%;
+  }
+}
+@media (max-width: 480px) {
+  .add-box{
+    width: 95%;
+    min-height: 95%;
+    max-height: 95%;
+  }
+  .add-box-title{
+    margin-top: 40px;
+  }
 }
 </style>
 

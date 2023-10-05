@@ -23,7 +23,7 @@
                     <div class="get-requests-title-box">
                         <h2 class="get-requests-title">Préparations facturées</h2>
                     </div>
-                    <input @change="updatePrepBilled()" type="month" v-model="month" name="" id="">
+                    <input @change="updatePrepBilled()" type="month" v-model="month" name="" id="month-input">
                     <div class="prep-request" v-for="prep in getPreparationsBilled" :key="prep.id">
                         <div class="prep-request-infos">
                             <p class="prep-request-info">{{prep.immat}}</p>
@@ -84,10 +84,10 @@ export default {
 <style scoped>
 .get-box{
     position: relative;
-    width: 60%;
+    width: 95%;
     max-width: 800px;
-    min-height: 70%;
-    max-height: 90%;
+    min-height: 40%;
+    max-height: 95%;
     background: white;
     display: flex;
     flex-direction: column;
@@ -96,6 +96,7 @@ export default {
     overflow-y: auto;
     z-index: 7;
     border-radius: 10px;
+    padding-bottom: 2em;
 }
 .get-requests-box{
   width: 90%;
@@ -114,11 +115,13 @@ export default {
   border-bottom: 3px solid #c0c0c0;
   display: flex;
   align-items: center;
+  padding-bottom: 5px;
   margin-bottom: 15px;
   margin-top: 15px;
 }
 .get-requests-title{
-  font-size: 1.3em;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2em;
 }
 .prep-request{
   width: 100%;
@@ -126,16 +129,20 @@ export default {
   justify-content: space-between;
   align-items: center;
   margin-bottom: 10px;
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(245, 245, 245);
   border-radius: 10px;
   padding: 0.4em 0;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 .prep-request-infos{
   display: flex;
+  flex-wrap: wrap;
+  margin-right: 10px;
 }
 .prep-request-info{
   margin-left: 5px;
   margin-right: 5px;
+  font-weight: 600;
 }
 .invoice-icon-box{
   height: 35px;
@@ -153,5 +160,18 @@ export default {
 }
 .billed{
   cursor: unset;
+}
+#month-input{
+  width: 180px;
+  padding: 0 10px;
+  height: 40px;
+  font-size: 1.3em;
+  margin: auto;
+  margin-bottom: 20px;
+  border: #2c3e50 solid 3px;
+  border-radius: 20px;
+}
+#month-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
 }
 </style>

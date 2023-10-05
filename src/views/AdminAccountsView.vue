@@ -8,14 +8,14 @@
   <Header url="/admin/home" />
   <div class="main-page">
     <div class="account-admin-title-box">
-      <h1 class="account-admin-title">Comptes Utilisateurs</h1>
+      <h1 class="account-admin-title">Comptes d'accès</h1>
     </div>
     <div class="account-admin-box">
       <div class="account-admin-employees">
         <div class="account-admin-employees-title-box">
           <h2 class="account-admin-employees-title">Collaborateurs</h2>
           <div @click="openAddBox('addAccountEmployee')" class="add-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/add-2.svg" alt="" class="add-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/add.svg" alt="" class="add-icon">
           </div>
         </div>
         <div class="account-admin-employees-list">
@@ -34,7 +34,7 @@
                 <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon">
               </div>
               <div @click="openDeleteBox({id: employee.id, type: 'deleteAccountEmployee'})" class="delete-icon-box">
-                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="delete-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="delete-icon">
               </div>
             </div>
           </div>
@@ -44,7 +44,7 @@
         <div class="account-admin-customers-title-box">
           <h2 class="account-admin-customers-title">Clients</h2>
           <div @click="openAddBox('addAccountCustomer')" class="add-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/add-2.svg" alt="" class="add-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/add.svg" alt="" class="add-icon">
           </div>
         </div>
         <div class="account-admin-customers-list">
@@ -68,7 +68,7 @@
                 <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon">
               </div>
               <div @click="openDeleteBox({id: customer.id, type: 'deleteAccountCustomer'})" class="delete-icon-box">
-                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="delete-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="delete-icon">
               </div>
             </div>
           </div>
@@ -147,14 +147,16 @@ export default {
 <style>
 .account-admin-title-box{
   width: 100%;
-  height: 40px;
-  border-bottom: 3px solid #c0c0c0;
+  height: 60px;
+  border-bottom: 3px solid #c90200;
   display: flex;
   align-items: center;
 }
 .account-admin-title{
-  font-size: 1.3em;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2.1em;
   margin-left: 30px;
+  text-transform: uppercase;
 }
 .account-admin-box{
   width: 100%;
@@ -162,6 +164,7 @@ export default {
   align-items: center;
   flex-direction: column;
   padding-top: 1.5em;
+  padding-bottom: 4em;
 }
 .account-admin-employees, .account-admin-customers{
   width: 95%;
@@ -177,6 +180,10 @@ export default {
   margin-bottom: 15px;
   padding-bottom: 5px;
 }
+.account-admin-employees-title, .account-admin-customers-title{
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2em;
+}
 
 .account-admin-employees-list, .account-admin-customers-list{
   width: 100%;
@@ -189,10 +196,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(245, 245, 245);
   border-radius: 5px;
   padding: 0.4em 0;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 .account-admin-employee-infos, .account-admin-customer-infos{
   display: flex;
@@ -204,6 +212,8 @@ export default {
   display: flex;
   align-items: center;
   font-weight: 600;
+  font-family: 'catamaran', sans-serif;
+  font-size: 1em;
 }
 .slash{
   font-weight: 400;
@@ -220,6 +230,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-left: 15px;
 }
 
 .add-icon-box{
@@ -263,5 +274,28 @@ export default {
   height: 20px;
 }
 
-
+@media (max-width: 480px) {
+  .account-admin-employee, .account-admin-customer{
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .account-admin-employee-actions, .account-admin-customer-actions{
+    align-self: flex-end;
+    margin-top: 5px;
+  }
+  .edit-icon-box{
+    height: 35px;
+    width: 35px;
+  }
+  .edit-icon{
+    height: 15px;
+  }
+  .delete-icon-box{
+    height: 35px;
+    width: 35px;
+  }
+  .delete-icon{
+    height: 15px;
+  }
+}
 </style>

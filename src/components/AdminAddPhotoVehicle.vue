@@ -3,13 +3,17 @@
     <div class="add-photo-vehicle-box">
         <h2 class="add-box-title">Ajouter la photo n°{{checkPhoto(numberPhoto)}}</h2>
         <div class="add-photo-vehicle-form">
-            <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="vehicle-form-photo" id="vehicle-form-photo" class="required">
-            <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
-            <div v-if="error" class="error">{{ error.message }}</div>
-            <div class="box-choice-button">
-              <button class="valid-button" @click="addPhotoVehicle()">Ajouter la photo</button>
-              <div class="cancel-button" @click="closeAddBox()">Annuler</div>
-            </div>
+          <label class="form-label" for="vehicle-form-photo" id="vehicle-form-label-photo">
+            <img crossorigin="anonymous" src="../assets/Icons/file.svg" alt="" class="file-icon" />
+            <p>Sélectionner une photo</p>
+          </label>
+          <input @change="onFileSelected" ref="photo" @input="cancelError()" type="file" name="vehicle-form-photo" id="vehicle-form-photo" class="required">
+          <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
+          <div v-if="error" class="error">{{ error.message }}</div>
+          <div class="box-choice-button">
+            <button class="valid-button" @click="addPhotoVehicle()">Ajouter</button>
+            <div class="cancel-button" @click="closeAddBox()">Annuler</div>
+          </div>
         </div>
     </div>
   </div>
@@ -109,15 +113,15 @@ export default {
 }
 .add-photo-vehicle-box{
   position: relative;
-  width: 100%;
-  max-width: 700px;
-  min-height: 40%;
+  width: 80%;
+  max-width: 600px;
+  min-height: 30%;
   max-height: 80%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-y: auto;
   z-index: 10;
   border-radius: 10px;
@@ -128,9 +132,59 @@ export default {
   display: flex;
   flex-direction: column;
 }
+#vehicle-form-photo{
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+#vehicle-form-label-photo{
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  margin-top: 10px;
+  border: dotted 2px rgb(184, 184, 184);
+  padding: 5%;
+  border-radius: 20px;
+}
+.file-icon{
+  height: 40px;
+  margin-right: 20px;
+}
+#vehicle-form-label-photo p{
+  font-size: 0.8em;
+  line-height: 0.9em;
+  color: #707e8d;
+}
 .photo-selected{
   width: 100%;
+  max-height: 400px;
   object-fit: cover;
   margin-top: 20px;
+  border-radius: 10px;
+}
+.valid-button{
+  width: auto;
+  padding: 0 10px;
+}
+
+@media (max-width: 768px) {
+  .add-photo-vehicle-box{
+    width: 90%;
+  }
+}
+@media (max-width: 480px) {
+  .add-photo-vehicle-box{
+    width: 95%;
+    min-height: 40%;
+    max-height: 95%;
+  }
+  .photo-selected{
+    max-height: 200px;
+  }
 }
 </style>

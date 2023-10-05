@@ -51,7 +51,7 @@
                 <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="request-customer-edit-icon">
               </div>
               <div @click="openDeleteBox({type: 'deletePrepRequest', id: prep.id})" class="request-customer-delete-icon-box">
-                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="request-customer-delete-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="request-customer-delete-icon">
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@
                 <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="request-customer-edit-icon">
               </div>
               <div @click="openDeleteBox({type: 'deleteSlotRequest', id: slot.id})" class="request-customer-delete-icon-box">
-                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="request-customer-delete-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="request-customer-delete-icon">
               </div>
             </div>
           </div>
@@ -121,7 +121,7 @@
                 <p>Motif du refus : {{prep.observationsDepot}}</p>
               </div>
               <div @click="openDeleteBox({type: 'deletePrepRequest', id: prep.id})" class="request-customer-delete-icon-box">
-                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="request-customer-delete-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="request-customer-delete-icon">
               </div>
             </div>
           </div>
@@ -151,7 +151,7 @@
                 <p>Motif du refus : {{slot.observationsDepot}}</p>
               </div>
               <div @click="openDeleteBox({type: 'deleteSlotRequest', id: slot.id})" class="request-customer-delete-icon-box">
-                <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="request-customer-delete-icon">
+                <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="request-customer-delete-icon">
               </div>
             </div>
           </div>
@@ -275,6 +275,7 @@ export default {
   align-items: center;
   flex-direction: column;
   padding-top: 1em;
+  padding-bottom: 5em;
 }
 .requests-customer-pending-box{
   width: 95%;
@@ -291,13 +292,17 @@ export default {
 }
 
 .request-customer-box{
+  font-family: 'catamaran', sans-serif;
+  font-size: 1.2em;
+  line-height: 1.2em;
   width: 100%;
   display: flex;
   flex-direction: column;
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(245, 245, 245);
   border-radius: 10px;
   padding: 0.4em 0;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 .request-customer-infos-box{
   display: flex;
@@ -309,25 +314,29 @@ export default {
   margin-right: 10px;
 }
 .request-customer-infos-hidden-box{
+  width: 100%;
   position: relative;
   display: flex;
-  justify-content: space-between;
 }
 .request-customer-infos-hidden{
+  width: 100%;
   margin-left: 10px;
   display: flex;
   flex-direction: column;
 }
 .request-customer-infos{
   display: flex;
+  flex-wrap: wrap;
 }
 .request-customer-photo-box-hidden{
-  width: 80%;
-  height: auto;
+  width: 70%;
+  max-height: 300px;
   display: flex;
   justify-content: center;
   align-items: center;
   align-self: center;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .request-customer-photo-hidden{
   width: 100%;
@@ -384,5 +393,18 @@ export default {
 }
 .request-customer-delete-icon{
   height: 17px;
+}
+@media (max-width: 480px) {
+  .request-customer-infos-hidden{
+    width: 80%;
+  }
+  .request-customer-edit-icon-box{
+    bottom: 35px;
+    right: 10px;
+  }
+  .request-customer-delete-icon-box{
+    bottom: 2px;
+    right: 10px;
+  }
 }
 </style>

@@ -1,6 +1,9 @@
 <template>
   <div class="header">
-    <div class="logos-box"></div>
+    <div class="logos-box">
+      <img crossorigin="anonymous" class="logo logo-afc" alt="" src="../assets/images/afc-logo.png">
+      <img crossorigin="anonymous" class="logo logo-millenium" alt="" src="../assets/images/millenium-logo.png">
+    </div>
     <div class="back-box">
       <router-link class="link" :to="url">
         <img crossorigin="anonymous" class="back-icon" src="../assets/Icons/arrow-left.svg" alt="">
@@ -8,8 +11,10 @@
       </router-link>
     </div>
     <div class="logout-box">
-      <img crossorigin="anonymous" class="logout-icon" src="../assets/Icons/logout.svg" alt="">
-      <router-link to="/" @click="logOut()" class="logout-txt">Se Déconnecter</router-link>
+      <router-link to="/" @click="logOut()" class="logout-txt">
+        <img crossorigin="anonymous" class="logout-icon" src="../assets/Icons/logout.svg" alt="">
+        <p>Se Déconnecter</p>
+      </router-link>
     </div>
   </div>
 </template>
@@ -39,14 +44,24 @@ export default {
   align-items: center;
 }
 .logos-box{
-  height: 50px;
+  height: 60px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  background: white;
+  margin-bottom: 30px;
+}
+.logo{
+  height: 90%;
+  width: auto;
 }
 .back-box{
   width: 80%;
   display: flex;
   align-items: center;
   padding-bottom: 20px;
-  border-bottom: 3px solid #383838;
+  border-bottom: 3px solid #c90200;
   margin-bottom: 25px;
   font-size: 1.1em;
 }
@@ -60,6 +75,11 @@ export default {
 .back-icon{
   height: 18px;
   margin-right: 5px;
+}
+.back-txt{
+  font-weight: 600;
+  font-family: 'catamaran', sans-serif;
+  font-size: 1em;
 }
 .logout-box{
   position: absolute;
@@ -77,8 +97,65 @@ export default {
   margin-left: 15px;
 }
 .logout-txt{
+  display: flex;
+  align-items: center;
+  font-weight: 600;
+  font-family: 'catamaran', sans-serif;
+  font-size: 1em;
   text-decoration: none;
   color: white;
   cursor: pointer;
+}
+
+@media (max-width: 768px) {
+  .header{
+    bottom: 0;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .logos-box{
+    display: none;
+  }
+  .back-box{
+    width: 120px;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: unset;
+    border-bottom: unset;
+    margin-bottom: unset;
+    font-size: 1.1em;
+    border-right: 3px solid #c90200;
+  }
+  .link{
+    text-decoration: none;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .back-icon{
+    height: 18px;
+    margin-right: 5px;
+  }
+  .logout-box{
+    position: unset;
+    width: auto;
+    height: 100%;
+    padding-right: 20px;
+  }
+}
+@media (max-width: 480px) {
+  .logout-box{
+    padding-right: unset;
+  }
+  .logout-txt p{
+    display: none;
+  }
 }
 </style>

@@ -31,16 +31,20 @@
             </div>
             <label class="form-label" for="vehicle-form-observations">Observations</label>
             <input class="form-input" v-model="observations" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-            <label class="form-label" for="vehicle-form-photos">Photos</label>
+            <p class="form-label">Photos</p>
+            <label class="form-label" for="vehicle-form-photos" id="vehicle-form-label-photos">
+              <img crossorigin="anonymous" src="../assets/Icons/file.svg" alt="" class="file-icon" />
+              <p>Sélectionnez jusqu'à 4 photos</p>
+            </label>
             <input @change="onFileSelected" ref="photos" @input="cancelError()" type="file" multiple name="vehicle-form-photos" id="vehicle-form-photos">
-            <div class="photos-box">
+            <div v-if="this.url1 || this.url2 || this.url3 || this.url4" class="photos-box">
               <img crossorigin="anonymous" v-if="this.url1" :src="this.url1" alt="" class="photo-selected">
               <img crossorigin="anonymous" v-if="this.url2" :src="this.url2" alt="" class="photo-selected">
               <img crossorigin="anonymous" v-if="this.url3" :src="this.url3" alt="" class="photo-selected">
               <img crossorigin="anonymous" v-if="this.url4" :src="this.url4" alt="" class="photo-selected">
             </div>
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button class="add-button" @click="addVehicle()">Créer le véhicule</button>
+            <button class="add-button" @click="addVehicle()">Ajouter le véhicule</button>
         </div>
     </div>
   </div>
@@ -152,26 +156,65 @@ export default {
 
 
 <style scoped>
-.add-box{
-  justify-content: flex-start;
-}
 .add-vehicle-form{
   max-width: 400px;
   width: 80%;
   display: flex;
   flex-direction: column;
 }
+.custom-checkbox{
+  margin-bottom: 20px;
+}
+
+#vehicle-form-photos{
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+#vehicle-form-label-photos{
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  z-index: 1;
+  margin-top: 10px;
+  border: dotted 2px rgb(184, 184, 184);
+  padding: 5%;
+  border-radius: 20px;
+}
+.file-icon{
+  height: 40px;
+  margin-right: 20px;
+}
+#vehicle-form-label-photos p{
+  font-size: 0.8em;
+  line-height: 0.9em;
+  color: #707e8d;
+}
+
 .photos-box{
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: wrap;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .photo-selected{
   width: 45%;
+  margin: 2.5%;
   height: 120px;
   object-fit: cover;
+  border-radius: 10px;
+}
+@media (max-width: 480px) {
+  .photo-selected{
+    width: 90%;
+    height: 120px;
+  }
 }
 </style>

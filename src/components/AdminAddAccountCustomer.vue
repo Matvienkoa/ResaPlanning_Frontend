@@ -2,14 +2,14 @@
   <div class="add-back">
     <div class="add-box">
         <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
-        <h2 class="add-box-title">Créer un compte client</h2>
+        <h2 class="add-box-title">Créer un compte d'accès client</h2>
         <div class="add-account-form">
             <label class="form-label" for="form-customer">Séléctionner un Client :<span class="star">*</span></label>
             <select class="form-input required" @change="cancelError()" v-model="customer" name="form-customer" id="form-customer">
                 <option v-if="getCustomersWithoutAccount.length === 0" disabled selected value="">Aucun client trouvé</option>
                 <option v-for="customer in getCustomersWithoutAccount" :key="customer.id" :value="customer.id">{{customer.company}} {{customer.firstName}} {{customer.lastName}}</option>
             </select>
-            <label class="form-label" for="form-login">Login<span class="star">*</span></label>
+            <label class="form-label" for="form-login">Identifiant<span class="star">*</span></label>
             <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
             <label class="form-label" for="form-password">Mot de passe<span class="star">*</span></label>
             <p class="form-password-infos">Compris entre 8 et 30 caractères avec au minimum 1 Majuscule, 1 Minuscule et 1 Chiffre</p>

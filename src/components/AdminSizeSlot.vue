@@ -69,3 +69,21 @@ export default {
     },
 }
 </script>
+
+<style scoped>
+.add-box{
+  position: relative;
+  width: 95%;
+  max-width: 600px;
+  min-height: 50%;
+  max-height: 90%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 7;
+  border-radius: 10px;
+}
+</style>

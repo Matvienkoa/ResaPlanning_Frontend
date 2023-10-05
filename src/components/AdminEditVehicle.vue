@@ -142,13 +142,13 @@ export default {
 
 
 <style scoped>
-.add-box{
-  justify-content: flex-start;
-}
 .add-vehicle-form{
   max-width: 400px;
   width: 80%;
   display: flex;
   flex-direction: column;
+}
+.custom-checkbox{
+  margin-bottom: 20px;
 }
 </style>

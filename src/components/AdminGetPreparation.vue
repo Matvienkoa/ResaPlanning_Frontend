@@ -38,7 +38,7 @@
           <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
         </div>
         <div @click="openDeleteBox({mode: 'deletePreparation', id: this.id})" class="delete-icon-box">
-          <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="delete-icon" />
+          <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="delete-icon" />
         </div>
       </div>
       <div class="get-customer-box">
@@ -61,6 +61,7 @@
             </div>
             <p class="step-state-txt-completed">Terminé</p>
           </div>
+          
           <h3 class="step-state-type">{{step.type}}</h3>
           <div class="step-fonctions-box">
             <div @click="openEditStepBox({mode: 'editStep', id: step.id, type: step.type})" class="edit-step-icon-box">
@@ -251,9 +252,13 @@ export default {
   width: 90%;
   display: flex;
   flex-direction: column;
-  background-color: rgb(236, 236, 236);
+  background-color: rgb(245, 245, 245);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
   padding: 0.4em 0;
   border-radius: 10px;
+  font-family: 'catamaran', sans-serif;
+  font-size: 1.2em;
+  line-height: 1.2em;
 }
 .get-customer-box p{
   margin-left: 10px;
@@ -262,27 +267,6 @@ export default {
 </style>
 
 <style scoped>
-.get-box{
-    position: relative;
-    width: 60%;
-    max-width: 800px;
-    min-height: 70%;
-    max-height: 90%;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    overflow-y: auto;
-    z-index: 7;
-    border-radius: 10px;
-}
-.get-box-title{
-  text-align: start;
-  width: 90%;
-  border-bottom: 3px solid #c0c0c0;
-  padding-bottom: 5px;
-}
 .get-box-state{
   width: 100%;
   display: flex;
@@ -292,7 +276,6 @@ export default {
 }
 .get-infos-box{
   position: relative;
-  background-color: rgb(240, 240, 240);
   padding: 0.4em 0;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -306,6 +289,8 @@ export default {
   width: 90%;
   border-bottom: 3px solid #c0c0c0;
   padding-bottom: 5px;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2em;
 }
 .get-state-icon{
   height: 40px;
@@ -355,9 +340,10 @@ export default {
 }
 .step-box{
   position: relative;
-  width: 400px;
+  width: 90%;
+  max-width: 500px;
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   margin-bottom: 20px;
 }
@@ -387,11 +373,13 @@ export default {
   border: solid 5px rgb(198,238,0);
 }
 .step-state-txt-in-time{
+  text-align: center;
   font-size: 1.2em;
   font-weight: 700;
   color: rgb(243,126,0);
 }
 .step-state-txt-completed{
+  text-align: center;
   font-size: 1.2em;
   font-weight: 700;
   color: rgb(198,238,0);
@@ -401,10 +389,17 @@ export default {
   height: auto;
 }
 .step-state-type{
-  width: 260px;
+  font-family: 'catamaran', sans-serif;
+  font-size: 1.2em;
+  line-height: 1.1em;
+  word-break: break-all;
+  width: 70%;
   margin-left: 20px;
+  margin-right: 100px;
 }
 .step-fonctions-box{
+  position: absolute;
+  right: 0;
   display: flex;
   justify-content: flex-end;
 }
@@ -440,6 +435,10 @@ export default {
   width: 100%;
   display: flex;
   justify-content: center;
+}
+.no-step{
+  width: 90%;
+  text-align: center;
 }
 
 .get-photos-box{
@@ -519,5 +518,68 @@ export default {
   width: 240px;
   height: 40px;
 }
-
+@media (max-width: 769px) {
+  .get-infos-box{
+    margin-top: 30px;
+  }
+  .edit-icon-box{
+    top: -45px;
+    background: rgb(245, 245, 245);
+  }
+  .delete-icon-box{
+    top: -45px;
+    background: rgb(245, 245, 245);
+  }
+  .step-state-box-icon-in-time{
+    height: 60px;
+    width: 60px;
+  }
+  .step-state-box-icon-completed{
+    height: 60px;
+    width: 60px;
+  }
+  .step-state-txt-in-time{
+    font-size: 1em;
+  }
+  .step-state-txt-completed{
+    font-size: 1em;
+  }
+  .step-state-type{
+    font-size: 1em;
+    word-break: break-all;
+    width: 70%;
+    margin-left: 20px;
+    margin-right: 90px;
+  }
+}
+@media (max-width: 480px) {
+  .step-state-box-icon-in-time{
+    height: 50px;
+    width: 50px;
+  }
+  .step-state-box-icon-completed{
+    height: 50px;
+    width: 50px;
+  }
+  .step-state-txt-in-time{
+    font-size: 0.8em;
+  }
+  .step-state-txt-completed{
+    font-size: 0.8em;
+  }
+  .step-state-type{
+    font-size: 1em;
+    word-break: break-all;
+    width: 70%;
+    margin-left: 20px;
+    margin-right: 60px;
+  }
+  .step-fonctions-box{
+    flex-direction: column;
+    justify-content: space-evenly;
+  }
+  .edit-step-icon-box{
+    margin-bottom: 5px;
+  }
+}
 </style>

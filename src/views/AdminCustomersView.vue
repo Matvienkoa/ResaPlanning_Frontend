@@ -44,7 +44,7 @@
                 <img crossorigin="anonymous" @click="openEditBox({id: customer.id, mode: 'editCustomer'})" src="../assets/Icons/edit.svg" alt="" class="customer-edit-icon">
               </div>
               <div class="customer-delete-icon-box">
-                <img crossorigin="anonymous" @click="openDeleteBox({id: customer.id, account: customer.userId, mode: 'deleteCustomer'})" src="../assets/Icons/delete-2.svg" alt="" class="customer-delete-icon">
+                <img crossorigin="anonymous" @click="openDeleteBox({id: customer.id, account: customer.userId, mode: 'deleteCustomer'})" src="../assets/Icons/delete.svg" alt="" class="customer-delete-icon">
               </div>
             </div>
           </div>
@@ -174,6 +174,9 @@ export default {
 }
 .account-admin-customer-infos{
   display: flex;
+}
+.customer-info{
+  line-height: 1em;
 }
 .account-admin-customer-show-box{
   height: 30px;

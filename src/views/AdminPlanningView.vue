@@ -21,16 +21,17 @@
       <h1 class="home-admin-title">Mon Planning</h1>
     </div>
     <div class="planning-calendar-box">
-      <FullCalendar :options="calendarOptions" />
+      <FullCalendar ref="calendar" :options="calendarOptions" />
     </div>
   </div>
 </template>
 
 <script>
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import FullCalendar from '@fullcalendar/vue3';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
 import frLocale from '@fullcalendar/core/locales/fr';
 import { mapGetters } from 'vuex';
 
@@ -73,13 +74,17 @@ export default {
       preparation: null,
       slot: null,
       calendarOptions: {
-        plugins: [ dayGridPlugin, timeGridPlugin, interactionPlugin ],
+        plugins: [ dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin ],
         headerToolbar: {
-          left: 'prev,next today',
+          left: 'prev,next',
           center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          right: ''
         },
-        initialView: 'dayGridMonth',
+        initialView: this.calculateInitialView(),
+        views: {
+          listMonth: { buttonText: 'Mois' },
+          listWeek: { buttonText: 'Semaine' }
+        },
         locale: frLocale,
         selectable: true,
         editable: true,
@@ -102,6 +107,27 @@ export default {
     ...mapGetters(['getAddBox', 'getGetBox', 'getDropBox', 'getSizeBox', 'getEventsPlanning', 'getUser', 'getProfile'])
   },
   methods: {
+    initializeCalendar() {
+      this.calendarOptions.initialView = this.calculateInitialView() 
+      this.calendarOptions.headerToolbar.right = this.calculateHeaderRight()
+      this.$refs.calendar.getApi().setOption('height', this.calculateCalendarHeight());
+    },
+    calculateInitialView() {
+      return window.innerWidth < 480 ? 'listMonth' : 'dayGridMonth';
+    },
+    calculateHeaderRight() {
+      return window.innerWidth < 480 ? 'listMonth,listWeek,timeGridDay' : 'dayGridMonth,timeGridWeek,timeGridDay';
+    },
+    calculateCalendarHeight() {
+      const windowHeight = window.innerHeight;
+      return windowHeight;
+    },
+    // handleResize() {
+    //   this.$refs.calendar.getApi().setOption('height', this.calculateCalendarHeight());
+    //   this.$refs.calendar.getApi().changeView(this.calculateInitialView());
+    //   this.calendarOptions.headerToolbar.right = this.calculateHeaderRight()
+    //   this.calendarOptions.headerToolbar.left = this.calculateHeaderLeft()
+    // },
     getEventsByDate(date) {
       this.showSpinner()
       this.calendarOptions.events = []
@@ -214,6 +240,13 @@ export default {
         body.classList.remove('on');
     },
   },
+  mounted() {
+    this.initializeCalendar();
+    // window.addEventListener('resize', this.handleResize);
+  },
+  // beforeUnmount() {
+  //   window.removeEventListener('resize', this.handleResize);
+  // },
   created: function () {
     this.$store.commit('RESET_BOX');
     this.$store.dispatch('checkToken')
@@ -241,19 +274,52 @@ export default {
 
 <style>
 .planning-calendar-box{
-  width: 90%;
+  width: 95%;
   margin-top: 20px;
-  margin-bottom: 20px;
+  padding-bottom: 6em;
 }
 
 :root {
   --fc-button-bg-color: black;
   --fc-button-border-color: black;
-  --fc-button-hover-bg-color: rgba(198, 238, 0);
-  --fc-button-hover-border-color: rgb(198,238,0);
-  --fc-button-active-bg-color: rgb(198,238,0);
-  --fc-button-active-border-color: rgb(198,238,0);
-  --fc-today-bg-color: rgba(198, 238, 0, 0.438);
-  --fc-highlight-color: rgba(198, 238, 0, 0.226);
+  --fc-button-hover-bg-color: #c90200;
+  --fc-button-hover-border-color: #c90200;
+  --fc-button-active-bg-color: #c90200;
+  --fc-button-active-border-color: #c90200;
+  --fc-today-bg-color: #c9030021;
+  --fc-highlight-color: #c9030021;
+}
+
+@media (max-width: 479px) {
+  .fc-view-timeGridDay {
+    display: block !important;
+  }
+  .fc-view-timeGridWeek, .fc-view-timeGridMonth {
+    display: none !important;
+  }
+  .fc-header-toolbar {
+    flex-direction: column-reverse;
+    font-size: 1em;
+  }
+  .fc-toolbar-chunk{
+    margin-bottom: 10px;
+  }
+  .fc .fc-toolbar-title{
+    font-size: 1.5em;
+    text-transform: uppercase;
+  }
+}
+</style>
+
+<style scoped>
+@media (max-width: 1024px) {
+  .main-page{
+    margin-left: 150px;
+  }
+}
+@media (max-width: 768px) {
+  .main-page{
+    margin-left: unset;
+  }
 }
 </style>

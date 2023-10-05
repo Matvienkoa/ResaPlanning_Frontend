@@ -252,9 +252,6 @@ export default {
 
 
 <style scoped>
-.add-box{
-  justify-content: flex-start;
-}
 .add-choice-box{
     width: 100%;
     margin: auto;
@@ -264,6 +261,7 @@ export default {
 }
 .add-preparation-box, .add-slot-box{
   width: 80%;
+  max-width: 400px;
   display: flex;
   flex-direction: column;
 }

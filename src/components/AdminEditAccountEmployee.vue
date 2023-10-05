@@ -2,9 +2,9 @@
   <div class="add-back">
     <div class="add-box">
         <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
-        <h2 class="add-box-title">Modifier le compte collaborateur</h2>
+        <h2 class="add-box-title">Modifier le compte d'accès collaborateur</h2>
         <div class="add-account-form">
-            <label class="form-label" for="form-login">Login<span class="star">*</span></label>
+            <label class="form-label" for="form-login">Identifiant<span class="star">*</span></label>
             <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
             <label class="form-label" for="form-lastName">Nom</label>
             <input class="form-input" v-model="lastName" type="text" name="form-lastName" id="form-lastName">
@@ -14,7 +14,7 @@
               <input v-model="privileges" type="checkbox" name="form-privileges" id="form-privileges">
               <label class="form-label-checkbox" for="form-privileges">Privilèges</label>
             </div>
-            <p class="form-password-infos">Les privilèges donnent accès aux demandes des clients</p>
+            <p class="form-privileges-infos">Les privilèges donnent accès aux demandes des clients</p>
             <label class="form-label" for="form-password">Mot de passe</label>
             <p class="form-password-infos">Compris entre 8 et 30 caractères avec au minimum 1 Majuscule, 1 Minuscule et 1 Chiffre</p>
             <div class="home-form-password-box">

@@ -157,10 +157,10 @@ export default {
 }
 .edit-preparation-box{
   position: relative;
-  width: 100%;
+  width: 95%;
   max-width: 800px;
   min-height: 90%;
-  max-height: 90%;
+  max-height: 95%;
   background: white;
   display: flex;
   flex-direction: column;

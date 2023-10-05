@@ -131,12 +131,6 @@ export default {
   z-index: 7;
   border-radius: 10px;
 }
-.get-box-title{
-  text-align: start;
-  width: 90%;
-  border-bottom: 3px solid #c0c0c0;
-  padding-bottom: 5px;
-}
 .get-box-state{
   width: 100%;
   display: flex;

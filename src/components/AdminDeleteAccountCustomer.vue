@@ -1,7 +1,7 @@
 <template>
-  <div class="add-back">
-    <div class="add-box">
-        <h2 class="add-box-title">Supprimer ce compte client?</h2>
+  <div class="delete-back">
+    <div class="delete-box">
+        <h2 class="add-box-title">Supprimer ce compte d'accès client?</h2>
         <div v-if="error" class="error">{{ error }}</div>
         <div class="box-choice-button">
             <button class="valid-button" @click="deleteAccount()">Oui</button>
@@ -41,8 +41,3 @@ export default {
   },
 }
 </script>
-
-
-<style>
-
-</style>

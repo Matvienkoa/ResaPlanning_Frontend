@@ -5,19 +5,27 @@
       <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
         <h2 class="add-box-title">Ajouter la photo n°{{checkPhoto(numberPhoto)}}</h2>
         <div class="add-photo-preparation-form">
-            <input @change="onFileSelected" ref="photo" @input="cancelError(), resetData()" type="file" name="add-photo-preparation-form-photo" id="add-photo-preparation-form-photo" class="required">
-            <button @click="startCamera()">Prendre une photo</button>
-            <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
-            <img crossorigin="anonymous" v-if="this.getActualPhoto" :src="this.getActualPhoto" alt="" class="photo-selected">
-            <div v-if="error" class="error">{{ error.message }}</div>
-            <div v-if="this.photo" class="box-choice-button">
-              <button class="add-button" @click="addPhotoPreparation()">Ajouter la photo</button>
-              <div class="cancel-button" @click="closeAddBox()">Annuler</div>
-            </div>
-            <div v-if="this.photoCamera" class="box-choice-button">
-              <button class="add-button" @click="addPhotoShootPreparation()">Ajouter la photo</button>
-              <div class="cancel-button" @click="closeAddBox()">Annuler</div>
-            </div>
+          <label class="form-label" for="add-photo-preparation-form-photo" id="add-photo-preparation-form-label-photo">
+            <img crossorigin="anonymous" src="../assets/Icons/file.svg" alt="" class="file-icon" />
+            <p>Sélectionner une photo</p>
+          </label>
+          <input @change="onFileSelected" ref="photo" @input="cancelError(), resetData()" type="file" name="add-photo-preparation-form-photo" id="add-photo-preparation-form-photo" class="required">
+          <h3 class="option-txt">Ou</h3>
+          <div class="button-photo" @click="startCamera()">
+            <img crossorigin="anonymous" src="../assets/Icons/camera.svg" alt="" class="file-icon" />
+            <p>Prendre une photo</p>
+          </div>
+          <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
+          <img crossorigin="anonymous" v-if="this.getActualPhoto" :src="this.getActualPhoto" alt="" class="photo-selected">
+          <div v-if="error" class="error">{{ error.message }}</div>
+          <div v-if="this.photo" class="box-choice-button">
+            <button class="add-button" @click="addPhotoPreparation()">Ajouter la photo</button>
+            <div class="cancel-button" @click="closeAddBox()">Annuler</div>
+          </div>
+          <div v-if="this.photoCamera" class="box-choice-button">
+            <button class="add-button" @click="addPhotoShootPreparation()">Ajouter la photo</button>
+            <div class="cancel-button" @click="closeAddBox()">Annuler</div>
+          </div>
         </div>
     </div>
   </div>
@@ -161,24 +169,59 @@ export default {
 }
 .add-photo-preparation-box{
   position: relative;
-  width: 100%;
-  max-width: 700px;
-  min-height: 40%;
+  width: 95%;
+  max-width: 600px;
+  min-height: 30%;
   max-height: 80%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-y: auto;
   z-index: 10;
   border-radius: 10px;
+  padding-bottom: 3em;
 }
 .add-photo-preparation-form{
   width: 80%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
+  align-items: center;
+}
+#add-photo-preparation-form-photo{
+  width: 0.1px;
+  height: 0.1px;
+  opacity: 0;
+  overflow: hidden;
+  position: absolute;
+  z-index: -1;
+}
+#add-photo-preparation-form-label-photo, .button-photo{
+  width: 80%;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+  margin-top: 10px;
+  border: dotted 2px rgb(184, 184, 184);
+  padding: 5%;
+  border-radius: 20px;
+}
+.file-icon{
+  height: 40px;
+  margin-right: 20px;
+}
+#add-photo-preparation-form-label-photo p, .button-photo p{
+  font-size: 0.8em;
+  line-height: 0.9em;
+  color: #707e8d;
+}
+.option-txt{
+  padding-top: 10px;
 }
 .photo-selected{
   width: 100%;

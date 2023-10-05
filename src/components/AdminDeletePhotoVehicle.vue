@@ -1,6 +1,6 @@
 <template>
-  <div class="delete-photo-vehicle-back">
-    <div class="delete-photo-vehicle-box">
+  <div class="delete-back">
+    <div class="delete-box">
         <h2 class="add-box-title">Supprimer la photo n°{{checkPhoto(numberPhoto)}} ?</h2>
         <div v-if="error" class="error">{{ error }}</div>
         <div class="box-choice-button">
@@ -68,31 +68,3 @@ export default {
   }
 }
 </script>
-
-<style scoped>
-.delete-photo-vehicle-back{
-  position: fixed;
-  width: 100%;
-  height: 100vh;
-  background: rgba(0, 0, 0, 0.671);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 9;
-}
-.delete-photo-vehicle-box{
-  position: relative;
-  width: 100%;
-  max-width: 500px;
-  min-height: 40%;
-  max-height: 50%;
-  background: white;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  overflow-y: auto;
-  z-index: 10;
-  border-radius: 10px;
-}
-</style>

@@ -1,8 +1,8 @@
 <template>
-    <div class="get-back">
-        <div class="get-box">
+    <div class="add-back">
+        <div class="add-box">
             <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
-            <h2 class="add-box-title">Modifier un client</h2>
+            <h2 class="add-box-title">Modifier le client</h2>
             <div class="add-customer-form">
                 <label class="form-label" for="customer-form-company">Société<span class="star">*</span></label>
                 <input class="form-input required" v-model="company" @input="cancelError()" type="text" name="customer-form-company" id="customer-form-company">
@@ -113,21 +113,6 @@ export default {
 </script>
 
 <style scoped>
-.get-box{
-    position: relative;
-    width: 60%;
-    max-width: 800px;
-    min-height: 70%;
-    max-height: 90%;
-    background: white;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    overflow-y: auto;
-    z-index: 7;
-    border-radius: 10px;
-}
 .add-customer-form{
   width: 80%;
   max-width: 400px;

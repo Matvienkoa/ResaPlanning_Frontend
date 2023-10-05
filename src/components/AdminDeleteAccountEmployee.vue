@@ -1,7 +1,7 @@
 <template>
-  <div class="add-back">
-    <div class="add-box">
-        <h2 class="add-box-title">Supprimer ce compte collaborateur?</h2>
+  <div class="delete-back">
+    <div class="delete-box">
+        <h2 class="add-box-title">Supprimer ce compte d'accès collaborateur?</h2>
         <div v-if="error" class="error">{{ error }}</div>
         <div class="box-choice-button">
             <button class="valid-button" @click="deleteAccount()">Oui</button>
@@ -44,6 +44,31 @@ export default {
 
 
 <style>
+.delete-back{
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.808);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 6;
+}
+.delete-box{
+  position: relative;
+  width: 70%;
+  max-width: 500px;
+  min-height: 40%;
+  max-height: 90%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 7;
+  border-radius: 10px;
+}
 .box-choice-button{
   width: 100%;
   display: flex;
@@ -53,27 +78,36 @@ export default {
   margin-top: 20px;
 }
 .valid-button{
+  font-family: 'catamaran', sans-serif;
   margin: 0 10px;
   width: 70px;
   height: 35px;
   border-radius: 30px;
-  background: rgb(198,238,0);
+  background: #09c407;
   color: white;
   font-size: 1.1em;
-  border: solid 2px rgb(198,238,0);
+  border: solid 2px #09c407;
   cursor: pointer;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 .delete-button{
+  font-family: 'catamaran', sans-serif;
   margin: 0 10px;
   width: 70px;
   height: 35px;
   border-radius: 30px;
-  background: red;
+  background: #c90200;
   color: white;
   font-size: 1.1em;
-  border: solid 2px red;
+  border: solid 2px #c90200;
   cursor: pointer;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+@media (max-width: 480px) {
+  .delete-box{
+    width: 90%;
+    min-height: 40%;
+    max-height: 50%;
+  }
 }
 </style>

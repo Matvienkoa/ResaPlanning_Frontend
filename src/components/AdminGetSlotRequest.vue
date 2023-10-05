@@ -133,12 +133,3 @@ export default {
     },
 }
 </script>
-
-<style scoped>
-.get-box-title{
-  text-align: start;
-  width: 90%;
-  border-bottom: 3px solid #c0c0c0;
-  padding-bottom: 5px;
-}
-</style>

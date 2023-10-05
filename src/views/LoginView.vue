@@ -7,6 +7,10 @@
       <div></div>
     </div>
     <div class="home-form-box">
+      <div class="home-logos-box">
+        <img crossorigin="anonymous" class="home-logo-afc" alt="" src="../assets/images/afc-logo.svg">
+        <img crossorigin="anonymous" class="home-logo-millenium" alt="" src="../assets/images/millenium-logo.svg">
+      </div>
       <div class="home-form">
         <label class="home-form-label" for="login-input">Identifiant</label>
         <input class="home-form-input form-login-input required" @input="cancelError()" v-model="login" type="text" id="login-input">
@@ -19,7 +23,6 @@
         <div v-if="error" class="error">{{ error.message }}</div>
         <button @click="signIn()" id="button-login">Connexion</button>
       </div>
-      <img crossorigin="anonymous" src="../assets/images/wave-trans.svg" alt="" class="wave">
     </div>
     <img crossorigin="anonymous" class="home-back" alt="" src="../assets/images/1.jpg">
   </div>
@@ -144,20 +147,27 @@ export default {
   width: 50%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
   z-index: 1;
   background-color: white;
 }
-.wave{
-  position: absolute;
+.home-logos-box{
+  position: relative;
+  top: 5%;
   width: 100%;
-  bottom: 0;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+.home-logo-afc, .home-logo-millenium{
+  width: 25%;
 }
 
 /* Form */
 .home-form{
   position: relative;
+  top: 15%;
   width: 60%;
   max-width: 350px;
   display: flex;
@@ -165,15 +175,16 @@ export default {
   justify-content: center;
   z-index: 2;
 }
+
 .home-form-label{
+  font-family: 'trumpSoftPro', sans-serif;
   margin-bottom: 5px;
   margin-left: 5px;
-  font-weight: 600;
-  font-size: 1.2em;
+  font-size: 2em;
 }
 .home-form-input{
   width: 90%;
-  height: 35px;
+  height: 40px;
   margin-bottom: 20px;
   border-radius: 30px;
   border: solid 1px rgb(184, 184, 184);
@@ -187,7 +198,7 @@ input:focus{
 .home-form-password-box{
   position: relative;
   width: 100%;
-  height: 35px;
+  height: 40px;
   margin-bottom: 30px;
   display: flex;
   justify-content: center;
@@ -210,36 +221,70 @@ input:focus{
   cursor: pointer;
 }
 #button-login{
+  font-family: 'catamaran', sans-serif;
   margin: auto;
   width: 60%;
-  height: 40px;
+  height: 45px;
   border-radius: 30px;
-  background: rgb(198,238,0);
+  background: #c90200;
   color: white;
   margin-top: 7%;
-  font-size: 1.2em;
-  border: solid 2px rgb(198,238,0);
+  font-size: 1.4em;
+  border: solid 2px #c90200;
   cursor: pointer;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
 
 @media (max-width: 1024px) {
+  .home{
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
   .home-back{
     width: 100%;
   }
   .home-form-box{
-    background-color: unset;
-    width: 100%;
-    align-items: flex-start;
+    width: 90%;
+    max-width: 600px;
+    height: auto;
+    border-radius: 30px;
+  }
+  .home-logos-box{
+    top: unset;
+    margin-top: 10%;
+    margin-bottom: 10%;
   }
   .home-form{
-    top: 20%;
+    top: unset;
+    margin-bottom: 15%;
   }
-  .wave{
-    top: 0;
+}
+@media (max-width: 600px) {
+  .home-back{
+    display: none;
+  }
+  .home-form-box{
     width: 100%;
-    height: 100%;
-    object-fit: cover;
+    max-width: unset;
+    height: 100vh;
+    border-radius: unset;
+    justify-content: center;
+  }
+  .home-logos-box{
+    position: absolute;
+    top: 0;
+    margin-bottom: 15%;
+  }
+  .home-logo-afc, .home-logo-millenium{
+    width: 30%;
+  }
+  .home-form{
+    width: 75%;
+    margin-top: 15%;
+  }
+  #button-login{
+    min-width: 200px;
   }
 }
 </style>

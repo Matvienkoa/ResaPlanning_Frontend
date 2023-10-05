@@ -215,9 +215,9 @@ export default {
 }
 .prepR-box{
   position: relative;
-  width: 100%;
-  max-width: 600px;
-  min-height: 90%;
+  width: 95%;
+  max-width: 800px;
+  min-height: 30%;
   max-height: 90%;
   background: white;
   display: flex;
@@ -229,23 +229,31 @@ export default {
   border-radius: 10px;
 }
 .prepR-customer-box{
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  background-color: rgb(236, 236, 236);
-  padding: 0.4em 0;
-  border-radius: 10px;
-  margin-bottom: 20px;
+    font-family: 'catamaran', sans-serif;
+    font-size: 1.2em;
+    line-height: 1.2em;
+    width: 90%;
+    display: flex;
+    flex-direction: column;
+    background-color: rgb(245, 245, 245);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    padding: 0.4em 0;
+    border-radius: 10px;
+    margin-bottom: 20px;
 }
 .prepR-customer-box p{
   margin-left: 10px;
   margin-right: 10px;
 }
 .prepR-infos-box{
+    font-family: 'catamaran', sans-serif;
+    font-size: 1.2em;
+    line-height: 1.2em;
     width: 90%;
     display: flex;
     flex-direction: column;
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(245, 245, 245);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     padding: 0.4em 0;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -259,7 +267,6 @@ export default {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgb(240, 240, 240);
     padding: 0.4em 0;
     border-radius: 10px;
     margin-bottom: 20px;
@@ -268,20 +275,12 @@ export default {
     width: 80%;
     height: 80%;
     object-fit: contain;
+    border-radius: 10px;
 }
 .add-preparation-form{
   width: 80%;
   max-width: 400px;
   display: flex;
   flex-direction: column;
-}
-</style>
-
-<style scoped>
-.get-box-title{
-  text-align: start;
-  width: 90%;
-  border-bottom: 3px solid #c0c0c0;
-  padding-bottom: 5px;
 }
 </style>

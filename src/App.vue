@@ -4,6 +4,14 @@
 </template>
 
 <style>
+@font-face {
+  font-family: 'trumpSoftPro'; /* Nom de la police */
+  src: url('./assets/fonts/TrumpSoftPro.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'catamaran'; /* Nom de la police */
+  src: url('./assets/fonts/catamaran.ttf') format('truetype');
+}
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -48,10 +56,10 @@ button:focus{
   width: 64px;
   height: 64px;
   margin: 8px;
-  border: 8px solid rgb(198,238,0);
+  border: 8px solid #c90200;
   border-radius: 50%;
   animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: rgb(198,238,0) transparent transparent transparent;
+  border-color: #c90200 transparent transparent transparent;
   z-index: 9998;
 }
 .lds-ring div:nth-child(1) {
@@ -67,7 +75,6 @@ button:focus{
   0% {
     transform: rotate(0deg);
   }
-
   100% {
     transform: rotate(360deg);
   }
@@ -78,7 +85,7 @@ button:focus{
 }
 
 .star{
-  color: #ea510b;
+  color: #c90200;
   margin-left: 3px;
   font-weight: bold;
   font-size: 1.2em;
@@ -87,8 +94,12 @@ button:focus{
 /* Error */
 .error{
   text-align: center;
+  font-family: 'catamaran', sans-serif;
+  font-size: 1.1em;
+  line-height: 100%;
+  letter-spacing: 0;
 }
 .empty{
-  border: solid 2px #ea510b!important;
+  border: solid 2px #c90200!important;
 }
 </style>

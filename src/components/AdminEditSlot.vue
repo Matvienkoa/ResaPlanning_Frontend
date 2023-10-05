@@ -138,10 +138,10 @@ export default {
 }
 .edit-slot-box{
   position: relative;
-  width: 100%;
-  max-width: 600px;
+  width: 95%;
+  max-width: 700px;
   min-height: 90%;
-  max-height: 90%;
+  max-height: 95%;
   background: white;
   display: flex;
   flex-direction: column;

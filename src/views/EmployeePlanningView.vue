@@ -226,22 +226,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.planning-calendar-box{
-  width: 90%;
-  margin-top: 20px;
-  margin-bottom: 20px;
-}
-
-:root {
-  --fc-button-bg-color: black;
-  --fc-button-border-color: black;
-  --fc-button-hover-bg-color: rgba(198, 238, 0);
-  --fc-button-hover-border-color: rgb(198,238,0);
-  --fc-button-active-bg-color: rgb(198,238,0);
-  --fc-button-active-border-color: rgb(198,238,0);
-  --fc-today-bg-color: rgba(198, 238, 0, 0.438);
-  --fc-highlight-color: rgba(198, 238, 0, 0.226);
-}
-</style>

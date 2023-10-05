@@ -30,22 +30,22 @@
           <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-admin-edit-icon">
         </div>
         <div @click="openDeleteBox('deleteVehicle')" class="showroom-vehicle-admin-delete-icon-box">
-          <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-admin-delete-icon">
+          <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-admin-delete-icon">
         </div>
       </div>
       <div class="showroom-vehicle-admin-infos-box">
-        <p>Marque : {{getVehicle.brand}}</p>
-        <p>Modèle : {{getVehicle.model}}</p>
-        <p>Année : {{getVehicle.year}}</p>
-        <p>KM : {{getVehicle.kilometers}}</p>
-        <p>Immat : {{getVehicle.immat}}</p>
-        <p v-if="getVehicle.observations">Observations : {{getVehicle.observations}}</p>
-        <p>Prix Marchand : {{getVehicle.marketPrice/100}} €</p>
-        <p>Prix Public : {{getVehicle.publicPrice/100}} €</p>
-        <p>Prix d'achat : {{getVehicle.purchasePrice/100}} €</p>
-        <p v-if="getVehicle.frevos">FREVOS : {{getVehicle.frevos}}</p>
-        <p v-if="getVehicle.frevosPrice">Montant FREVOS : {{getVehicle.frevosPrice/100}} €</p>
-        <p v-if="getVehicle.firstHand === 'yes'">Première main</p>
+        <p class="showroom-vehicle-admin-info-box">Marque : <span class="showroom-vehicle-admin-info">{{getVehicle.brand}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">Modèle : <span class="showroom-vehicle-admin-info">{{getVehicle.model}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">Année : <span class="showroom-vehicle-admin-info">{{getVehicle.year}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">KM : <span class="showroom-vehicle-admin-info">{{getVehicle.kilometers}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">Immat : <span class="showroom-vehicle-admin-info">{{getVehicle.immat}}</span></p>
+        <p v-if="getVehicle.observations" class="showroom-vehicle-admin-info-box">Observations : <span class="showroom-vehicle-admin-info">{{getVehicle.observations}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">Prix Marchand : <span class="showroom-vehicle-admin-info">{{getVehicle.marketPrice/100}} €</span></p>
+        <p class="showroom-vehicle-admin-info-box">Prix Public : <span class="showroom-vehicle-admin-info">{{getVehicle.publicPrice/100}} €</span></p>
+        <p class="showroom-vehicle-admin-info-box">Prix d'achat : <span class="showroom-vehicle-admin-info">{{getVehicle.purchasePrice/100}} €</span></p>
+        <p v-if="getVehicle.frevos" class="showroom-vehicle-admin-info-box">FREVOS : <span class="showroom-vehicle-admin-info">{{getVehicle.frevos}}</span></p>
+        <p v-if="getVehicle.frevosPrice" class="showroom-vehicle-admin-info-box">Montant FREVOS : <span class="showroom-vehicle-admin-info">{{getVehicle.frevosPrice/100}} €</span></p>
+        <div v-if="getVehicle.firstHand === 'yes'" class="first-box"><p>Première main</p><img crossorigin="anonymous" src="../assets/Icons/first.svg" alt="" class="first"></div>
       </div>
       <div class="showroom-vehicle-admin-photos-box">
         <div v-if="getVehicle.photo1" class="showroom-vehicle-admin-photo-box">
@@ -207,6 +207,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: flex-start;
+  margin-bottom: 30px;
 }
 .showroom-vehicle-admin-back-img{
   position: absolute;
@@ -225,10 +226,11 @@ export default {
   z-index: -2;
 }
 .showroom-vehicle-admin-title{
+  font-family: 'trumpSoftPro', sans-serif;
   width: 100%;
   display: flex;
-  font-size: 4em;
-  font-weight: 700;
+  font-size: 6em;
+  font-weight: 600;
   text-transform: uppercase;
   margin-bottom: 30px;
 }
@@ -238,28 +240,30 @@ export default {
   margin-right: 20px;
 }
 .title-green{
-  color: rgb(198,238,0);
+  color: #c90200;
 }
 .showroom-vehicle-admin-subtitles{
   width: 100%;
   display: flex;
 }
 .showroom-vehicle-admin-subtitle{
+  font-family: 'trumpSoftPro', sans-serif;
   display: flex;
   align-items: center;
   font-weight: 700;
   text-transform: uppercase;
   margin: 0 20px;
+  font-size: 1.6em;
 }
 .subtitle-green{
   font-size: 3em;
-  color: rgb(198,238,0);
-  margin: 0 2px;
+  color: #c90200;
+  margin: 0 5px;
 }
 .subtitle-white{
   font-size: 2em;
   color: white;
-  margin: 0 2px;
+  margin: 0 5px;
 }
 .showroom-vehicle-admin-edit-icon-box{
   height: 40px;
@@ -299,6 +303,32 @@ export default {
   display: flex;
   flex-direction: column;
   margin-top: 20px;
+  margin-bottom: 30px;
+  border-left: #c90200 solid 6px;
+  padding-left: 10px;
+  font-family: 'catamaran', sans-serif;
+  line-height: 1.2em;
+  font-size: 1.2em;
+}
+.showroom-vehicle-admin-info-box{
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 5px;
+}
+.showroom-vehicle-admin-info{
+  margin-left: 5px;
+  font-weight: 600;
+  font-size: 1.3em;
+}
+.first-box{
+  display: flex;
+  align-items: flex-end;
+}
+.first{
+  width: 30px;
+  margin-left: 10px;
 }
 
 .showroom-vehicle-admin-photos-box{
@@ -306,6 +336,7 @@ export default {
   display: flex;
   justify-content: center;
   flex-wrap: wrap;
+  margin-bottom: 4em;
 }
 .showroom-vehicle-admin-photo-box{
   position: relative;
@@ -344,7 +375,7 @@ export default {
   position: absolute;
   z-index: 1;
   bottom: 2%;
-  right: 15%;
+  right: 17%;
   background-color: white;
 }
 .showroom-vehicle-edit-icon{
@@ -381,5 +412,47 @@ export default {
 }
 .showroom-vehicle-add-icon{
   height: 30px;
+}
+
+@media (max-width: 1024px) {
+  .showroom-vehicle-admin-title{
+    font-size: 5em;
+  }
+  .showroom-vehicle-admin-subtitle{
+    font-size: 1.4em;
+  }
+}
+@media (max-width: 768px) {
+  .showroom-vehicle-admin-title{
+    flex-wrap: wrap;
+  }
+  .showroom-vehicle-admin-subtitles{
+    flex-wrap: wrap;
+  }
+  .showroom-vehicle-admin-subtitle{
+    margin: 0 10px;
+  }
+}
+@media (max-width: 600px) {
+  .showroom-vehicle-admin-title{
+    font-size: 4em;
+  }
+  .showroom-vehicle-admin-subtitle{
+    font-size: 1.2em;
+  }
+}
+@media (max-width: 480px) {
+  .showroom-vehicle-admin-title{
+    font-size: 4em;
+  }
+  .showroom-vehicle-admin-subtitle{
+    font-size: 1em;
+  }
+  .showroom-vehicle-admin-photo-box{
+    width: 80%;
+    max-width: 300px;
+    min-width: 220px;
+    height: 200px;
+  }
 }
 </style>

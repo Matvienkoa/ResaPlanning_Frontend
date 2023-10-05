@@ -20,7 +20,7 @@
           <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
         </div>
         <div @click="openDeleteBox({mode: 'deleteSlot', id: this.id})" class="delete-icon-box">
-          <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="delete-icon" />
+          <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="delete-icon" />
         </div>
       </div>
       <div class="get-customer-box">
@@ -87,23 +87,28 @@ export default {
 }
 .get-box{
   position: relative;
-  max-width: 600px;
-  min-height: 50%;
+  width: 80%;
+  max-width: 800px;
+  min-height: 30%;
   max-height: 90%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   overflow-y: auto;
   z-index: 7;
   border-radius: 10px;
 }
 .get-box-title{
-  width: 80%;
-  text-align: center;
+  text-align: start;
   margin-bottom: 20px;
   margin-top: 40px;
+  width: 90%;
+  border-bottom: 3px solid #c0c0c0;
+  padding-bottom: 5px;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2.5em;
 }
 .close-get{
   position: absolute;
@@ -113,31 +118,40 @@ export default {
   width: 30px;
 }
 .get-infos-box{
+  font-family: 'catamaran', sans-serif;
+  font-size: 1.2em;
+  line-height: 1.2em;
   width: 90%;
   position: relative;
   display: flex;
   flex-direction: column;
+  background-color: rgb(245, 245, 245);
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 .edit-infos-box{
   width: 90%;
   display: flex;
   flex-direction: column;
 }
+@media (max-width: 768px) {
+  .get-box{
+    width: 90%;
+  }
+}
+@media (max-width: 480px) {
+  .get-box{
+    width: 95%;
+    min-height: 95%;
+    max-height: 95%;
+  }
+  .get-box-title{
+    font-size: 2.2em;
+  }
+}
 </style>
 
 <style scoped>
-.get-box{
-  width: 60%;
-  justify-content: flex-start;
-}
-.get-box-title{
-  text-align: start;
-  width: 90%;
-  border-bottom: 3px solid #c0c0c0;
-  padding-bottom: 5px;
-}
 .get-infos-box{
-  background-color: rgb(240, 240, 240);
   padding: 0.4em 0;
   border-radius: 10px;
   margin-bottom: 20px;
@@ -145,6 +159,9 @@ export default {
 .get-infos-box p{
   margin-left: 10px;
   margin-right: 10px;
+}
+.get-customer-box{
+  margin-bottom: 3em;
 }
 .edit-icon-box{
   position: absolute;
@@ -167,5 +184,18 @@ export default {
 }
 .delete-icon{
   height: 16px;
+}
+@media (max-width: 769px) {
+  .get-infos-box{
+    margin-top: 30px;
+  }
+  .edit-icon-box{
+    top: -45px;
+    background: rgb(245, 245, 245);
+  }
+  .delete-icon-box{
+    top: -45px;
+    background: rgb(245, 245, 245);
+  }
 }
 </style>

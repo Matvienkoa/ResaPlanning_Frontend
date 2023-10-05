@@ -1,9 +1,9 @@
 <template>
-  <div class="add-back">
-    <div class="add-box">
+  <div class="delete-back">
+    <div class="delete-box">
         <img crossorigin="anonymous" @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
         <h2 class="add-box-title">Supprimer ce client?</h2>
-        <h3 v-if="account !== null || account !== undefined" class="second-title">Le compte utilisateur associé ainsi que ses demandes en cours seront également supprimés</h3>
+        <h3 v-if="account !== null || account !== undefined" class="second-title">Le compte d'accès client associé ainsi que ses demandes en cours seront également supprimés!</h3>
         <div v-if="error" class="error">{{ error }}</div>
         <div class="box-choice-button">
             <button class="valid-button" @click="deleteCustomer()">Oui</button>

@@ -4,7 +4,7 @@
     <div class="home-admin-title-box">
       <h1 class="home-admin-title">Menu Principal</h1>
     </div>
-    <div class="home-customer-box">
+    <div class="home-admin-box">
       <router-link v-if="getUser.afc === 'yes'" to="/customer/requests" class="home-menu-link">
         <div class="home-menu-link-img-box">
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-booking.jpg" alt="">
@@ -66,12 +66,3 @@ export default {
   }
 }
 </script>
-
-<style>
-.home-customer-box{
-  width: 100%;
-  display: flex;
-  justify-content: flex-start;
-  flex-wrap: wrap;
-}
-</style>
