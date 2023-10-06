@@ -95,9 +95,6 @@ export default {
 
 
 <style scoped>
-.add-box{
-  justify-content: flex-start;
-}
 .edit-request-form{
   width: 80%;
   max-width: 400px;

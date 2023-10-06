@@ -102,8 +102,5 @@ export default {
 </script>
 
 <style scoped>
-.showroom-vehicle-admin-photos-box{
-  width: 90%;
-  justify-content: flex-start;
-}
+
 </style>

@@ -2,7 +2,7 @@
   <div class="add-back">
     <div class="add-box">
       <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
-      <img crossorigin="anonymous" v-if="addMode === 'preparation' || addMode === 'slot'" @click="closeAddMode()" src="../assets/Icons/arrow-back.svg" alt="" class="arrow-back" />
+      <img crossorigin="anonymous" v-if="addMode === 'preparation' || addMode === 'slot'" @click="closeAddMode(), cancelError()" src="../assets/Icons/arrow-back.svg" alt="" class="arrow-back" />
       <div v-if="addMode === ''" class="add-choice-box">
         <h2 class="add-box-title">Ajouter un évènement le : {{moment(date).format('LL')}}</h2>
         <div class="box-choice-button">
@@ -36,7 +36,7 @@
         <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-        <label class="form-label" for="vehicle-form-steps">Ajouter une étape de préparation</label>
+        <label class="form-label" for="vehicle-form-steps">Ajouter une prestation</label>
         <input class="form-input" @input="cancelErrorPrestation()" v-model="prestation" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
         <div v-if="errorPrestation" class="error">{{ errorPrestation }}</div>
         <button class="add-presta-button" @click="addStep()">Ajouter la prestation</button>
@@ -46,13 +46,13 @@
             <img crossorigin="anonymous" class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/>
           </div>
         </div>
-        <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+        <label class="form-label" for="vehicle-form-maker">Préparation attribuée à :</label>
         <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
         <div v-if="error" class="error">{{ error.message }}</div>
         <button class="add-button" @click="addPreparation()">Créer la préparation</button>
       </div>
       <div v-if="addMode=== 'slot'" class="add-slot-box">
-        <h2 class="second-title">Ajouter un créneaux</h2>
+        <h2 class="second-title">Ajouter un créneau</h2>
         <label class="form-label" for="preparation-form-customer">Séléctionner un Client :<span class="star">*</span></label>
         <select class="form-input required" @change="cancelError()" v-model="customer" name="preparation-form-customer" id="preparation-form-customer">
             <option v-if="getCustomers.length === 0" disabled selected value="">Aucun client trouvé</option>
@@ -71,10 +71,10 @@
         <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-        <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+        <label class="form-label" for="vehicle-form-maker">Créneau attribué à :</label>
         <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button class="add-button" @click="addSlot()">Créer le créneaux</button>
+        <button class="add-button" @click="addSlot()">Créer le créneau</button>
       </div>
     </div>
   </div>
@@ -278,11 +278,12 @@ export default {
   margin: auto;
   display: flex;
   flex-wrap: wrap;
+  margin-bottom: 20px;
 }
 .presta-box{
   display: flex;
   align-items: center;
-  background: rgb(5, 122, 255);
+  background: rgb(55,136,216);
   border-radius: 10px;
   color: white;
   font-size: 0.9em;

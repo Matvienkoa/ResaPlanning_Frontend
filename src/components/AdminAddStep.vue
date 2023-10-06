@@ -1,9 +1,9 @@
 <template>
     <div class="add-step-back">
         <div class="add-step-box">
-            <h2 class="add-box-title">Ajouter une étape</h2>
+            <h2 class="add-box-title">Ajouter une prestation</h2>
             <div class="add-step-form">
-              <label class="form-label" for="step-form-type">Type</label>
+              <label class="form-label" for="step-form-type">Type de prestation</label>
               <input class="form-input required" v-model="type" @input="cancelError()" type="text" name="step-form-type" id="step-form-type">
               <div v-if="error" class="error">{{ error.message }}</div>
               <div class="box-choice-button">

@@ -23,7 +23,7 @@
                 <label class="form-label" for="customer-form-mail">Mail<span class="star">*</span></label>
                 <input class="form-input required" v-model="mail" @input="cancelError()" type="text" name="customer-form-mail" id="customer-form-mail">
                 <div v-if="error" class="error">{{ error.message }}</div>
-                <button class="add-button" @click="editCustomer()">Modifier le client</button>
+                <button class="add-button" @click="editCustomer()">Modifier</button>
             </div>
         </div>
     </div>

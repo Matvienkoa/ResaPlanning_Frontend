@@ -1,9 +1,9 @@
 <template>
     <div class="add-back">
         <div class="add-box">
-            <h2 class="add-box-title">Voulez vous vraiment modifier ce créneau?</h2>
-            <div class="drop-actual">Créneau actuel : du {{moment(start).format('LLLL')}} au {{moment(end).format('LLLL')}}</div>
-            <div class="drop-new">Nouveau créneau : du {{moment(start).format('LLLL')}} au {{newEnd}}</div>
+            <h2 class="add-box-title">Modifier les horaires de créneau?</h2>
+            <div class="drop-actual">Horaires actuels : du {{moment(start).format('LLLL')}} au {{moment(end).format('LLLL')}}</div>
+            <div class="drop-new">Nouveaux horaires : du {{moment(start).format('LLLL')}} au {{newEnd}}</div>
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
                 <button class="valid-button" @click="sizeSlot()">Oui</button>

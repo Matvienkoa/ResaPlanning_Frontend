@@ -1,8 +1,8 @@
 <template>
     <div class="edit-state-step-back">
         <div class="edit-state-step-box">
-            <h2 class="add-box-title" v-if="stepState === 'planned'">Valider cette étape comme finalisée?</h2>
-            <h2 class="add-box-title" v-if="stepState === 'completed'">Valider cette étape comme non finalisée?</h2>
+            <h2 class="add-box-title" v-if="stepState === 'planned'">Marquer cette prestation comme terminée?</h2>
+            <h2 class="add-box-title" v-if="stepState === 'completed'">Marquer cette prestation comme non terminée?</h2>
             <div v-if="error" class="error">{{ error }}</div>
             <div class="box-choice-button">
               <button class="valid-button" v-if="stepState === 'planned'" @click="editStateStep('completed')">Valider</button>

@@ -10,7 +10,7 @@
             </div>
             <div class="prepR-infos-box">
                 <p>Date souhaitée : {{moment(getSlotRequest.date).format('LL')}}</p>
-                <p>Lieux : {{getSlotRequest.place}}</p>
+                <p>Lieux de la prestation : {{getSlotRequest.place}}</p>
                 <p>Durée de l'intervention : {{checkDuration(getSlotRequest.duration)}}</p>
                 <p>Observations client : {{getSlotRequest.observationsCustomer}}</p>
             </div>

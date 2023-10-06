@@ -28,7 +28,7 @@
               <label class="form-label-checkbox" for="form-millenium">Accès Millenium</label>
             </div>
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button class="add-button" @click="editAccount()">Modifier le compte</button>
+            <button class="add-button" @click="editAccount()">Modifier</button>
         </div>
     </div>
   </div>

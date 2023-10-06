@@ -14,7 +14,7 @@
     <AdminInvalidatePreparation v-if="getEditBox === 'invalidatePreparation'" :preparationId="this.id" />
     <div class="get-box">
       <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
-      <h2 class="get-box-title">Préparation du véhicule immatriculé {{getPreparation.immat}}</h2>
+      <h2 class="get-box-title">Préparation du véhicule immatriculé : {{getPreparation.immat}}</h2>
       <div v-if="getPreparation.state === 'planned'" class="get-box-state">
         <img src="../assets/Icons/in-time.svg" alt="" class="get-state-icon" /><p class="get-state-txt-in-time">En cours</p>
       </div>
@@ -47,7 +47,7 @@
         <p>Contact : {{getPreparation.phone}} {{getPreparation.mail}}</p>
       </div>
       <div class="get-steps-box">
-        <h2 class="second-title">Etapes de préparations</h2>
+        <h2 class="second-title">Prestations</h2>
         <div v-for="step in getSteps" :key="step.id" class="step-box">
           <div v-if="step.state === 'planned'" @click="openEditStateStepBox({mode: 'editStateStep', id: step.id, state: step.state})" class="step-state-box-in-time">
             <div class="step-state-box-icon-in-time">
@@ -68,13 +68,13 @@
               <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="step-edit-icon" />
             </div>
             <div @click="openDeleteStepBox({mode: 'deleteStep', id: step.id})" class="delete-step-icon-box">
-              <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="step-delete-icon" />
+              <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="step-delete-icon" />
             </div>
           </div>
         </div>
-        <h3 v-if="getSteps.length === 0" class="no-step">Aucune étape renseignée pour le moment</h3>
+        <h3 v-if="getSteps.length === 0" class="no-step">Aucune prestation renseignée pour le moment</h3>
         <div class="add-step-box-2">
-          <button class="add-button" @click="openAddStepBox('addStep')">Ajouter une étape</button>
+          <button class="add-button" @click="openAddStepBox('addStep')">Ajouter une prestation</button>
         </div>
       </div>
       <h2 class="second-title">Photos</h2>
@@ -85,7 +85,7 @@
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo1', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="get-photo-delete-icon">
           </div>
         </div>
         <div v-if="!getPreparation.photo1" class="get-photo-box">
@@ -98,7 +98,7 @@
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo2', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="get-photo-delete-icon">
           </div>
         </div>
         <div v-if="!getPreparation.photo2" class="get-photo-box">
@@ -111,7 +111,7 @@
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo3', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="get-photo-delete-icon">
           </div>
         </div>
         <div v-if="!getPreparation.photo3" class="get-photo-box">
@@ -124,7 +124,7 @@
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="get-photo-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo4', type: 'deletePhotoPreparation'})" class="get-photo-delete-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="get-photo-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="get-photo-delete-icon">
           </div>
         </div>
         <div v-if="!getPreparation.photo4" class="get-photo-box">
@@ -305,7 +305,7 @@ export default {
 .get-state-txt-completed{
   font-weight: 700;
   font-size: 1.4em;
-  color: rgb(198,238,0);
+  color: #09c407;
   margin: 0 5px;
 }
 .edit-icon-box{
@@ -370,7 +370,7 @@ export default {
   justify-content: center;
   align-items: center;
   border-radius: 100%;
-  border: solid 5px rgb(198,238,0);
+  border: solid 5px #09c407;
 }
 .step-state-txt-in-time{
   text-align: center;
@@ -382,7 +382,7 @@ export default {
   text-align: center;
   font-size: 1.2em;
   font-weight: 700;
-  color: rgb(198,238,0);
+  color: #09c407;
 }
 .step-state-icon{
   width: 60%;

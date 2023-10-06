@@ -12,6 +12,7 @@
           <img crossorigin="anonymous" @click="openAddBox('addVehicle')" src="../assets/Icons/add.svg" alt="" class="showroom-admin-icon">
         </div>
         <div class="showroom-admin-vehicles-box">
+          <p class="no-content" v-if="getVehicles.length === 0">Aucun véhicule enregistré pour le moment</p>
           <router-link v-for="vehicle in getVehicles" :key="vehicle.id" :to="{name: 'AdminShowroomVehicle', params: {id: vehicle.id}}" class="showroom-admin-vehicle">
             <div class="showroom-admin-vehicle-img-box">
               <img crossorigin="anonymous" v-if="vehicle.photo1" :src="vehicle.photo1" alt="" class="showroom-admin-vehicle-img">

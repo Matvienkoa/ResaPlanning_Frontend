@@ -22,8 +22,8 @@
                 <p v-if="!getPrepRequest.immat">Immatriculation / N° de série : Non renseigné</p>
                 <p v-if="getPrepRequest.kilometer">KM : {{getPrepRequest.kilometer}}</p>
                 <p v-if="!getPrepRequest.kilometer">KM : Non renseigné</p>
-                <p v-if="getPrepRequest.steps">Préparations souhaitées : {{getPrepRequest.steps}}</p>
-                <p v-if="!getPrepRequest.steps">Préparations souhaitées : Non renseigné</p>
+                <p v-if="getPrepRequest.steps">Prestations souhaitées : {{getPrepRequest.steps}}</p>
+                <p v-if="!getPrepRequest.steps">Prestations souhaitées : Non renseigné</p>
                 <p v-if="getPrepRequest.observationsCustomer">Observations client : {{getPrepRequest.observationsCustomer}}</p>
                 <p v-if="!getPrepRequest.observationsCustomer">Observations client : Non renseigné</p>
             </div>
@@ -54,7 +54,7 @@
                 <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
                 <label class="form-label" for="vehicle-form-observations">Observations</label>
                 <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-                <label class="form-label" for="vehicle-form-steps">Ajouter une étape de préparation</label>
+                <label class="form-label" for="vehicle-form-steps">Ajouter une prestation</label>
                 <input class="form-input" @input="cancelErrorPrestation()" v-model="prestation" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
                 <div v-if="errorPrestation" class="error">{{ errorPrestation }}</div>
                 <button class="add-presta-button" @click="addStep()">Ajouter la prestation</button>
@@ -64,7 +64,7 @@
                         <img crossorigin="anonymous" class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/>
                     </div>
                 </div>
-                <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+                <label class="form-label" for="vehicle-form-maker">Préparation attribuée à :</label>
                 <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
                 <div v-if="error" class="error">{{ error.message }}</div>
                 <button class="add-button" @click="addPreparation()">Créer la préparation</button>
@@ -282,5 +282,11 @@ export default {
   max-width: 400px;
   display: flex;
   flex-direction: column;
+}
+</style>
+
+<style scoped>
+.prestas-box{
+    margin-bottom: 20px;
 }
 </style>

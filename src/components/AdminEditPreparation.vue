@@ -31,11 +31,11 @@
             <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
             <label class="form-label" for="vehicle-form-observations">Observations</label>
             <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-            <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+            <label class="form-label" for="vehicle-form-maker">Préparation attribuée à :</label>
             <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
-              <button class="valid-button" @click="editPreparation()">Modifier la préparation</button>
+              <button class="valid-button" @click="editPreparation()">Modifier</button>
               <div class="cancel-button" @click="closeEditBox()">Annuler</div>
             </div>
           </div>

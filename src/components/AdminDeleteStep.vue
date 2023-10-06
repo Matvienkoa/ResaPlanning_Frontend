@@ -1,7 +1,7 @@
 <template>
     <div class="delete-step-back">
         <div class="delete-step-box">
-            <h2 class="add-box-title">Supprimer cette étape?</h2>
+            <h2 class="add-box-title">Supprimer cette prestation?</h2>
             <div v-if="error" class="error">{{ error }}</div>
             <div class="box-choice-button">
               <button class="valid-button" @click="deleteStep()">Supprimer</button>

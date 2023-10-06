@@ -1,9 +1,9 @@
 <template>
     <div class="edit-step-back">
         <div class="edit-step-box">
-            <h2 class="add-box-title">Modifier l'étape de préparation</h2>
+            <h2 class="add-box-title">Modifier le type de prestation</h2>
             <div class="edit-step-form">
-              <label class="form-label" for="step-form-type">Type<span class="star">*</span></label>
+              <label class="form-label" for="step-form-type">Type de prestation<span class="star">*</span></label>
               <input class="form-input required" v-model="type" @input="cancelError()" type="text" name="step-form-type" id="step-form-type">
               <div v-if="error" class="error">{{ error.message }}</div>
               <div class="box-choice-button">

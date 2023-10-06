@@ -1,16 +1,12 @@
-import { createRouter, createWebHistory } from 'vue-router'
-
+import { createRouter, createWebHashHistory } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
-
 import AdminHome from '../views/AdminHomeView.vue'
 import AdminAccounts from '../views/AdminAccountsView.vue'
 import AdminPlanning from '../views/AdminPlanningView.vue'
 import AdminShowroom from '../views/AdminShowroomView.vue'
 import AdminShowroomVehicle from '../views/AdminShowroomVehicleView.vue'
 import AdminCustomers from '../views/AdminCustomersView.vue'
-
 import EmployeePlanning from '../views/EmployeePlanningView.vue'
-
 import CustomerHome from '../views/CustomerHomeView.vue'
 import CustomerRequests from '../views/CustomerRequestsView.vue'
 import CustomerTracking from '../views/CustomerTracking.vue'
@@ -23,7 +19,6 @@ const routes = [
     name: 'login',
     component: LoginView
   },
-
   {
     path: '/admin/home',
     name: 'AdminHome',
@@ -54,13 +49,11 @@ const routes = [
     name: 'AdminCustomers',
     component: AdminCustomers
   },
-
   {
     path: '/employee/planning',
     name: 'EmployeePlanning',
     component: EmployeePlanning
   },
-
   {
     path: '/customer/home',
     name: 'CustomerHome',
@@ -89,7 +82,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  history: createWebHistory(process.env.BASE_URL),
+  history: createWebHashHistory(process.env.BASE_URL),
   routes
 })
 

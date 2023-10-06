@@ -4,7 +4,7 @@
     <AdminDeleteSlot v-if="getDeleteBox === 'deleteSlot'" :slotId="this.slot" />
     <div class="get-box">
       <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
-      <h2 class="get-box-title">Créneau réservé à {{getSlot.company}}</h2>
+      <h2 class="get-box-title">Créneau réservé à : {{getSlot.company}}</h2>
       <div class="get-infos-box">
         <p>Réalisé par : {{getSlot.maker}}</p>
         <p v-if="getSlot.duration === 'day'">Durée de l'intervention : Journée entière</p>

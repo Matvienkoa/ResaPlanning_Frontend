@@ -13,8 +13,9 @@
       <button class="add-button" @click="openAddBox()">Nouvelle demande</button>
       <div class="requests-customer-pending-box">
           <div class="requests-customer-pending-title-box">
-              <h2 class="requests-customer-pending-title">Demandes de prep en cours</h2>
+              <h2 class="requests-customer-pending-title">Demandes de préparation en cours</h2>
           </div>
+          <p class="no-content" v-if="getCustomerPrepRequestsPending.length === 0">Aucune demande pour le moment</p>
           <div v-for="prep in getCustomerPrepRequestsPending" :key="prep.id" class="request-customer-box">
             <div class="request-customer-infos-box">
               <div class="request-customer-infos">
@@ -33,8 +34,8 @@
             <div v-if="showModePrepRequestPending === 'open' && prepRequestPendingSelected === prep.id" class="request-customer-infos-hidden-box">
               <div class="request-customer-infos-hidden">
                 <p>Date de livraison souhaitée : {{moment(prep.deliveryDate).format('LL')}}</p>
-                <p v-if="prep.steps">Etapes de préparation souhaitées : {{prep.steps}}</p>
-                <p v-if="!prep.steps">Etapes de préparation souhaitées : Non renseigné</p>
+                <p v-if="prep.steps">Prestations souhaitées : {{prep.steps}}</p>
+                <p v-if="!prep.steps">Prestations souhaitées : Non renseigné</p>
                 <p v-if="prep.year">Année : {{prep.year}}</p>
                 <p v-if="!prep.year">Année : Non renseigné</p>
                 <p v-if="prep.kilometer">KM : {{prep.kilometer}}</p>
@@ -56,8 +57,9 @@
             </div>
           </div>
           <div class="requests-customer-pending-title-box">
-              <h2 class="requests-customer-pending-title">Demandes de créneaux en cours</h2>
+              <h2 class="requests-customer-pending-title">Demandes de créneau en cours</h2>
           </div>
+          <p class="no-content" v-if="getCustomerSlotRequestsPending.length === 0">Aucune demande pour le moment</p>
           <div v-for="slot in getCustomerSlotRequestsPending" :key="slot.id" class="request-customer-box">
             <div class="request-customer-infos-box">
               <div class="request-customer-infos">
@@ -75,7 +77,7 @@
             <div v-if="showModeSlotRequestPending === 'open' && slotRequestPendingSelected === slot.id" class="request-customer-infos-hidden-box">
               <div class="request-customer-infos-hidden">
                 <p>Date souhaitée : {{moment(slot.date).format('LL')}}</p>
-                <p>Lieux : {{slot.place}}</p>
+                <p>Lieux de la prestation : {{slot.place}}</p>
                 <p v-if="slot.observationsCustomer">Observations : {{slot.observationsCustomer}}</p>
                 <p v-if="!slot.observationsCustomer">Observations : non renseigné</p>
               </div>
@@ -88,8 +90,9 @@
             </div>
           </div>
           <div class="requests-customer-pending-title-box">
-              <h2 class="requests-customer-pending-title">Demandes de preparations refusées</h2>
+              <h2 class="requests-customer-pending-title">Demandes de preparation refusées</h2>
           </div>
+          <p class="no-content" v-if="getCustomerPrepRequestsRefused.length === 0">Aucune demande pour le moment</p>
           <div v-for="prep in getCustomerPrepRequestsRefused" :key="prep.id" class="request-customer-box">
             <div class="request-customer-infos-box">
               <div class="request-customer-infos">
@@ -108,8 +111,8 @@
             <div v-if="showModePrepRequestRefused === 'open' && prepRequestRefusedSelected === prep.id" class="request-customer-infos-hidden-box">
               <div class="request-customer-infos-hidden">
                 <p>Date de livraison souhaitée : {{moment(prep.deliveryDate).format('LL')}}</p>
-                <p v-if="prep.steps">Etapes de préparation souhaitées : {{prep.steps}}</p>
-                <p v-if="!prep.steps">Etapes de préparation souhaitées : Non renseigné</p>
+                <p v-if="prep.steps">Prestations souhaitées : {{prep.steps}}</p>
+                <p v-if="!prep.steps">Prestations souhaitées : Non renseigné</p>
                 <p v-if="prep.year">Année : {{prep.year}}</p>
                 <p v-if="!prep.year">Année : Non renseigné</p>
                 <p v-if="prep.kilometer">KM : {{prep.kilometer}}</p>
@@ -126,8 +129,9 @@
             </div>
           </div>
           <div class="requests-customer-pending-title-box">
-              <h2 class="requests-customer-pending-title">Demandes de créneaux refusées</h2>
+              <h2 class="requests-customer-pending-title">Demandes de créneau refusées</h2>
           </div>
+          <p class="no-content" v-if="getCustomerSlotRequestsRefused.length === 0">Aucune demande pour le moment</p>
           <div v-for="slot in getCustomerSlotRequestsRefused" :key="slot.id" class="request-customer-box">
             <div class="request-customer-infos-box">
               <div class="request-customer-infos">
@@ -145,7 +149,7 @@
             <div v-if="showModeSlotRequestRefused === 'open' && slotRequestRefusedSelected === slot.id" class="request-customer-infos-hidden-box">
               <div class="request-customer-infos-hidden">
                 <p>Date souhaitée : {{moment(slot.date).format('LL')}}</p>
-                <p>Lieux : {{slot.place}}</p>
+                <p>Lieux de la prestation : {{slot.place}}</p>
                 <p v-if="slot.observationsCustomer">Observations : {{slot.observationsCustomer}}</p>
                 <p v-if="!slot.observationsCustomer">Observations : non renseigné</p>
                 <p>Motif du refus : {{slot.observationsDepot}}</p>
@@ -281,6 +285,7 @@ export default {
   width: 95%;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 .requests-customer-pending-title-box{
   width: 100%;
@@ -288,7 +293,8 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid black;
-  margin-bottom: 10px;
+  margin-bottom: 20px;
+  padding-bottom: 5px;
 }
 
 .request-customer-box{
@@ -406,5 +412,12 @@ export default {
     bottom: 2px;
     right: 10px;
   }
+}
+</style>
+
+<style scoped>
+.no-content{
+  margin-bottom: 20px;
+  margin-top: unset;
 }
 </style>

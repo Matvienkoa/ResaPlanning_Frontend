@@ -1,10 +1,10 @@
 <template>
     <div class="validate-preparation-back">
         <div class="validate-preparation-box">
-            <h2 class="add-box-title">Valider la préparation?</h2>
+            <h2 class="add-box-title">Marquer la préparation comme terminée?</h2>
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
-              <button class="valid-button" @click="validatePreparation()">Valider la préparation</button>
+              <button class="valid-button" @click="validatePreparation()">Oui</button>
               <div class="cancel-button" @click="closeEditBox()">Annuler</div>
             </div>
         </div>
@@ -33,7 +33,6 @@ export default {
     validatePreparation() {
       instance.put(`/preparation/validate/${this.preparationId}`)
       .then((res) => {
-        console.log(res.data)
           if(res.status === 201) {
             this.$store.commit('EDIT_PREPARATION_TO_EVENTS_PLANNING', res.data)
             this.$store.dispatch('getPreparation', this.preparationId)

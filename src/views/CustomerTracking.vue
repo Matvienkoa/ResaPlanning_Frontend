@@ -10,6 +10,7 @@
                 <div class="requests-customer-pending-title-box">
                     <h2 class="requests-customer-pending-title">Preparations En cours</h2>
                 </div>
+                <p class="no-content" v-if="getPreparationsCustomerPlanned.length === 0">Aucune préparation en cours pour le moment</p>
                 <div @click="openGetBox(prep.id)" v-for="prep in getPreparationsCustomerPlanned" :key="prep.id" class="home-tracking-prep-box">
                     <div class="home-tracking-prep-infos">
                         <p>{{prep.brand}}</p>
@@ -25,7 +26,8 @@
                 <div class="requests-customer-pending-title-box">
                     <h2 class="requests-customer-pending-title">Preparations Terminées</h2>
                 </div>
-                <input @change="updatePrepCompleted()" type="month" v-model="month" name="" id="">
+                <input @change="updatePrepCompleted()" type="month" v-model="month" name="" id="month-input">
+                <p class="no-content" v-if="getPreparationsCustomerCompleted.length === 0">Aucune préparation terminée pour le mois sélectionné</p>
                 <div @click="openGetBox(prep.id)" v-for="prep in getPreparationsCustomerCompleted" :key="prep.id" class="home-tracking-prep-box">
                     <div class="home-tracking-prep-infos">
                         <p>{{prep.brand}}</p>
@@ -102,10 +104,11 @@ export default {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: rgb(236, 236, 236);
+    background-color: rgb(245, 245, 245);
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
     border-radius: 10px;
     padding: 0.4em 0;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
     cursor: pointer;
 }
 .home-tracking-prep-infos{
@@ -127,5 +130,18 @@ export default {
 }
 .home-tracking-prep-icon{
     height: 18px;
+}
+#month-input{
+  width: 180px;
+  padding: 0 10px;
+  height: 40px;
+  font-size: 1.3em;
+  margin: auto;
+  margin-bottom: 20px;
+  border: #2c3e50 solid 3px;
+  border-radius: 20px;
+}
+#month-input::-webkit-calendar-picker-indicator {
+  cursor: pointer;
 }
 </style>

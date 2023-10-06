@@ -40,20 +40,20 @@
         <input class="form-input required" v-model="condition" @input="cancelError()" type="text" name="preparation-form-condition" id="preparation-form-condition">
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-        <label class="form-label" for="vehicle-form-steps">Ajouter une étape de préparation</label>
+        <label class="form-label" for="vehicle-form-steps">Ajouter une prestation</label>
         <input class="form-input" @input="cancelErrorPrestation()" v-model="prestation" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
         <div v-if="errorPrestation" class="error">{{ errorPrestation }}</div>
         <button class="add-presta-button" @click="addStep()">Ajouter la prestation</button>
         <div class="prestas-box">
           <div class="presta-box" v-for="step in steps" :key="step">{{step}}<img crossorigin="anonymous" class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/></div>
         </div>
-        <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+        <label class="form-label" for="vehicle-form-maker">Préparation attribuée à :</label>
         <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
         <div v-if="error" class="error">{{ error.message }}</div>
         <button class="add-button" @click="addPreparation()">Créer la préparation</button>
       </div>
       <div v-if="addMode=== 'slot'" class="add-slot-box">
-        <h2 class="second-title">Ajouter un créneaux</h2>
+        <h2 class="second-title">Ajouter un créneau</h2>
         <label class="form-label" for="preparation-form-customer">Séléctionner un Client :<span class="star">*</span></label>
         <select class="form-input required" @change="cancelError()" v-model="customer" name="preparation-form-customer" id="preparation-form-customer">
             <option v-if="getCustomers.length === 0" disabled selected value="">Aucun client trouvé</option>
@@ -76,10 +76,10 @@
         <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-        <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+        <label class="form-label" for="vehicle-form-maker">Créneau attribué à :</label>
         <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button class="add-button" @click="addSlot()">Créer le créneaux</button>
+        <button class="add-button" @click="addSlot()">Créer le créneau</button>
       </div>
     </div>
   </div>

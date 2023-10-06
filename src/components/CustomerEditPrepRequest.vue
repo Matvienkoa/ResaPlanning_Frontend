@@ -24,7 +24,7 @@
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsCustomer" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button class="add-button" @click="editPrepRequest()">Modifier la demande</button>
+        <button class="add-button" @click="editPrepRequest()">Modifier</button>
       </div>
     </div>
   </div>
@@ -119,9 +119,6 @@ export default {
 
 
 <style scoped>
-.add-box{
-  justify-content: flex-start;
-}
 .edit-request-form{
   width: 80%;
   max-width: 400px;

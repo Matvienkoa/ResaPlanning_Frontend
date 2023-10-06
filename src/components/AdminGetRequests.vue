@@ -9,7 +9,7 @@
             <div class="get-requests-box">
               <div class="get-preps-box">
                 <div class="get-requests-title-box">
-                  <h2 class="get-requests-title">Nouvelles Demandes de préparation</h2>
+                  <h2 class="get-requests-title">Nouvelles demandes de préparation</h2>
                 </div>
                 <h3 v-if="getPrepRequestsPending.length === 0" class="no-request">Aucune nouvelle demande pour le moment</h3>
                 <div class="prep-request" v-for="prepR in getPrepRequestsPending" :key="prepR.id">
@@ -31,7 +31,7 @@
               </div>
               <div class="get-slots-box">
                 <div class="get-requests-title-box">
-                  <h2 class="get-requests-title">Demandes de créneaux</h2>
+                  <h2 class="get-requests-title">Nouvelles demandes de créneaux</h2>
                 </div>
                 <h3 v-if="getSlotRequestsPending.length === 0" class="no-request">Aucune nouvelle demande pour le moment</h3>
                 <div class="slot-request" v-for="slotR in getSlotRequestsPending" :key="slotR.id">

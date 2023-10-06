@@ -39,6 +39,12 @@ input:focus{
 button:focus{
   outline: none;
 }
+input[type=date]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
+input[type=time]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+}
 /* Spinner */
 .lds-ring {
   position: absolute;

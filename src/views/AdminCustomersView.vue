@@ -14,6 +14,7 @@
           <img crossorigin="anonymous" @click="openAddBox('addCustomer')" src="../assets/Icons/add.svg" alt="" class="account-admin-customer-icon">
         </div>
         <div class="account-admin-customers-list">
+          <p class="no-content" v-if="getCustomers.length === 0">Aucun client enregistré pour le moment</p>
           <div v-for="customer in getCustomers" :key="customer.id" class="account-admin-customer">
             <div class="account-admin-customer-infos-box">
               <div class="account-admin-customer-infos">

@@ -29,7 +29,7 @@
               <img crossorigin="anonymous" v-if="modePassword2 === 'visible'" @click="hidePassword2()" class="home-form-password-icon" alt="" src="../assets/Icons/eye-slash.svg">
             </div>
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button class="add-button" @click="editAccount()">Modifier le compte</button>
+            <button class="add-button" @click="editAccount()">Modifier</button>
         </div>
     </div>
   </div>

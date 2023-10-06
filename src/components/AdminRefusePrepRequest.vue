@@ -22,8 +22,8 @@
                 <p v-if="!getPrepRequest.immat">Immatriculation / N° de série : Non renseigné</p>
                 <p v-if="getPrepRequest.kilometer">KM : {{getPrepRequest.kilometer}}</p>
                 <p v-if="!getPrepRequest.kilometer">KM : Non renseigné</p>
-                <p v-if="getPrepRequest.steps">Préparations souhaitées : {{getPrepRequest.steps}}</p>
-                <p v-if="!getPrepRequest.steps">Préparations souhaitées : Non renseigné</p>
+                <p v-if="getPrepRequest.steps">Préstations souhaitées : {{getPrepRequest.steps}}</p>
+                <p v-if="!getPrepRequest.steps">Préstations souhaitées : Non renseigné</p>
                 <p v-if="getPrepRequest.observationsCustomer">Observations client : {{getPrepRequest.observationsCustomer}}</p>
                 <p v-if="!getPrepRequest.observationsCustomer">Observations client : Non renseigné</p>
             </div>

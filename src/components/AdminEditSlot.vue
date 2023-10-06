@@ -25,7 +25,7 @@
       <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
       <label class="form-label" for="vehicle-form-observations">Observations</label>
       <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-      <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+      <label class="form-label" for="vehicle-form-maker">Créneau attribué à :</label>
       <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
       <div v-if="error" class="error">{{ error.message }}</div>
       <div class="box-choice-button">

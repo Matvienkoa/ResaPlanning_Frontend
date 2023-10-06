@@ -10,6 +10,7 @@
           <h2 class="showroom-customer-title">Véhicules disponibles</h2>
         </div>
         <div class="showroom-customer-vehicles-box">
+          <p class="no-content" v-if="getVehicles.length === 0">Aucun véhicule disponible pour le moment</p>
           <router-link v-for="vehicle in getVehicles" :key="vehicle.id" :to="{name: 'CustomerShowroomVehicle', params: {id: vehicle.id}}" class="showroom-customer-vehicle">
             <div class="showroom-customer-vehicle-img-box">
               <img crossorigin="anonymous" v-if="vehicle.photo1" :src="vehicle.photo1" alt="" class="showroom-customer-vehicle-img">

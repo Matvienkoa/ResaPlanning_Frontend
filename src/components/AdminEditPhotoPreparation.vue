@@ -23,7 +23,7 @@
         <img crossorigin="anonymous" v-if="this.url === '' && !this.getActualPhoto && this.numberPhoto ==='photo4'" :src="getPreparation.photo4" alt="" class="photo-selected">
         <div v-if="error" class="error">{{ error.message }}</div>
         <div v-if="this.photo" class="box-choice-button">
-          <button class="valid-button" @click="editPhotoPreparation()">Modifier la photo</button>
+          <button class="valid-button" @click="editPhotoPreparation()">Modifier</button>
           <div class="cancel-button" @click="closeEditBox()">Annuler</div>
         </div>
         <div v-if="this.photoCamera" class="box-choice-button">

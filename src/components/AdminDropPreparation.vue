@@ -1,9 +1,9 @@
 <template>
     <div class="add-back">
         <div class="add-box">
-            <h2 class="add-box-title">Voulez vous vraiment déplacer cette préparation?</h2>
-            <div class="drop-actual">Créneau actuel : du {{moment(start).format('LLLL')}} au {{moment(end).format('LLLL')}}</div>
-            <div class="drop-new">Nouveau créneau : du {{newStart}} au {{newEnd}}</div>
+            <h2 class="add-box-title">Déplacer cette préparation?</h2>
+            <div class="drop-actual">Date actuelle : du {{moment(start).format('LLLL')}} au {{moment(end).format('LLLL')}}</div>
+            <div class="drop-new">Nouvelle date : du {{newStart}} au {{newEnd}}</div>
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
                 <button class="valid-button" @click="dropPreparation()">Oui</button>
@@ -76,7 +76,7 @@ export default {
 
 <style>
 .drop-actual, .drop-new{
-    width: 90%;
+    width: 80%;
     margin-bottom: 10px;
 }
 </style>

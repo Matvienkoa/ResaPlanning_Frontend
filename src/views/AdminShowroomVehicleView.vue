@@ -54,7 +54,7 @@
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo1', type: 'deletePhotoVehicle'})" class="showroom-vehicle-delete-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-delete-icon">
           </div>
         </div>
         <div v-if="!getVehicle.photo1" class="showroom-vehicle-admin-photo-box">
@@ -69,7 +69,7 @@
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo2', type: 'deletePhotoVehicle'})" class="showroom-vehicle-delete-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-delete-icon">
           </div>
         </div>
         <div v-if="!getVehicle.photo2" class="showroom-vehicle-admin-photo-box">
@@ -84,7 +84,7 @@
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo3', type: 'deletePhotoVehicle'})" class="showroom-vehicle-delete-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-delete-icon">
           </div>
         </div>
         <div v-if="!getVehicle.photo3" class="showroom-vehicle-admin-photo-box">
@@ -99,7 +99,7 @@
             <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="showroom-vehicle-edit-icon">
           </div>
           <div @click="openDeletePhoto({number: 'photo4', type: 'deletePhotoVehicle'})" class="showroom-vehicle-delete-icon-box">
-            <img crossorigin="anonymous" src="../assets/Icons/delete-2.svg" alt="" class="showroom-vehicle-delete-icon">
+            <img crossorigin="anonymous" src="../assets/Icons/delete.svg" alt="" class="showroom-vehicle-delete-icon">
           </div>
         </div>
         <div v-if="!getVehicle.photo4" class="showroom-vehicle-admin-photo-box">

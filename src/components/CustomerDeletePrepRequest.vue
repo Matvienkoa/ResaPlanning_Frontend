@@ -1,6 +1,6 @@
 <template>
-    <div class="add-back">
-        <div class="add-box">
+    <div class="delete-back">
+        <div class="delete-box">
             <h2 class="add-box-title">Supprimer la demande?</h2>
             <div v-if="error" class="error">{{ error }}</div>
             <div class="box-choice-button">

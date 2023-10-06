@@ -19,6 +19,7 @@
           </div>
         </div>
         <div class="account-admin-employees-list">
+          <p class="no-content" v-if="getAccountsEmployee.length === 0">Aucun compte d'accès collaborateur pour le moment</p>
           <div v-for="employee in getAccountsEmployee" :key="employee.id" class="account-admin-employee">
             <div class="account-admin-employee-infos">
               <div class="employee-info">N°{{ employee.id }}</div>
@@ -48,6 +49,7 @@
           </div>
         </div>
         <div class="account-admin-customers-list">
+          <p class="no-content" v-if="getAccountsCustomer.length === 0">Aucun compte d'accès client pour le moment</p>
           <div v-for="customer in getAccountsCustomer" :key="customer.id" class="account-admin-customer">
             <div class="account-admin-customer-infos">
               <div class="customer-info">N°{{ customer.id }}</div>
@@ -184,7 +186,12 @@ export default {
   font-family: 'trumpSoftPro', sans-serif;
   font-size: 2em;
 }
-
+.no-content{
+  width: 100%;
+  text-align: start;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 .account-admin-employees-list, .account-admin-customers-list{
   width: 100%;
   display: flex;

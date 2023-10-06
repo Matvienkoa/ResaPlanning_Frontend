@@ -32,7 +32,7 @@
             <label class="form-label" for="vehicle-form-observations">Observations</label>
             <input class="form-input" v-model="observations" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
             <div v-if="error" class="error">{{ error.message }}</div>
-            <button class="add-button" @click="editVehicle()">Modifier le véhicule</button>
+            <button class="add-button" @click="editVehicle()">Modifier</button>
         </div>
     </div>
   </div>

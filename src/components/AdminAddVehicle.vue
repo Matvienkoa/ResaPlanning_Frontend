@@ -2,7 +2,7 @@
   <div class="add-back">
     <div class="add-box">
         <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
-        <h2 class="add-box-title">Ajouter un véhicule</h2>
+        <h2 class="add-box-title">Créer un nouveau véhicule</h2>
         <div class="add-vehicle-form">
             <label class="form-label" for="vehicle-form-brand">Marque<span class="star">*</span></label>
             <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="vehicle-form-brand" id="vehicle-form-brand">

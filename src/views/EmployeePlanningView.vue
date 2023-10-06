@@ -20,16 +20,17 @@
       <h1 class="home-admin-title">Mon Planning</h1>
     </div>
     <div class="planning-calendar-box">
-      <FullCalendar :options="calendarOptions" />
+      <FullCalendar ref="calendar" :options="calendarOptions" />
     </div>
   </div>
 </template>
 
 <script>
-import FullCalendar from '@fullcalendar/vue3'
-import dayGridPlugin from '@fullcalendar/daygrid'
-import timeGridPlugin from '@fullcalendar/timegrid'
-import interactionPlugin from '@fullcalendar/interaction'
+import FullCalendar from '@fullcalendar/vue3';
+import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
+import listPlugin from '@fullcalendar/list';
+import interactionPlugin from '@fullcalendar/interaction';
 import frLocale from '@fullcalendar/core/locales/fr';
 import { mapGetters } from 'vuex';
 
@@ -70,13 +71,17 @@ export default {
       preparation: null,
       slot: null,
       calendarOptions: {
-        plugins: [ dayGridPlugin, timeGridPlugin, interactionPlugin ],
+        plugins: [ dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin ],
         headerToolbar: {
-          left: 'prev,next today',
+          left: 'prev,next',
           center: 'title',
-          right: 'dayGridMonth,timeGridWeek,timeGridDay'
+          right: ''
         },
-        initialView: 'dayGridMonth',
+        initialView: this.calculateInitialView(),
+        views: {
+          listMonth: { buttonText: 'Mois' },
+          listWeek: { buttonText: 'Semaine' }
+        },
         locale: frLocale,
         selectable: true,
         editable: true,
@@ -99,6 +104,21 @@ export default {
     ...mapGetters(['getAddBox', 'getGetBox', 'getDropBox', 'getSizeBox', 'getEventsPlanning', 'getUser', 'getProfile'])
   },
   methods: {
+    initializeCalendar() {
+      this.calendarOptions.initialView = this.calculateInitialView() 
+      this.calendarOptions.headerToolbar.right = this.calculateHeaderRight()
+      this.$refs.calendar.getApi().setOption('height', this.calculateCalendarHeight());
+    },
+    calculateInitialView() {
+      return window.innerWidth < 480 ? 'listMonth' : 'dayGridMonth';
+    },
+    calculateHeaderRight() {
+      return window.innerWidth < 480 ? 'listMonth,listWeek,timeGridDay' : 'dayGridMonth,timeGridWeek,timeGridDay';
+    },
+    calculateCalendarHeight() {
+      const windowHeight = window.innerHeight;
+      return windowHeight;
+    },
     getEventsByDate(date) {
       this.showSpinner()
       this.calendarOptions.events = []
@@ -161,14 +181,25 @@ export default {
       this.allDay = date.allDay
       this.$store.state.addBox = 'addEventSelect'
     },
+    checkColor(state) {
+      let color = "";
+      if(state === 'planned') {
+        color = 'orange'
+      } else {
+        color = 'green'
+      }
+      return color;
+    },
     setEvents(res) {
       res.data.forEach(prep => {
         this.calendarOptions.events.push(
           {
-            title: prep.immat + ' ' + prep.brand + ' ' + prep.model,
+            title: prep.maker + ' ' + prep.immat + ' ' + prep.brand + ' ' + prep.model,
             start: prep.start,
             end: prep.end,
             eventId: prep.id,
+            backgroundColor: this.checkColor(prep.state),
+            borderColor: this.checkColor(prep.state),
             type: 'preparation'
           }
         )
@@ -178,12 +209,10 @@ export default {
       res.data.forEach(slot => {
         this.calendarOptions.events.push(
           {
-            title: slot.place,
+            title: slot.maker + ' ' + slot.place,
             start: slot.start,
             end: slot.end,
             eventId: slot.id,
-            backgroundColor: 'rgb(255,0,0)',
-            borderColor: 'rgb(255,0,0)',
             type: 'slot'
           }
         )
@@ -201,6 +230,9 @@ export default {
         const body = document.getElementById('login-home');
         body.classList.remove('on');
     },
+  },
+  mounted() {
+    this.initializeCalendar();
   },
   created: function () {
     this.$store.commit('RESET_BOX');

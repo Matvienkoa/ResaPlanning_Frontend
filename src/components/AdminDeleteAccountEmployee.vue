@@ -80,7 +80,8 @@ export default {
 .valid-button{
   font-family: 'catamaran', sans-serif;
   margin: 0 10px;
-  width: 70px;
+  min-width: 70px;
+  padding: 0 10px;
   height: 35px;
   border-radius: 30px;
   background: #09c407;

@@ -8,11 +8,14 @@
                     <div class="get-requests-title-box">
                         <h2 class="get-requests-title">Préparations à facturer</h2>
                     </div>
+                    <p class="no-content" v-if="getPreparationsBilling.length === 0">Aucune préparation à facturer pour le moment</p>
                     <div class="prep-request" v-for="prep in getPreparationsBilling" :key="prep.id">
                         <div class="prep-request-infos">
-                            <p class="prep-request-info">{{prep.immat}}</p>
-                            <p class="prep-request-info">{{prep.brand}}</p>
-                            <p class="prep-request-info">{{prep.model}}</p>
+                          <p class="prep-request-info">{{prep.company}}</p>
+                          <p class="prep-request-info">{{prep.immat}}</p>
+                          <p class="prep-request-info">{{prep.brand}}</p>
+                          <p class="prep-request-info">{{prep.model}}</p>
+                          <p class="prep-request-info">Terminée le : {{moment(prep.end).format('LL')}}</p>
                         </div>
                         <div @click="openInvoiceBox({mode: 'invoicePrep', id: prep.id})" class="invoice-icon-box">
                           <img crossorigin="anonymous" src="../assets/Icons/invoice-red.svg" alt="" class="invoice-icon" />
@@ -24,11 +27,14 @@
                         <h2 class="get-requests-title">Préparations facturées</h2>
                     </div>
                     <input @change="updatePrepBilled()" type="month" v-model="month" name="" id="month-input">
+                    <p class="no-content" v-if="getPreparationsBilled.length === 0">Aucune préparation facturée pour le moment</p>
                     <div class="prep-request" v-for="prep in getPreparationsBilled" :key="prep.id">
                         <div class="prep-request-infos">
-                            <p class="prep-request-info">{{prep.immat}}</p>
-                            <p class="prep-request-info">{{prep.brand}}</p>
-                            <p class="prep-request-info">{{prep.model}}</p>
+                          <p class="prep-request-info">{{prep.company}}</p>
+                          <p class="prep-request-info">{{prep.immat}}</p>
+                          <p class="prep-request-info">{{prep.brand}}</p>
+                          <p class="prep-request-info">{{prep.model}}</p>
+                          <p class="prep-request-info">Terminée le : {{moment(prep.end).format('LL')}}</p>
                         </div>
                         <div class="invoice-icon-box billed">
                           <img crossorigin="anonymous" src="../assets/Icons/invoice-green.svg" alt="" class="invoice-icon" />

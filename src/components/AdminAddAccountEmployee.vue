@@ -241,7 +241,7 @@ export default {
 .add-button{
   font-family: 'catamaran', sans-serif;
   margin: auto;
-  width: 200px;
+  min-width: 200px;
   height: 35px;
   border-radius: 30px;
   background: #c90200;

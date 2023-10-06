@@ -4,7 +4,7 @@
         <h2 class="add-box-title">Supprimer la photo n°{{checkPhoto(numberPhoto)}} ?</h2>
         <div v-if="error" class="error">{{ error.message }}</div>
         <div class="box-choice-button">
-          <button class="valid-button" @click="deletePhotoPreparation()">Supprimer la photo</button>
+          <button class="valid-button" @click="deletePhotoPreparation()">Supprimer</button>
           <div class="cancel-button" @click="closeDeleteBox()">Annuler</div>
         </div>
     </div>

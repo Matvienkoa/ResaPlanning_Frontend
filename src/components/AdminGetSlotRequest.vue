@@ -10,7 +10,7 @@
             </div>
             <div class="prepR-infos-box">
                 <p>Date souhaitée : {{moment(getSlotRequest.date).format('LL')}}</p>
-                <p>Lieux : {{getSlotRequest.place}}</p>
+                <p>Lieux de la prestation : {{getSlotRequest.place}}</p>
                 <p>Durée de l'intervention : {{checkDuration(getSlotRequest.duration)}}</p>
                 <p v-if="getSlotRequest.observationsCustomer">Observations client : {{getSlotRequest.observationsCustomer}}</p>
                 <p v-if="!getSlotRequest.observationsCustomer">Observations client : non renseigné</p>
@@ -31,10 +31,10 @@
                 <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
                 <label class="form-label" for="vehicle-form-observations">Observations</label>
                 <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
-                <label class="form-label" for="vehicle-form-maker">Prestation attribuée à :</label>
+                <label class="form-label" for="vehicle-form-maker">Créneau attribué à :</label>
                 <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
                 <div v-if="error" class="error">{{ error.message }}</div>
-                <button class="add-button" @click="addSlot()">Créer le créneaux</button>
+                <button class="add-button" @click="addSlot()">Créer le créneau</button>
             </div>
         </div>
     </div>
