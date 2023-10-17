@@ -4,7 +4,7 @@ import axios from 'axios'
 // Config Url
 const instance = axios.create({
   // baseURL: '/api/afc/',
-    baseURL: 'http://localhost:3000/api/afc/',
+  baseURL: 'http://localhost:3000/api/afc/',
 });
 
 // Config Token in Anthorization-Header

@@ -4,15 +4,15 @@
             <img crossorigin="anonymous" @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <h2 class="get-box-title">Refuser la demande de créneau</h2>
             <div class="prepR-customer-box">
-                <p>Client : {{getSlotRequest.company}} {{getSlotRequest.firstName}} {{getSlotRequest.lastName}}</p>
-                <p>Adresse : {{getSlotRequest.adress}} {{getSlotRequest.adress2}} {{getSlotRequest.zipCode}} {{getSlotRequest.city}}</p>
-                <p>Contact : {{getSlotRequest.phone}} {{getSlotRequest.mail}}</p>
+                <p>Client : <span class="info-bold">{{getSlotRequest.company}} {{getSlotRequest.firstName}} {{getSlotRequest.lastName}}</span></p>
+                <p>Adresse : <span class="info-bold">{{getSlotRequest.adress}} {{getSlotRequest.adress2}} {{getSlotRequest.zipCode}} {{getSlotRequest.city}}</span></p>
+                <p>Contact : <span class="info-bold">{{getSlotRequest.phone}} {{getSlotRequest.mail}}</span></p>
             </div>
             <div class="prepR-infos-box">
-                <p>Date souhaitée : {{moment(getSlotRequest.date).format('LL')}}</p>
-                <p>Lieux de la prestation : {{getSlotRequest.place}}</p>
-                <p>Durée de l'intervention : {{checkDuration(getSlotRequest.duration)}}</p>
-                <p>Observations client : {{getSlotRequest.observationsCustomer}}</p>
+                <p>Date souhaitée : <span class="info-bold">{{moment(getSlotRequest.date).format('LL')}}</span></p>
+                <p>Lieux de la prestation : <span class="info-bold">{{getSlotRequest.place}}</span></p>
+                <p>Durée de l'intervention : <span class="info-bold">{{checkDuration(getSlotRequest.duration)}}</span></p>
+                <p>Observations client : <span class="info-bold">{{getSlotRequest.observationsCustomer}}</span></p>
             </div>
             <div class="add-preparation-form">
                 <label class="form-label" for="vehicle-form-observations">Motifs du refus<span class="star">*</span></label>

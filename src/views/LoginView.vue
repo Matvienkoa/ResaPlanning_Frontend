@@ -242,46 +242,40 @@ input:focus{
     align-items: center;
   }
   .home-back{
-    width: 100%;
-  }
-  .home-form-box{
-    width: 90%;
-    max-width: 600px;
-    height: auto;
-    border-radius: 30px;
-  }
-  .home-logos-box{
-    top: unset;
-    margin-top: 10%;
-    margin-bottom: 10%;
-  }
-  .home-form{
-    top: unset;
-    margin-bottom: 15%;
-  }
-}
-@media (max-width: 600px) {
-  .home-back{
     display: none;
   }
   .home-form-box{
     width: 100%;
-    max-width: unset;
-    height: 100vh;
-    border-radius: unset;
-    justify-content: center;
+    height: 100%;
   }
   .home-logos-box{
-    position: absolute;
-    top: 0;
-    margin-bottom: 15%;
+    height: 40%;
+    top: unset;
+    margin-bottom: 5%;
   }
   .home-logo-afc, .home-logo-millenium{
-    width: 30%;
+    width: 25%;
+    height: 70%;
+  }
+  .home-form{
+    top: unset;
+  }
+}
+@media (max-width: 600px) {
+  .home-form-box{
+    width: 100%;
+    max-width: unset;
+    justify-content: flex-start;
+  }
+  .home-logos-box{
+    height: 30%;
+    margin-bottom: 5%;
+  }
+  .home-logo-afc, .home-logo-millenium{
+    width: 40%;
   }
   .home-form{
     width: 75%;
-    margin-top: 15%;
   }
   #button-login{
     min-width: 200px;

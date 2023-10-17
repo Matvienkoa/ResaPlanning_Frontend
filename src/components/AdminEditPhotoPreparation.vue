@@ -1,8 +1,8 @@
 <template>
   <div class="edit-photo-preparation-back">
+    <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
     <div class="edit-photo-preparation-box">
       <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
-      <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
       <h2 class="add-box-title">Modifier la photo n°{{checkPhoto(numberPhoto)}}</h2>
       <div class="edit-photo-preparation-form">
         <label class="form-label" for="edit-photo-preparation-form-photo" id="edit-photo-preparation-form-label-photo">
@@ -163,27 +163,30 @@ export default {
 <style scoped>
 .edit-photo-preparation-back{
   position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: rgba(0, 0, 0, 0.671);
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9;
+  z-index: 10;
 }
 .edit-photo-preparation-box{
   position: relative;
   width: 95%;
   max-width: 600px;
-  min-height: 30%;
-  max-height: 80%;
+  min-height: 40%;
+  max-height: 95%;
   background: white;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: flex-start;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 11;
   border-radius: 10px;
   padding-bottom: 3em;
 }

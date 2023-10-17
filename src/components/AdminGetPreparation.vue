@@ -22,17 +22,17 @@
         <img src="../assets/Icons/completed.svg" alt="" class="get-state-icon" /><p class="get-state-txt-completed">Terminée</p>
       </div>
       <div class="get-infos-box">
-        <p>Réalisée par : {{getPreparation.maker}}</p>
-        <p>Du {{moment(getPreparation.start).format('LLL')}}</p>
-        <p>Au {{moment(getPreparation.end).format('LLL')}}</p>
-        <p>Marque : {{getPreparation.brand}}</p>
-        <p>Modèle : {{getPreparation.model}}</p>
-        <p>Annéee : {{getPreparation.year}}</p>
-        <p>KM : {{getPreparation.kilometer}}</p>
-        <p>Etat du véhicule : {{getPreparation.condition}}</p>
-        <p v-if="getPreparation.observationsDepot">Observations : {{getPreparation.observationsDepot}}</p>
+        <p>Réalisée par : <span class="info-bold">{{getPreparation.maker}}</span></p>
+        <p>Du <span class="info-bold">{{moment(getPreparation.start).format('LLL')}}</span></p>
+        <p>Au <span class="info-bold">{{moment(getPreparation.end).format('LLL')}}</span></p>
+        <p>Marque : <span class="info-bold">{{getPreparation.brand}}</span></p>
+        <p>Modèle : <span class="info-bold">{{getPreparation.model}}</span></p>
+        <p>Annéee : <span class="info-bold">{{getPreparation.year}}</span></p>
+        <p>KM : <span class="info-bold">{{getPreparation.kilometer}}</span></p>
+        <p>Etat du véhicule : <span class="info-bold">{{getPreparation.condition}}</span></p>
+        <p v-if="getPreparation.observationsDepot">Observations : <span class="info-bold">{{getPreparation.observationsDepot}}</span></p>
         <p v-if="!getPreparation.observationsDepot">Observations : Non renseigné</p>
-        <p v-if="getPreparation.observationsCustomer">Informations client : {{getPreparation.observationsCustomer}}</p>
+        <p v-if="getPreparation.observationsCustomer">Informations client : <span class="info-bold">{{getPreparation.observationsCustomer}}</span></p>
         <p v-if="!getPreparation.observationsCustomer">Informations client : Non renseigné</p>
         <div @click="openEditBox({mode: 'editPreparation', id: this.id})" class="edit-icon-box">
           <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
@@ -42,9 +42,9 @@
         </div>
       </div>
       <div class="get-customer-box">
-        <p>Client : {{getPreparation.company}} {{getPreparation.firstName}} {{getPreparation.lastName}}</p>
-        <p>Adresse : {{getPreparation.adress}} {{getPreparation.adress2}} {{getPreparation.zipCode}} {{getPreparation.city}}</p>
-        <p>Contact : {{getPreparation.phone}} {{getPreparation.mail}}</p>
+        <p>Client : <span class="info-bold">{{getPreparation.company}} {{getPreparation.firstName}} {{getPreparation.lastName}}</span></p>
+        <p>Adresse : <span class="info-bold">{{getPreparation.adress}} {{getPreparation.adress2}} {{getPreparation.zipCode}} {{getPreparation.city}}</span></p>
+        <p>Contact : <span class="info-bold">{{getPreparation.phone}} {{getPreparation.mail}}</span></p>
       </div>
       <div class="get-steps-box">
         <h2 class="second-title">Prestations</h2>

@@ -36,8 +36,11 @@ export default {
 .header{
   position: fixed;
   z-index: 5;
-  width: 200px;
-  height: 100vh;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 150px;
+  height: 100%;
   background: black;
   display: flex;
   flex-direction: column;
@@ -88,28 +91,30 @@ export default {
   bottom: 0;
   background-color: #383838;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 }
 .logout-icon{
   width: 20px;
-  margin-right: 10px;
-  margin-left: 15px;
+    margin-right: 5px;
+    margin-left: 0px;
 }
 .logout-txt{
   display: flex;
   align-items: center;
-  font-weight: 600;
+  font-weight: 400;
   font-family: 'catamaran', sans-serif;
-  font-size: 1em;
+  font-size: 0.9em;
   text-decoration: none;
   color: white;
   cursor: pointer;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .header{
     bottom: 0;
+    top: unset;
+    left: unset;
     width: 100%;
     height: 50px;
     display: flex;
@@ -149,6 +154,9 @@ export default {
     height: 100%;
     padding-right: 20px;
   }
+  .logout-icon{
+    margin-left: 15px;
+  }
 }
 @media (max-width: 480px) {
   .logout-box{
@@ -156,6 +164,9 @@ export default {
   }
   .logout-txt p{
     display: none;
+  }
+  .logout-icon{
+    margin-left: 10px;
   }
 }
 </style>

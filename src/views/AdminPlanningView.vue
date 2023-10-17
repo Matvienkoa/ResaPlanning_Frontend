@@ -312,12 +312,12 @@ export default {
 </style>
 
 <style scoped>
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   .main-page{
     margin-left: 150px;
   }
-}
-@media (max-width: 768px) {
+} */
+@media (max-width: 1024px) {
   .main-page{
     margin-left: unset;
   }

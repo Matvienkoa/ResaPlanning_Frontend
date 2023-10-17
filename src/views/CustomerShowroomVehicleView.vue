@@ -23,16 +23,17 @@
         </div>
       </div>
       <div class="showroom-vehicle-admin-infos-box">
-        <p>Marque : {{getVehicle.brand}}</p>
-        <p>Modèle : {{getVehicle.model}}</p>
-        <p>Année : {{getVehicle.year}}</p>
-        <p>KM : {{getVehicle.kilometers}}</p>
-        <p>Immat : {{getVehicle.immat}}</p>
-        <p v-if="getVehicle.observations">Observations : {{getVehicle.observations}}</p>
-        <p>Prix Marchand : {{getVehicle.marketPrice/100}} €</p>
-        <p>Prix Public : {{getVehicle.publicPrice/100}} €</p>
-        <p v-if="getVehicle.frevos">FREVOS : {{getVehicle.frevos}}</p>
-        <p v-if="getVehicle.firstHand === 'yes'">Première main</p>
+        <p class="showroom-vehicle-admin-info-box">Marque : <span class="showroom-vehicle-admin-info">{{getVehicle.brand}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">Modèle : <span class="showroom-vehicle-admin-info">{{getVehicle.model}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">Année : <span class="showroom-vehicle-admin-info">{{getVehicle.year}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">KM : <span class="showroom-vehicle-admin-info">{{getVehicle.kilometers}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">Immat : <span class="showroom-vehicle-admin-info">{{getVehicle.immat}}</span></p>
+        <p v-if="getVehicle.observations" class="showroom-vehicle-admin-info-box">Observations : <span class="showroom-vehicle-admin-info">{{getVehicle.observations}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">Prix Marchand : <span class="showroom-vehicle-admin-info">{{getVehicle.marketPrice/100}} €</span></p>
+        <p class="showroom-vehicle-admin-info-box">Prix Public : <span class="showroom-vehicle-admin-info">{{getVehicle.publicPrice/100}} €</span></p>
+        <p v-if="getVehicle.frevos" class="showroom-vehicle-admin-info-box">FREVOS : <span class="showroom-vehicle-admin-info">{{getVehicle.frevos}}</span></p>
+        <p v-if="getVehicle.frevosPrice" class="showroom-vehicle-admin-info-box">Montant FREVOS : <span class="showroom-vehicle-admin-info">{{getVehicle.frevosPrice/100}} €</span></p>
+        <div v-if="getVehicle.firstHand === 'yes'" class="first-box"><p>Première main</p><img crossorigin="anonymous" src="../assets/Icons/first.svg" alt="" class="first"></div>
       </div>
       <div class="showroom-vehicle-admin-photos-box">
         <div v-if="getVehicle.photo1" class="showroom-vehicle-admin-photo-box">
@@ -90,7 +91,7 @@ export default {
     this.$store.dispatch('getProfile')
     .then((res) => {
       if(res.data) {
-        if(res.data.role !== 'admin' && res.data.role !== 'customer') {
+        if(res.data.role !== 'admin' && res.data.role !== 'customer' && res.data.role !== 'employee') {
           this.$router.push('/')
         }
       } else {

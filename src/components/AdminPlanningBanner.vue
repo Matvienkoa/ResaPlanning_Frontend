@@ -68,8 +68,11 @@ export default {
 .banner{
   position: fixed;
   z-index: 5;
-  width: 200px;
-  height: 100vh;
+  width: 150px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  height: 100%;
   background: black;
   display: flex;
   flex-direction: column;
@@ -135,7 +138,7 @@ export default {
 }
 .banner-events-box{
   position: absolute;
-  width: 80%;
+  width: 90%;
   bottom: 50px;
   display: flex;
   flex-direction: column;
@@ -143,7 +146,7 @@ export default {
   color: white;
   padding-top: 20px;
   border-top: 3px solid #c90200;
-  font-size: 0.9em;
+  font-size: 0.8em;
 }
 .banner-event-prep-planned{
   padding: 5px 10px;
@@ -170,25 +173,25 @@ export default {
   bottom: 0;
   background-color: #383838;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 }
 .logout-icon{
   width: 20px;
-  margin-right: 10px;
-  margin-left: 15px;
+  margin-right: 5px;
+  margin-left: 0px;
 }
 .logout-txt{
   display: flex;
   align-items: center;
   font-weight: 600;
   font-family: 'catamaran', sans-serif;
-  font-size: 1em;
+  font-size: 0.9em;
   text-decoration: none;
   color: white;
   cursor: pointer;
 }
-@media (max-width: 1024px) {
+/* @media (max-width: 1024px) {
   .banner{
     width: 150px;
   }
@@ -207,10 +210,12 @@ export default {
   .logout-txt{
     font-size: 0.9em;
   }
-}
-@media (max-width: 768px) {
+} */
+@media (max-width: 1024px) {
   .banner{
     bottom: 0;
+    top: unset;
+    left: unset;
     width: 100%;
     height: 70px;
     min-height: 60px;
@@ -298,6 +303,9 @@ export default {
   }
   .logout-txt p{
     display: none;
+  }
+  .logout-icon{
+    margin-left: 5px;
   }
 }
 @media (max-width: 600px) {

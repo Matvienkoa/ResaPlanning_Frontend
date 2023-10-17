@@ -27,8 +27,11 @@ export default {
 <style scoped>
 .header{
   position: fixed;
-  width: 200px;
-  height: 100vh;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 150px;
+  height: 100%;
   background: black;
   display: flex;
   flex-direction: column;
@@ -54,25 +57,27 @@ export default {
   bottom: 0;
   background-color: #383838;
   display: flex;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
 }
 .logout-icon{
   width: 20px;
-  margin-right: 10px;
-  margin-left: 15px;
+  margin-right: 5px;
+  margin-left: 0px;
 }
 .logout-txt{
   font-family: 'catamaran', sans-serif;
   text-decoration: none;
   color: white;
   cursor: pointer;
-  font-size: 1.1em;
+  font-size: 0.9em;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .header{
     bottom: 0;
+    top: unset;
+    left: unset;
     width: 100%;
     height: 50px;
     flex-direction: row;
@@ -87,6 +92,9 @@ export default {
     width: auto;
     height: 100%;
     padding-right: 20px;
+  }
+  .logout-icon{
+    margin-left: 15px;
   }
 }
 </style>

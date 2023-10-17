@@ -27,7 +27,7 @@
                         <h2 class="get-requests-title">Préparations facturées</h2>
                     </div>
                     <input @change="updatePrepBilled()" type="month" v-model="month" name="" id="month-input">
-                    <p class="no-content" v-if="getPreparationsBilled.length === 0">Aucune préparation facturée pour le moment</p>
+                    <p class="no-content" v-if="getPreparationsBilled.length === 0">Aucune préparation facturée pour le mois sélectionné</p>
                     <div class="prep-request" v-for="prep in getPreparationsBilled" :key="prep.id">
                         <div class="prep-request-infos">
                           <p class="prep-request-info">{{prep.company}}</p>
@@ -148,7 +148,7 @@ export default {
 .prep-request-info{
   margin-left: 5px;
   margin-right: 5px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .invoice-icon-box{
   height: 35px;

@@ -42,7 +42,7 @@
         <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
         <label class="form-label" for="vehicle-form-steps">Ajouter une prestation</label>
         <input class="form-input" @input="cancelErrorPrestation()" v-model="prestation" type="text" name="vehicle-form-steps" id="vehicle-form-steps">
-        <div v-if="errorPrestation" class="error">{{ errorPrestation }}</div>
+        <div v-if="errorPrestation" class="error error-step">{{ errorPrestation }}</div>
         <button class="add-presta-button" @click="addStep()">Ajouter la prestation</button>
         <div class="prestas-box">
           <div class="presta-box" v-for="step in steps" :key="step">{{step}}<img crossorigin="anonymous" class="presta-icon" src="../assets/Icons/presta.svg" @click="deleteStep(step)" alt=""/></div>

@@ -1,8 +1,8 @@
 <template>
   <div class="add-photo-preparation-back">
+    <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
     <div class="add-photo-preparation-box">
       <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
-      <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
         <h2 class="add-box-title">Ajouter la photo n°{{checkPhoto(numberPhoto)}}</h2>
         <div class="add-photo-preparation-form">
           <label class="form-label" for="add-photo-preparation-form-photo" id="add-photo-preparation-form-label-photo">
@@ -159,8 +159,11 @@ export default {
 <style scoped>
 .add-photo-preparation-back{
   position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: rgba(0, 0, 0, 0.671);
   display: flex;
   justify-content: center;

@@ -45,6 +45,14 @@
           <p>Showroom</p>
         </div>
       </router-link>
+      <router-link v-if="getUser.role === 'employee'" to="/customer/showroom" class="home-menu-link">
+        <div class="home-menu-link-img-box">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-showroom.jpg" alt="">
+        </div>
+        <div class="home-menu-link-bloc">
+          <p>Showroom</p>
+        </div>
+      </router-link>
     </div>
   </div>
   
@@ -94,7 +102,7 @@ export default {
 
 <style>
 .main-page{
-  margin-left: 200px;
+  margin-left: 150px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -152,7 +160,7 @@ export default {
   color: #2c3e50;
   text-transform: uppercase;
 }
-@media (max-width: 768px) {
+@media (max-width: 1024px) {
   .main-page{
     margin-left: unset;
   }

@@ -184,6 +184,7 @@ export default {
   border: dotted 2px rgb(184, 184, 184);
   padding: 5%;
   border-radius: 20px;
+  margin-bottom: 15px;
 }
 .file-icon{
   height: 40px;

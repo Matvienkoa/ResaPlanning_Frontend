@@ -1,7 +1,7 @@
 <template>
   <div class="add-back">
+    <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
     <div class="add-box">
-      <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
       <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
       <img crossorigin="anonymous" v-if="addMode === 'preparation' || addMode === 'slot' || addMode === 'preparationPhoto'" @click="closeAddMode(), cancelError()" src="../assets/Icons/arrow-back.svg" alt="" class="arrow-back" />
       <div v-if="addMode === ''" class="add-choice-box">
@@ -348,6 +348,7 @@ export default {
   z-index: -1;
 }
 #add-photo-preparation-form-label-photo, .button-photo{
+  margin: auto;
   width: 80%;
   font-weight: 600;
   cursor: pointer;

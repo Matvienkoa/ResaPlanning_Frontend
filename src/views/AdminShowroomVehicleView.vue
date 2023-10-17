@@ -233,14 +233,17 @@ export default {
   font-weight: 600;
   text-transform: uppercase;
   margin-bottom: 30px;
+  margin-left: 10px;
 }
 .title-white{
   color: white;
-  margin-left: 20px;
-  margin-right: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .title-green{
   color: #c90200;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 .showroom-vehicle-admin-subtitles{
   width: 100%;
@@ -252,7 +255,7 @@ export default {
   align-items: center;
   font-weight: 700;
   text-transform: uppercase;
-  margin: 0 20px;
+  margin: 0 15px;
   font-size: 1.6em;
 }
 .subtitle-green{

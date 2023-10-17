@@ -22,6 +22,9 @@
   margin: 0;
   padding: 0;
 }
+h2 {
+  font-weight: 500;
+}
 nav a {
   font-weight: bold;
   color: #2c3e50;

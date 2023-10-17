@@ -163,7 +163,7 @@ export default {
 .prep-request-info, .slot-request-info{
   margin-left: 5px;
   margin-right: 5px;
-  font-weight: 600;
+  font-weight: 500;
 }
 .prep-request-actions, .slot-request-actions{
   display: flex;
@@ -181,5 +181,8 @@ export default {
 }
 .requests-icon{
   height: 20px;
+}
+.no-request{
+  font-weight: 400;
 }
 </style>

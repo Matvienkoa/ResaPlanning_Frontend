@@ -3,7 +3,7 @@
         <div class="add-step-box">
             <h2 class="add-box-title">Ajouter une prestation</h2>
             <div class="add-step-form">
-              <label class="form-label" for="step-form-type">Type de prestation</label>
+              <label class="form-label" for="step-form-type">Type de prestation<span class="star">*</span></label>
               <input class="form-input required" v-model="type" @input="cancelError()" type="text" name="step-form-type" id="step-form-type">
               <div v-if="error" class="error">{{ error.message }}</div>
               <div class="box-choice-button">
@@ -64,8 +64,11 @@ export default {
 <style scoped>
 .add-step-back{
   position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: rgba(0, 0, 0, 0.671);
   display: flex;
   justify-content: center;

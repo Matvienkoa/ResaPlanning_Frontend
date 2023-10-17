@@ -218,7 +218,7 @@ export default {
   margin: 5px;
   display: flex;
   align-items: center;
-  font-weight: 600;
+  font-weight: 500;
   font-family: 'catamaran', sans-serif;
   font-size: 1em;
 }

@@ -32,7 +32,7 @@ export default {
         async initializeCamera() {
             try {
                 this.showSpinner()
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const stream = await navigator.mediaDevices.getUserMedia({ video: { facingMode: 'environment' } });
                 this.$refs.video.srcObject = stream;
                 this.stream = stream;
                 this.showButtons()
@@ -46,7 +46,7 @@ export default {
             const canvas = this.$refs.canvas;
             const context = canvas.getContext('2d');
             const videoProportion = video.videoWidth / video.videoHeight;
-            const captureWidth = video.videoWidth * 0.8;
+            const captureWidth = video.videoWidth;
             const captureHeight = captureWidth / videoProportion;
             const canvasWidth = captureWidth;
             const canvasHeight = captureHeight;
@@ -103,8 +103,9 @@ export default {
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
     z-index: 15;
     overflow: hidden;
     background: black;
@@ -120,8 +121,8 @@ canvas{
 #photo-button{
     position: absolute;
     bottom: 5%;
-    left: 48%;
-    width: 50px;
+    right: 10%;
+    width: 70px;
     
     cursor: pointer;
 }
@@ -132,7 +133,7 @@ canvas{
   position: absolute;
   bottom: 5%;
   left: 10%;
-  width: 50px;
+  width: 70px;
   
   cursor: pointer;
 }

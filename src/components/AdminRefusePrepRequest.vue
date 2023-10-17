@@ -4,27 +4,27 @@
             <img crossorigin="anonymous" @click="closeDeleteBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
             <h2 class="get-box-title">Refuser la demande de préparation</h2>
             <div class="prepR-customer-box">
-                <p>Client : {{getPrepRequest.company}} {{getPrepRequest.firstName}} {{getPrepRequest.lastName}}</p>
-                <p>Adresse : {{getPrepRequest.adress}} {{getPrepRequest.adress2}} {{getPrepRequest.zipCode}} {{getPrepRequest.city}}</p>
-                <p>Contact : {{getPrepRequest.phone}} {{getPrepRequest.mail}}</p>
+                <p>Client : <span class="info-bold">{{getPrepRequest.company}} {{getPrepRequest.firstName}} {{getPrepRequest.lastName}}</span></p>
+                <p>Adresse : <span class="info-bold">{{getPrepRequest.adress}} {{getPrepRequest.adress2}} {{getPrepRequest.zipCode}} {{getPrepRequest.city}}</span></p>
+                <p>Contact : <span class="info-bold">{{getPrepRequest.phone}} {{getPrepRequest.mail}}</span></p>
             </div>
             <div class="prepR-infos-box">
-                <p>Date de livraison souhaitée : {{moment(getPrepRequest.deliveryDate).format('LL')}}</p>
-                <p v-if="getPrepRequest.brand">Marque : {{getPrepRequest.brand}}</p>
+                <p>Date de livraison souhaitée : <span class="info-bold">{{moment(getPrepRequest.deliveryDate).format('LL')}}</span></p>
+                <p v-if="getPrepRequest.brand">Marque : <span class="info-bold">{{getPrepRequest.brand}}</span></p>
                 <p v-if="!getPrepRequest.brand">Marque : Non renseigné</p>
-                <p v-if="getPrepRequest.model">Modèle : {{getPrepRequest.model}}</p>
+                <p v-if="getPrepRequest.model">Modèle : <span class="info-bold">{{getPrepRequest.model}}</span></p>
                 <p v-if="!getPrepRequest.model">Modèle : Non renseigné</p>
-                <p v-if="getPrepRequest.year">Année : {{getPrepRequest.year}}</p>
+                <p v-if="getPrepRequest.year">Année : <span class="info-bold">{{getPrepRequest.year}}</span></p>
                 <p v-if="!getPrepRequest.year">Année : Non renseigné</p>
-                <p v-if="getPrepRequest.condition">Etat : {{getPrepRequest.condition}}</p>
+                <p v-if="getPrepRequest.condition">Etat : <span class="info-bold">{{getPrepRequest.condition}}</span></p>
                 <p v-if="!getPrepRequest.condition">Etat : Non renseigné</p>
-                <p v-if="getPrepRequest.immat">Immatriculation / N° de série : {{getPrepRequest.immat}}</p>
+                <p v-if="getPrepRequest.immat">Immatriculation / N° de série : <span class="info-bold">{{getPrepRequest.immat}}</span></p>
                 <p v-if="!getPrepRequest.immat">Immatriculation / N° de série : Non renseigné</p>
-                <p v-if="getPrepRequest.kilometer">KM : {{getPrepRequest.kilometer}}</p>
+                <p v-if="getPrepRequest.kilometer">KM : <span class="info-bold">{{getPrepRequest.kilometer}}</span></p>
                 <p v-if="!getPrepRequest.kilometer">KM : Non renseigné</p>
-                <p v-if="getPrepRequest.steps">Préstations souhaitées : {{getPrepRequest.steps}}</p>
+                <p v-if="getPrepRequest.steps">Préstations souhaitées : <span class="info-bold">{{getPrepRequest.steps}}</span></p>
                 <p v-if="!getPrepRequest.steps">Préstations souhaitées : Non renseigné</p>
-                <p v-if="getPrepRequest.observationsCustomer">Observations client : {{getPrepRequest.observationsCustomer}}</p>
+                <p v-if="getPrepRequest.observationsCustomer">Observations client : <span class="info-bold">{{getPrepRequest.observationsCustomer}}</span></p>
                 <p v-if="!getPrepRequest.observationsCustomer">Observations client : Non renseigné</p>
             </div>
             <div v-if="getPrepRequest.photo" class="prepR-photo-box">

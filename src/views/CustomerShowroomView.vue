@@ -1,5 +1,6 @@
 <template>
-  <Header url="/customer/home" />
+  <Header v-if="getUser.role === 'customer'" url="/customer/home" />
+  <Header v-if="getUser.role === 'employee'" url="/admin/home" />
   <div class="main-page">
     <div class="account-admin-title-box">
       <h1 class="account-admin-title">Showroom</h1>
@@ -42,7 +43,7 @@ export default {
     Header
   },
   computed: {
-    ...mapGetters(['getVehicles'])
+    ...mapGetters(['getVehicles', 'getUser'])
   },
   created: function () {
     this.$store.dispatch('getVehicles');
@@ -55,7 +56,7 @@ export default {
     this.$store.dispatch('getProfile')
     .then((res) => {
       if(res.data) {
-        if(res.data.role !== 'admin' && res.data.role !== 'customer') {
+        if(res.data.role !== 'admin' && res.data.role !== 'customer' && res.data.role !== 'employee') {
           this.$router.push('/')
         }
       } else {
@@ -73,6 +74,7 @@ export default {
   align-items: center;
   flex-direction: column;
   padding-top: 1em;
+  padding-bottom: 4em;
 }
 .showroom-customer{
   width: 95%;
@@ -85,7 +87,7 @@ export default {
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid black;
-  margin-bottom: 10px;
+  margin-bottom: 30px;
 }
 .showroom-customer-icon{
   width: 20px;
@@ -101,6 +103,7 @@ export default {
 }
 .showroom-customer-vehicle{
   width: 30%;
+  min-width: 250px;
   max-width: 300px;
   height: 300px;
   display: flex;
@@ -149,19 +152,43 @@ export default {
   margin-left: 10px;
 }
 .showroom-customer-vehicle-title{
-  color: black;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2em;
+  color: #2c3e50;
   font-weight: 600;
   margin-bottom: 5px;
 }
 .showroom-customer-vehicle-year{
+  font-family: 'catamaran', sans-serif;
   color: rgb(153, 153, 153);
   font-weight: 600;
-  margin-bottom: 15px;
-}
-.showroom-customer-vehicle-price{
-  color: black;
-  font-weight: 600;
+  margin-bottom: 10px;
+  line-height: 1em;
   font-size: 1.2em;
 }
+.showroom-customer-vehicle-price{
+  font-family: 'trumpSoftPro', sans-serif;
+  color: #2c3e50;
+  font-weight: 600;
+  font-size: 2em;
+  line-height: 1em;
+}
 
+@media (max-width: 1024px) {
+  .showroom-customer-vehicles-box{
+    justify-content: center;
+  }
+  .showroom-customer-vehicle{
+    width: 45%;
+    min-width: 240px;
+    max-width: 300px;
+  }
+}
+@media (max-width: 480px) {
+  .showroom-customer-vehicle{
+    width: 90%;
+    min-width: 240px;
+    max-width: 300px;
+  }
+}
 </style>

@@ -6,15 +6,15 @@
       <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
       <h2 class="get-box-title">Créneau réservé à : {{getSlot.company}}</h2>
       <div class="get-infos-box">
-        <p>Réalisé par : {{getSlot.maker}}</p>
-        <p v-if="getSlot.duration === 'day'">Durée de l'intervention : Journée entière</p>
-        <p v-if="getSlot.duration === 'half'">Durée de l'intervention : Demie Journée</p>
-        <p>Du {{moment(getSlot.start).format('LLL')}}</p>
-        <p>Au {{moment(getSlot.end).format('LLL')}}</p>
-        <p>Lieux de la prestation : {{getSlot.place}}</p>
-        <p v-if="getSlot.observationsCustomer">Informations client : {{getSlot.observationsCustomer}}</p>
+        <p>Réalisé par : <span class="info-bold">{{getSlot.maker}}</span></p>
+        <p v-if="getSlot.duration === 'day'">Durée de l'intervention : <span class="info-bold">Journée entière</span></p>
+        <p v-if="getSlot.duration === 'half'">Durée de l'intervention : <span class="info-bold">Demie Journée</span></p>
+        <p>Du <span class="info-bold">{{moment(getSlot.start).format('LLL')}}</span></p>
+        <p>Au <span class="info-bold">{{moment(getSlot.end).format('LLL')}}</span></p>
+        <p>Lieux de la prestation : <span class="info-bold">{{getSlot.place}}</span></p>
+        <p v-if="getSlot.observationsCustomer">Informations client : <span class="info-bold">{{getSlot.observationsCustomer}}</span></p>
         <p v-if="!getSlot.observationsCustomer">Informations client : Non renseigné</p>
-        <p v-if="getSlot.observationsDepot">Observations : {{getSlot.observationsDepot}}</p>
+        <p v-if="getSlot.observationsDepot">Observations : <span class="info-bold">{{getSlot.observationsDepot}}</span></p>
         <p v-if="!getSlot.observationsDepot">Observations : Non renseigné</p>
         <div @click="openEditBox({mode: 'editSlot', id: this.id})" class="edit-icon-box">
           <img crossorigin="anonymous" src="../assets/Icons/edit.svg" alt="" class="edit-icon" />
@@ -24,9 +24,9 @@
         </div>
       </div>
       <div class="get-customer-box">
-        <p>Client : {{getSlot.company}} {{getSlot.firstName}} {{getSlot.lastName}}</p>
-        <p>Adresse : {{getSlot.adress}} {{getSlot.adress2}} {{getSlot.zipCode}} {{getSlot.city}}</p>
-        <p>Contact : {{getSlot.phone}} {{getSlot.mail}}</p>
+        <p>Client : <span class="info-bold">{{getSlot.company}} {{getSlot.firstName}} {{getSlot.lastName}}</span></p>
+        <p>Adresse : <span class="info-bold">{{getSlot.adress}} {{getSlot.adress2}} {{getSlot.zipCode}} {{getSlot.city}}</span></p>
+        <p>Contact : <span class="info-bold">{{getSlot.phone}} {{getSlot.mail}}</span></p>
       </div>
     </div>
   </div>
@@ -77,8 +77,11 @@ export default {
 <style>
 .get-back{
   position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
   width: 100%;
-  height: 100vh;
+  height: 100%;
   background: rgba(0, 0, 0, 0.671);
   display: flex;
   justify-content: center;
