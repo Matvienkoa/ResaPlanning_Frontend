@@ -8,14 +8,18 @@
                 <option v-if="getCustomers.length === 0" disabled selected value="">Aucun client trouvé</option>
                 <option v-for="customer in getCustomers" :key="customer.id" :value="customer.id">{{customer.company}}</option>
             </select>
-            <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
-            <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
-            <label class="form-label" for="preparation-form-endDate">Date de fin<span class="star">*</span></label>
-            <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
-            <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
-            <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-            <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
-            <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+            <label class="form-label">Date de début<span class="star">*</span></label>
+            <VueDatePicker class="picker" v-model="startDate" locale="fr" :format="formatStart" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
+            <!-- <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate"> -->
+            <label class="form-label">Date de fin<span class="star">*</span></label>
+            <VueDatePicker class="picker" v-model="endDate" locale="fr" :format="formatEnd" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
+            <!-- <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate"> -->
+            <label class="form-label">Heure de début<span class="star">*</span></label>
+            <VueDatePicker class="picker" v-model="startTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="required datepicker" @update:model-value="cancelError()" />
+            <!-- <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime"> -->
+            <label class="form-label">Heure de fin</label>
+            <VueDatePicker class="picker" v-model="endTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="datepicker" />
+            <!-- <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime"> -->
             <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
             <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
             <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
@@ -46,12 +50,36 @@
 <script>
 import instance from '@/axios';
 import { mapGetters } from 'vuex';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import { ref } from 'vue';
 let moment = require('moment');
 moment.locale('fr');
 
 export default {
   name: 'AdminEditPreparation',
   props: ['preparationId'],
+  components: { 
+    VueDatePicker 
+  },
+  setup() {
+    const startDate = ref(null);
+    const formatStart = (startDate) => {
+      return moment(startDate).format('DD/MM/YYYY')
+    }
+    const endDate = ref(null);
+    const formatEnd = (endDate) => {
+      return moment(endDate).format('DD/MM/YYYY')
+    }
+    return {
+      startDate,
+      endDate,
+      startTime: ref(null),
+      endTime: ref(null),
+      formatStart,
+      formatEnd
+    }
+  },
   data() {
     return {
       moment: moment,
@@ -64,10 +92,6 @@ export default {
       kilometer: "",
       condition: "",
       observationsDepot: "",
-      startDate: "",
-      endDate: "",
-      startTime: "",
-      endTime: "",
       prestation: "",
       maker: ""
     }
@@ -89,8 +113,8 @@ export default {
         condition: this.condition,
         observationsDepot: this.observationsDepot,
         customerId: this.customer,
-        startDate: this.startDate,
-        endDate: this.endDate,
+        startDate: moment(this.startDate).format('YYYY-MM-DD'),
+        endDate: moment(this.endDate).format('YYYY-MM-DD'),
         startTime: this.startTime,
         endTime: this.endTime,
         maker: this.maker
@@ -129,8 +153,14 @@ export default {
       this.customer = res.data.customerId
       this.startDate = moment(res.data.start).format('YYYY-MM-DD')
       this.endDate = moment(res.data.end).format('YYYY-MM-DD')
-      this.startTime = moment(res.data.start).format('LT')
-      this.endTime = moment(res.data.end).format('LT')
+      this.startTime = {
+        hours: moment(res.data.start).format('HH'),
+        minutes: moment(res.data.start).format('mm')
+      }
+      this.endTime = {
+        hours: moment(res.data.end).format('HH'),
+        minutes: moment(res.data.end).format('mm')
+      }
       this.brand = res.data.brand
       this.model = res.data.model
       this.year = res.data.year
@@ -156,7 +186,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9;
+  z-index: 10;
 }
 .edit-preparation-box{
   position: relative;
@@ -170,7 +200,7 @@ export default {
   align-items: center;
   justify-content: flex-start;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 11;
   border-radius: 10px;
 }
 .edit-preparation-form{

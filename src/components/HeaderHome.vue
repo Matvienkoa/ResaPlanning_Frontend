@@ -23,7 +23,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .header{
   position: fixed;
@@ -43,13 +42,11 @@ export default {
   align-items: center;
   justify-content: space-evenly;
   background: white;
-  /* border-bottom: 3px solid #c90200; */
 }
 .logo{
   height: 90%;
   width: auto;
 }
-
 .logout-box{
   position: absolute;
   width: 100%;

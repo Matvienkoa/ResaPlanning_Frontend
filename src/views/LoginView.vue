@@ -29,7 +29,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'LoginView',
   data() {
@@ -163,7 +162,6 @@ export default {
 .home-logo-afc, .home-logo-millenium{
   width: 25%;
 }
-
 /* Form */
 .home-form{
   position: relative;
@@ -175,7 +173,6 @@ export default {
   justify-content: center;
   z-index: 2;
 }
-
 .home-form-label{
   font-family: 'trumpSoftPro', sans-serif;
   margin-bottom: 5px;

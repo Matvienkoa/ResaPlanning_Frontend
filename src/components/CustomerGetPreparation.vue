@@ -4,8 +4,11 @@
     <div class="get-box">
       <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
       <h2 class="get-box-title">Préparation du véhicule immatriculé : {{getPreparation.immat}}</h2>
-      <div v-if="getPreparation.state === 'planned'" class="get-box-state">
+      <div v-if="getPreparation.state === 'planned' && moment(new Date()).isAfter(moment(getPreparation.start))" class="get-box-state">
         <img crossorigin="anonymous" src="../assets/Icons/in-time.svg" alt="" class="get-state-icon" /><p class="get-state-txt-in-time">En cours</p>
+      </div>
+      <div v-if="getPreparation.state === 'planned' && moment(new Date()).isBefore(moment(getPreparation.start))" class="get-box-state">
+        <img src="../assets/Icons/calendar.svg" alt="" class="get-state-icon" /><p class="get-state-txt-calendar">Programmée</p>
       </div>
       <div v-if="getPreparation.state === 'completed'" class="get-box-state">
         <img crossorigin="anonymous" src="../assets/Icons/completed.svg" alt="" class="get-state-icon" /><p class="get-state-txt-completed">Terminée</p>
@@ -26,11 +29,17 @@
       <div class="get-steps-box">
         <h2 class="second-title">Prestations</h2>
         <div v-for="step in getSteps" :key="step.id" class="step-box">
-          <div v-if="step.state === 'planned'" class="step-state-box-in-time">
+          <div v-if="step.state === 'planned' && moment(new Date()).isAfter(moment(getPreparation.start))" class="step-state-box-in-time">
             <div class="step-state-box-icon-in-time">
               <img crossorigin="anonymous" src="../assets/Icons/in-time.svg" alt="" class="step-state-icon" />
             </div>
             <p class="step-state-txt-in-time">En cours</p>
+          </div>
+          <div v-if="step.state === 'planned' && moment(new Date()).isBefore(moment(getPreparation.start))" class="step-state-box-calendar">
+            <div class="step-state-box-icon-calendar">
+              <img crossorigin="anonymous" src="../assets/Icons/calendar.svg" alt="" class="step-state-icon" />
+            </div>
+            <p class="step-state-txt-calendar">Programmé</p>
           </div>
           <div v-if="step.state === 'completed'" class="step-state-box-completed">
             <div class="step-state-box-icon-completed">
@@ -157,6 +166,12 @@ export default {
   color: #09c407;
   margin: 0 5px;
 }
+.get-state-txt-calendar{
+  font-weight: 700;
+  font-size: 1.4em;
+  color: rgb(55,136,216);
+  margin: 0 5px;
+}
 .get-steps-box{
   width: 100%;
   display: flex;
@@ -173,7 +188,7 @@ export default {
   align-items: center;
   margin-bottom: 20px;
 }
-.step-state-box-in-time, .step-state-box-completed{
+.step-state-box-in-time, .step-state-box-completed, .step-state-box-calendar{
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -197,6 +212,15 @@ export default {
   border-radius: 100%;
   border: solid 5px #09c407;
 }
+.step-state-box-icon-calendar{
+  height: 80px;
+  width: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 100%;
+  border: solid 5px rgb(55,136,216);
+}
 .step-state-txt-in-time{
   text-align: center;
   font-size: 1.2em;
@@ -207,6 +231,11 @@ export default {
   font-size: 1.2em;
   font-weight: 700;
   color: #09c407;
+}
+.step-state-txt-calendar{
+  font-size: 1.2em;
+  font-weight: 700;
+  color: rgb(55,136,216);
 }
 .step-state-icon{
   width: 60%;
@@ -219,6 +248,11 @@ export default {
   word-break: break-all;
   width: 100%;
   margin-left: 20px;
+}
+.no-step{
+  width: 90%;
+  text-align: center;
+  margin-bottom: 20px;
 }
 .get-photos-box{
   width: 100%;

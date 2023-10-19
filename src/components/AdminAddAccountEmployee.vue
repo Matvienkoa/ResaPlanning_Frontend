@@ -12,9 +12,14 @@
             <input class="form-input required" v-model="firstName" @input="cancelError()" type="text" name="form-firstName" id="form-firstName">
             <div class="custom-checkbox">
               <input v-model="privileges" type="checkbox" name="form-privileges" id="form-privileges">
-              <label class="form-label-checkbox" for="form-privileges">Privilèges</label>
+              <label class="form-label-checkbox" for="form-privileges">Privilèges AFC</label>
             </div>
-            <p class="form-privileges-infos">Les privilèges donnent accès aux demandes des clients</p>
+            <p class="form-privileges-infos">Les privilèges AFC donnent accès aux demandes des clients</p>
+            <div class="custom-checkbox">
+              <input v-model="privilegesM" type="checkbox" name="form-privilegesM" id="form-privilegesM">
+              <label class="form-label-checkbox" for="form-privilegesM">Privilèges Millenium</label>
+            </div>
+            <p class="form-privileges-infos">Les privilèges Millenium donnent accès à la création de véhicule</p>
             <label class="form-label" for="form-password">Mot de passe<span class="star">*</span></label>
             <p class="form-password-infos">Compris entre 8 et 30 caractères avec au minimum 1 Majuscule, 1 Minuscule et 1 Chiffre</p>
             <div class="home-form-password-box">
@@ -50,6 +55,7 @@ export default {
       lastName: "",
       firstName: "",
       privileges: false,
+      privilegesM: false,
       modePassword: 'hidden',
       modePassword2: 'hidden'
     }
@@ -95,7 +101,8 @@ export default {
         password2: this.password2,
         firstName: this.firstName,
         lastName: this.lastName,
-        privileges: this.checkBox(this.privileges)
+        privileges: this.checkBox(this.privileges),
+        privilegesM: this.checkBox(this.privilegesM)
       })
       .then((res) => {
         if(res.status === 201) {
@@ -223,7 +230,7 @@ export default {
 }
 .custom-checkbox label {
   position: relative;
-  padding-left: 35px; /* Espace à gauche de la case à cocher */
+  padding-left: 35px;
   cursor: pointer;
 }
 .custom-checkbox label::before {
@@ -231,15 +238,15 @@ export default {
   position: absolute;
   left: 0;
   top: 0;
-  width: 25px; /* Largeur de la case à cocher personnalisée */
-  height: 25px; /* Hauteur de la case à cocher personnalisée */
+  width: 25px;
+  height: 25px;
   border: solid 1px rgb(184, 184, 184);
-  background-color: #fff; /* Couleur de fond de la case à cocher */
+  background-color: #fff;
   border-radius: 20px;
 }
 .custom-checkbox input[type="checkbox"]:checked + label::before {
-  background-color: #c90200; /* Couleur de fond de la case à cocher cochée */
-  border-color: rgb(184, 184, 184); /* Couleur de bordure de la case à cocher cochée */
+  background-color: #c90200;
+  border-color: rgb(184, 184, 184);
 }
 .add-button{
   font-family: 'catamaran', sans-serif;

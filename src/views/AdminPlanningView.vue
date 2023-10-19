@@ -122,12 +122,6 @@ export default {
       const windowHeight = window.innerHeight;
       return windowHeight;
     },
-    // handleResize() {
-    //   this.$refs.calendar.getApi().setOption('height', this.calculateCalendarHeight());
-    //   this.$refs.calendar.getApi().changeView(this.calculateInitialView());
-    //   this.calendarOptions.headerToolbar.right = this.calculateHeaderRight()
-    //   this.calendarOptions.headerToolbar.left = this.calculateHeaderLeft()
-    // },
     getEventsByDate(date) {
       this.showSpinner()
       this.calendarOptions.events = []
@@ -242,11 +236,7 @@ export default {
   },
   mounted() {
     this.initializeCalendar();
-    // window.addEventListener('resize', this.handleResize);
   },
-  // beforeUnmount() {
-  //   window.removeEventListener('resize', this.handleResize);
-  // },
   created: function () {
     this.$store.commit('RESET_BOX');
     this.$store.dispatch('checkToken')
@@ -278,7 +268,6 @@ export default {
   margin-top: 20px;
   padding-bottom: 6em;
 }
-
 :root {
   --fc-button-bg-color: black;
   --fc-button-border-color: black;
@@ -289,7 +278,6 @@ export default {
   --fc-today-bg-color: #c9030021;
   --fc-highlight-color: #c9030021;
 }
-
 @media (max-width: 479px) {
   .fc-view-timeGridDay {
     display: block !important;
@@ -312,11 +300,6 @@ export default {
 </style>
 
 <style scoped>
-/* @media (max-width: 1024px) {
-  .main-page{
-    margin-left: 150px;
-  }
-} */
 @media (max-width: 1024px) {
   .main-page{
     margin-left: unset;

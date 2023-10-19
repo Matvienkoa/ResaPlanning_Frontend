@@ -11,6 +11,14 @@
             </select>
             <label class="form-label" for="form-login">Identifiant<span class="star">*</span></label>
             <input class="form-input required" v-model="login" @input="cancelError()" type="text" name="form-login" id="form-login">
+            <div class="custom-checkbox">
+              <input v-model="afc" type="checkbox" name="form-afc" id="form-afc">
+              <label class="form-label-checkbox" for="form-afc">Accès AFC</label>
+            </div>
+            <div class="custom-checkbox millenium">
+              <input v-model="millenium" type="checkbox" name="form-millenium" id="form-millenium">
+              <label class="form-label-checkbox" for="form-millenium">Accès Millenium</label>
+            </div>
             <label class="form-label" for="form-password">Mot de passe<span class="star">*</span></label>
             <p class="form-password-infos">Compris entre 8 et 30 caractères avec au minimum 1 Majuscule, 1 Minuscule et 1 Chiffre</p>
             <div class="home-form-password-box">
@@ -23,14 +31,6 @@
               <input class="home-form-password-input required" v-model="password2" @input="cancelError()" type="password" name="form-password-2" id="form-password-2">
               <img crossorigin="anonymous" v-if="modePassword2 === 'hidden'" @click="showPassword2()" class="home-form-password-icon" alt="" src="../assets/Icons/eye.svg">
               <img crossorigin="anonymous" v-if="modePassword2 === 'visible'" @click="hidePassword2()" class="home-form-password-icon" alt="" src="../assets/Icons/eye-slash.svg">
-            </div>
-            <div class="custom-checkbox">
-              <input v-model="afc" type="checkbox" name="form-afc" id="form-afc">
-              <label class="form-label-checkbox" for="form-afc">Accès AFC</label>
-            </div>
-            <div class="custom-checkbox">
-              <input v-model="millenium" type="checkbox" name="form-millenium" id="form-millenium">
-              <label class="form-label-checkbox" for="form-millenium">Accès Millenium</label>
             </div>
             <div v-if="error" class="error">{{ error.message }}</div>
             <button class="add-button" @click="createAccount()">Créer le compte</button>
@@ -132,6 +132,12 @@ export default {
   }
 }
 </script>
+
+<style>
+.millenium{
+  margin-bottom: 20px;
+}
+</style>
 
 <style scoped>
 .home-form-password-box{

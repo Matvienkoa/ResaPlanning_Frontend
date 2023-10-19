@@ -22,6 +22,7 @@ export default createStore({
     sizeBox: "closed",
     invoiceBox: "closed",
     photoBox: "closed",
+    prepBox: "closed",
     preparations: [],
     preparationsPlanning: [],
     preparation: "",
@@ -44,11 +45,13 @@ export default createStore({
     slotRequestsPending: [],
     preparationsCustomerPlanned: [],
     preparationsCustomerCompleted: [],
+    slotsCustomerPlanned: [],
     preparationsBilling: [],
     preparationsBilled: [],
     eventsPlanning: [],
     camera: false,
-    actualPhoto: ""
+    actualPhoto: "",
+    preparationsSlot: []
   },
   getters: {
     getUser: (state) => {
@@ -104,6 +107,9 @@ export default createStore({
     },
     getPhotoBox: (state) => {
       return state.photoBox
+    },
+    getPrepBox: (state) => {
+      return state.prepBox
     },
     getPreparations: (state) => {
       return state.preparations
@@ -165,6 +171,9 @@ export default createStore({
     getPreparationsCustomerCompleted: (state) => {
       return state.preparationsCustomerCompleted
     },
+    getSlotsCustomerPlanned: (state) => {
+      return state.slotsCustomerPlanned
+    },
     getPreparationsBilling: (state) => {
       return state.preparationsBilling
     },
@@ -179,6 +188,9 @@ export default createStore({
     },
     getActualPhoto: (state) => {
       return state.actualPhoto
+    },
+    getPreparationsSlot: (state) => {
+      return state.preparationsSlot
     }
   },
   mutations: {
@@ -197,6 +209,7 @@ export default createStore({
       state.sizeBox = "closed";
       state.invoiceBox = "closed";
       state.photoBox = "closed";
+      state.prepBox = "closed";
     },
     SET_USER: function (state, user) {
       state.user = user
@@ -455,6 +468,9 @@ export default createStore({
     SET_PREPARATIONS_CUSTOMER_COMPLETED: function (state, preparations) {
       state.preparationsCustomerCompleted = preparations
     },
+    SET_SLOTS_CUSTOMER_PLANNED: function (state, slots) {
+      state.slotsCustomerPlanned = slots
+    },
     SET_PREPARATIONS_COMPLETED_NO_BILLED: function (state, prep) {
       state.preparationsBilling = prep
     },
@@ -463,6 +479,12 @@ export default createStore({
     },
     RESET_EVENTS_PLANNING: function (state) {
       state.eventsPlanning = []
+    },
+    SET_PREPARATIONS_SLOT: function (state, preps) {
+      state.preparationsSlot = preps
+    },
+    ADD_PREPARATION_SLOT: function (state, prep) {
+      state.preparationsSlot.push(prep)
     }
   },
   actions: {
@@ -811,6 +833,28 @@ export default createStore({
         })
       }
     },
+    getSlotsCustomerPlanned: ({ commit }) => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        const decodedToken = jwt_decode(token, 'RANDOM_TOKEN_SECRET');
+        const userId = decodedToken.userId;
+        return new Promise((resolve, reject) => {
+          if (userId) {
+            instance.get(`/customer/user/${userId}`)
+              .then((res) => {
+                instance.get(`/slot/customer/${res.data.id}`)
+                  .then((slots) => {
+                    commit('SET_SLOTS_CUSTOMER_PLANNED', slots.data);
+                    resolve(slots)
+                  })
+              })
+              .catch(function (error) {
+                reject(error)
+              });
+          }
+        })
+      }
+    },
     getPreparationsCompletedNoBilled: ({ commit }) => {
       return new Promise((resolve, reject) => {
         instance.get(`/billings/nobilled/`)
@@ -828,6 +872,18 @@ export default createStore({
         instance.get(`/billings/billed/${date}`)
           .then((res) => {
             commit('SET_PREPARATIONS_COMPLETED_BILLED', res.data)
+            resolve(res)
+          })
+          .catch(function (error) {
+            reject(error)
+          });
+      })
+    },
+    getPreparationsSlot: ({ commit }, id) => {
+      return new Promise((resolve, reject) => {
+        instance.get(`/preparation/slot/${id}`)
+          .then((res) => {
+            commit('SET_PREPARATIONS_SLOT', res.data)
             resolve(res)
           })
           .catch(function (error) {

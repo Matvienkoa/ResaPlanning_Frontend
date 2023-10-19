@@ -72,7 +72,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9;
+  z-index: 10;
 }
 .edit-step-box{
   position: relative;
@@ -86,7 +86,7 @@ export default {
   align-items: center;
   justify-content: center;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 11;
   border-radius: 10px;
 }
 .edit-step-form{

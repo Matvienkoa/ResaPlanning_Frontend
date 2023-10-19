@@ -178,8 +178,8 @@ export default {
   position: relative;
   width: 95%;
   max-width: 600px;
-  min-height: 40%;
-  max-height: 95%;
+  min-height: 30%;
+  max-height: 80%;
   background: white;
   display: flex;
   flex-direction: column;

@@ -13,7 +13,7 @@
       <button class="add-button" @click="openAddBox()">Nouvelle demande</button>
       <div class="requests-customer-pending-box">
           <div class="requests-customer-pending-title-box">
-              <h2 class="requests-customer-pending-title">Demandes de préparation en cours</h2>
+              <h2 class="requests-customer-pending-title">Demandes de préparation envoyées</h2>
           </div>
           <p class="no-content" v-if="getCustomerPrepRequestsPending.length === 0">Aucune demande pour le moment</p>
           <div v-for="prep in getCustomerPrepRequestsPending" :key="prep.id" class="request-customer-box">
@@ -57,7 +57,7 @@
             </div>
           </div>
           <div class="requests-customer-pending-title-box">
-              <h2 class="requests-customer-pending-title">Demandes de créneau en cours</h2>
+              <h2 class="requests-customer-pending-title">Demandes de créneau envoyées</h2>
           </div>
           <p class="no-content" v-if="getCustomerSlotRequestsPending.length === 0">Aucune demande pour le moment</p>
           <div v-for="slot in getCustomerSlotRequestsPending" :key="slot.id" class="request-customer-box">
@@ -296,7 +296,6 @@ export default {
   margin-bottom: 20px;
   padding-bottom: 5px;
 }
-
 .request-customer-box{
   font-family: 'catamaran', sans-serif;
   font-size: 1.2em;
@@ -349,7 +348,6 @@ export default {
   height: 100%;
   object-fit: contain;
 }
-
 .request-customer-show-box{
   height: 30px;
   width: 30px;
@@ -367,7 +365,6 @@ export default {
 .request-customer-infos-hidden{
   display: flex;
 }
-
 .request-customer-edit-icon-box{
   position: absolute;
   bottom: 3px;

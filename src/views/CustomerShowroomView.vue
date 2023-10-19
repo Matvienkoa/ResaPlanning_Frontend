@@ -94,7 +94,6 @@ export default {
   margin-right: 10px;
   cursor: pointer;
 }
-
 .showroom-customer-vehicles-box{
   width: 100%;
   display: flex;

@@ -38,17 +38,13 @@
 import Header from '@/components/Header.vue';
 import AdminAddVehicle from '@/components/AdminAddVehicle.vue';
 import { mapGetters } from 'vuex';
+import instance from '@/axios';
 
 export default {
   name: 'AdminShowroom',
   components: {
     Header,
     AdminAddVehicle
-  },
-  data() {
-    return {
-      
-    }
   },
   computed: {
     ...mapGetters(['getAddBox', 'getVehicles'])
@@ -71,7 +67,17 @@ export default {
     .then((res) => {
       if(res.data) {
         if(res.data.role !== 'admin') {
-          this.$router.push('/')
+          if(res.data.role !== 'employee') {
+            this.$router.push('/')
+          }
+          if(res.data.role === 'employee') {
+            instance.get(`/employee/user/${res.data.id}`)
+            .then((res) => {
+              if(res.data.privilegesM !== 'yes') {
+                this.$router.push('/')
+              }
+            })
+          }
         }
       } else {
         this.$router.push('/')
@@ -112,7 +118,6 @@ export default {
   margin-right: 10px;
   cursor: pointer;
 }
-
 .showroom-admin-vehicles-box{
   width: 100%;
   display: flex;

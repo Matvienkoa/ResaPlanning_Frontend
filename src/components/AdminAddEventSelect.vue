@@ -4,7 +4,7 @@
       <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
       <img crossorigin="anonymous" v-if="addMode === 'preparation' || addMode === 'slot'" @click="closeAddMode()" src="../assets/Icons/arrow-back.svg" alt="" class="arrow-back" />
       <div v-if="addMode === ''" class="add-choice-box">
-        <h2 class="add-box-title">Ajouter un évènement du : {{moment(startD).format('LL')}} au {{moment(endD).format('LL')}}</h2>
+        <h2 class="add-box-title">Ajouter un évènement du : {{moment(startD).format('LL')}} au {{moment(endD).subtract(1, 'days').format('LL')}}</h2>
         <div class="box-choice-button">
           <button class="prep-button" @click="addOption('preparation')">Préparation</button>
           <button class="slot-button" @click="addOption('slot')">Créneau</button>
@@ -17,14 +17,18 @@
             <option v-if="getCustomers.length === 0" disabled selected value="">Aucun client trouvé</option>
             <option v-for="customer in getCustomers" :key="customer.id" :value="customer.id">{{customer.company}}</option>
         </select>
-        <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
-        <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
-        <label class="form-label" for="preparation-form-endDate">Date de fin<span class="star">*</span></label>
-        <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
-        <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
-        <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-        <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
-        <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+        <label class="form-label">Date de début<span class="star">*</span></label>
+        <VueDatePicker class="picker" v-model="startDate" locale="fr" :format="formatStart" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
+        <!-- <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate"> -->
+        <label class="form-label">Date de fin<span class="star">*</span></label>
+        <VueDatePicker class="picker" v-model="endDate" locale="fr" :format="formatEnd" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
+        <!-- <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate"> -->
+        <label class="form-label">Heure de début<span class="star">*</span></label>
+        <VueDatePicker class="picker" v-model="startTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="required datepicker" @update:model-value="cancelError()" />
+        <!-- <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime"> -->
+        <label class="form-label">Heure de fin</label>
+        <VueDatePicker class="picker" v-model="endTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="datepicker" />
+        <!-- <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime"> -->
         <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
         <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
         <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
@@ -64,14 +68,18 @@
             <option value="half">Demi-Journée</option>
             <option value="day">Journée</option>
         </select>
-        <label class="form-label" for="preparation-form-startDate">Date de début<span class="star">*</span></label>
-        <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate">
-        <label class="form-label" for="preparation-form-endDate">Date de fin<span class="star">*</span></label>
-        <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate">
-        <label class="form-label" for="preparation-form-startTime">Heure de début<span class="star">*</span></label>
-        <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime">
-        <label class="form-label" for="preparation-form-endTime">Heure de fin</label>
-        <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime">
+        <label class="form-label">Date de début<span class="star">*</span></label>
+        <VueDatePicker class="picker" v-model="startDate" locale="fr" :format="formatStart" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
+        <!-- <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate"> -->
+        <label class="form-label">Date de fin<span class="star">*</span></label>
+        <VueDatePicker class="picker" v-model="endDate" locale="fr" :format="formatEnd" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
+        <!-- <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate"> -->
+        <label class="form-label">Heure de début<span class="star">*</span></label>
+        <VueDatePicker class="picker" v-model="startTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="required datepicker" @update:model-value="cancelError()" />
+        <!-- <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime"> -->
+        <label class="form-label">Heure de fin</label>
+        <VueDatePicker class="picker" v-model="endTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="datepicker" />
+        <!-- <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime"> -->
         <label class="form-label" for="preparation-form-place">Lieux<span class="star">*</span></label>
         <input class="form-input required" v-model="place" @input="cancelError()" type="text" name="preparation-form-place" id="preparation-form-place">
         <label class="form-label" for="vehicle-form-observations">Observations</label>
@@ -88,12 +96,39 @@
 <script>
 import instance from '@/axios';
 import { mapGetters } from 'vuex';
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
+import { ref } from 'vue';
 let moment = require('moment');
 moment.locale('fr');
 
 export default {
   name: 'AdminAddEventSelect',
   props: ['startD', 'endD', 'day'],
+  components: { 
+    VueDatePicker 
+  },
+  setup(props) {
+    const startDate = ref(props.startD);
+    const formatStart = (startDate) => {
+      return moment(startDate).format('DD/MM/YYYY')
+    }
+    const endDate = ref(moment(props.endD).subtract(1, 'days').format('YYYY-MM-DD'));
+    const formatEnd = (endDate) => {
+      return moment(endDate).format('DD/MM/YYYY')
+    }
+    return {
+      startDate,
+      endDate,
+      startTime: ref({
+        hours: "9",
+        minutes: "0"
+      }),
+      endTime: ref(null),
+      formatStart,
+      formatEnd
+    }
+  },
   data() {
     return {
       moment: moment,
@@ -108,10 +143,6 @@ export default {
       kilometer: "",
       condition: "",
       observationsDepot: "",
-      startDate: "",
-      endDate: "",
-      startTime: "09:00",
-      endTime: "",
       allDay: this.day,
       prestation: "",
       steps: [],
@@ -142,13 +173,11 @@ export default {
         } else {
           this.errorPrestation = "Cette prestation est déjà présente";
         }
-        
       } else {
         this.errorPrestation = "Merci d'ajouter une prestation";
         const prestationInput = document.getElementById('vehicle-form-steps');
         prestationInput.classList.add('empty');
       }
-      
     },
     deleteStep(step) {
       const index = this.steps.findIndex(s => s === step)
@@ -166,8 +195,8 @@ export default {
         condition: this.condition,
         observationsDepot: this.observationsDepot,
         customerId: this.customer,
-        startDate: this.startDate,
-        endDate: this.endDate,
+        startDate: moment(this.startDate).format('YYYY-MM-DD'),
+        endDate: moment(this.endDate).format('YYYY-MM-DD'),
         startTime: this.startTime,
         endTime: this.endTime,
         steps: this.steps,
@@ -210,8 +239,8 @@ export default {
         customerId: this.customer,
         place: this.place,
         observationsDepot: this.observationsDepot,
-        startDate: this.startDate,
-        endDate: this.endDate,
+        startDate: moment(this.startDate).format('YYYY-MM-DD'),
+        endDate: moment(this.endDate).format('YYYY-MM-DD'),
         startTime: this.startTime,
         endTime: this.endTime,
         maker: this.maker,
@@ -236,16 +265,8 @@ export default {
   },
   created: function () {
     this.$store.dispatch('getCustomers');
-    if(this.day === true) {
-      this.startDate = moment(this.startD).format('YYYY-MM-DD')
-      this.endDate = moment(this.endD).subtract(1, 'days').format('YYYY-MM-DD')
-    }
-    if(this.day === false) {
-      this.startDate = moment(this.startD).format('YYYY-MM-DD')
-      this.endDate = moment(this.endD).format('YYYY-MM-DD')
-      this.startTime = moment(this.startD).format('LT')
-      this.endTime = moment(this.endD).format('LT')
-    }
+    // this.startDate = moment(this.startD).format('YYYY-MM-DD')
+    // this.endDate = moment(this.endD).subtract(1, 'days').format('YYYY-MM-DD')
   }
 }
 </script>

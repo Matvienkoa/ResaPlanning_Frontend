@@ -34,7 +34,6 @@
 <script>
 import { mapGetters } from 'vuex';
 import instance from '@/axios';
-
 import Camera from '@/components/Camera.vue';
 
 export default {
@@ -168,7 +167,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9;
+  z-index: 10;
 }
 .add-photo-preparation-box{
   position: relative;
@@ -182,7 +181,7 @@ export default {
   align-items: center;
   justify-content: flex-start;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 11;
   border-radius: 10px;
   padding-bottom: 3em;
 }

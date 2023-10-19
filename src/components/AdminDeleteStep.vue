@@ -54,7 +54,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9;
+  z-index: 10;
 }
 .delete-step-box{
   position: relative;
@@ -68,7 +68,7 @@ export default {
   align-items: center;
   justify-content: center;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 11;
   border-radius: 10px;
 }
 </style>

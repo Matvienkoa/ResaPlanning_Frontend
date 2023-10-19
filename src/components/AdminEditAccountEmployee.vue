@@ -12,9 +12,15 @@
             <input class="form-input required" v-model="firstName" @input="cancelError()" type="text" name="form-firstName" id="form-firstName">
             <div class="custom-checkbox">
               <input v-model="privileges" type="checkbox" name="form-privileges" id="form-privileges">
-              <label class="form-label-checkbox" for="form-privileges">Privilèges</label>
+              <label class="form-label-checkbox" for="form-privileges">Privilèges AFC</label>
             </div>
-            <p class="form-privileges-infos">Les privilèges donnent accès aux demandes des clients</p>
+            <p class="form-privileges-infos">Les privilèges AFC donnent accès aux demandes des clients</p>
+            <div class="custom-checkbox">
+              <input v-model="privilegesM" type="checkbox" name="form-privilegesM" id="form-privilegesM">
+              <label class="form-label-checkbox" for="form-privilegesM">Privilèges Millenium</label>
+            </div>
+            <p class="form-privileges-infos">Les privilèges Millenium donnent accès à la création de véhicule</p>
+            <p class="edit-password">Ne remplir que si vous souhaitez changer le mot de passe</p>
             <label class="form-label" for="form-password">Mot de passe</label>
             <p class="form-password-infos">Compris entre 8 et 30 caractères avec au minimum 1 Majuscule, 1 Minuscule et 1 Chiffre</p>
             <div class="home-form-password-box">
@@ -51,6 +57,7 @@ export default {
       firstName: "",
       lastName: "",
       privileges: false,
+      privilegesM: false,
       modePassword: 'hidden',
       modePassword2: 'hidden'
     }
@@ -96,7 +103,8 @@ export default {
         password2: this.password2,
         firstName: this.firstName,
         lastName: this.lastName,
-        privileges: this.checkBox(this.privileges)
+        privileges: this.checkBox(this.privileges),
+        privilegesM: this.checkBox(this.privilegesM)
       })
       .then((res) => {
         if(res.status === 201) {
@@ -133,10 +141,27 @@ export default {
         if(account.infos.privileges === 'yes') {
           this.privileges = true
         }
+        if(account.infos.privilegesM === 'yes') {
+          this.privilegesM = true
+        }
     })
   }
 }
 </script>
+
+<style>
+.edit-password{
+  color: #979797;
+  width: 100%;
+  text-align: center;
+  border-top: 2px solid #979797;
+  border-bottom: 2px solid #979797;
+  margin-top: 10px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+</style>
 
 <style scoped>
 .home-form-password-box{

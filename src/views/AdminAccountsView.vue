@@ -27,8 +27,10 @@
               <div v-if="employee.infos.firstName" class="employee-info">{{ employee.infos.firstName }}</div>
               <div v-if="employee.infos.lastName" class="employee-info">{{ employee.infos.lastName }}</div>
               <div class="employee-info slash">|</div>
-              <div v-if="employee.infos.privileges === 'yes'" class="employee-info checkbox-box">Privilèges : <img class="checkbox" src="../assets/Icons/checkbox-check.svg" alt=""></div>
-              <div v-if="employee.infos.privileges === 'no'" class="employee-info checkbox-box">Privilèges : <img class="checkbox" src="../assets/Icons/checkbox-mark.svg" alt=""></div>
+              <div v-if="employee.infos.privileges === 'yes'" class="employee-info checkbox-box">Privilèges AFC : <img class="checkbox" src="../assets/Icons/checkbox-check.svg" alt=""></div>
+              <div v-if="employee.infos.privileges === 'no'" class="employee-info checkbox-box">Privilèges AFC : <img class="checkbox" src="../assets/Icons/checkbox-mark.svg" alt=""></div>
+              <div v-if="employee.infos.privilegesM === 'yes'" class="employee-info checkbox-box">Privilèges Millenium : <img class="checkbox" src="../assets/Icons/checkbox-check.svg" alt=""></div>
+              <div v-if="employee.infos.privilegesM === 'no'" class="employee-info checkbox-box">Privilèges Millenium : <img class="checkbox" src="../assets/Icons/checkbox-mark.svg" alt=""></div>
             </div>
             <div class="account-admin-employee-actions">
               <div @click="openEditBox({id: employee.id, type: 'editAccountEmployee'})" class="edit-icon-box">
@@ -239,7 +241,6 @@ export default {
   align-items: center;
   margin-left: 15px;
 }
-
 .add-icon-box{
   height: 40px;
   width: 40px;

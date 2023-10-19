@@ -191,26 +191,6 @@ export default {
   color: white;
   cursor: pointer;
 }
-/* @media (max-width: 1024px) {
-  .banner{
-    width: 150px;
-  }
-  .banner-events-box{
-    width: 90%;
-    font-size: 0.8em;
-  }
-  .logout-box{
-    justify-content: center;
-  }
-  .logout-icon{
-    width: 20px;
-    margin-right: 5px;
-    margin-left: 0px;
-  }
-  .logout-txt{
-    font-size: 0.9em;
-  }
-} */
 @media (max-width: 1024px) {
   .banner{
     bottom: 0;

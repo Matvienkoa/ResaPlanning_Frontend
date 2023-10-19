@@ -13,7 +13,7 @@
     <AdminValidatePreparation v-if="getEditBox === 'validatePreparation'" :preparationId="this.id" />
     <AdminInvalidatePreparation v-if="getEditBox === 'invalidatePreparation'" :preparationId="this.id" />
     <div class="get-box">
-      <img crossorigin="anonymous" @click="closeGetBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
+      <img crossorigin="anonymous" @click="closePrepBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
       <h2 class="get-box-title">Préparation du véhicule immatriculé : {{getPreparation.immat}}</h2>
       <div v-if="getPreparation.state === 'planned' && moment(new Date()).isAfter(moment(getPreparation.start))" class="get-box-state">
         <img src="../assets/Icons/in-time.svg" alt="" class="get-state-icon" /><p class="get-state-txt-in-time">En cours</p>
@@ -168,7 +168,7 @@ import AdminEditPhotoPreparation from '@/components/AdminEditPhotoPreparation.vu
 import AdminDeletePhotoPreparation from '@/components/AdminDeletePhotoPreparation.vue';
 
 export default {
-  name: 'AdminGetPreparation',
+  name: 'AdminGetPrepSlot',
   components: {
     AdminAddStep,
     AdminEditStep,
@@ -230,8 +230,8 @@ export default {
       this.step = data.id
       this.$store.state.deleteBox = data.mode
     },
-    closeGetBox() {
-      this.$store.state.getBox = "closed"
+    closePrepBox() {
+      this.$store.state.prepBox = "closed"
     },
     openEditPhoto(data) {
       this.numberPhoto = data.number
@@ -275,6 +275,12 @@ export default {
 </style>
 
 <style scoped>
+.get-back{
+  z-index: 8;
+}
+.get-box{
+  z-index: 9;
+}
 .get-box-state{
   width: 100%;
   display: flex;

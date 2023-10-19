@@ -24,9 +24,6 @@ export default {
       error: ""
     }
   },
-  computed: {
-    
-  },
   methods: {
     closeEditStepBox() {
         this.$store.state.stepBox = 'closed'
@@ -61,7 +58,7 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 9;
+  z-index: 10;
 }
 .edit-state-step-box{
   position: relative;
@@ -75,7 +72,7 @@ export default {
   align-items: center;
   justify-content: center;
   overflow-y: auto;
-  z-index: 10;
+  z-index: 11;
   border-radius: 10px;
 }
 </style>

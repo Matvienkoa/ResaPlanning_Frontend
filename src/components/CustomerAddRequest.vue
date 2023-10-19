@@ -339,6 +339,13 @@ export default {
   display: flex;
   flex-direction: column;
 }
+.second-title{
+  margin: auto;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  font-family: 'trumpSoftPro', sans-serif;
+  font-size: 2.3em;
+}
 #add-photo-preparation-form-photo{
   width: 0.1px;
   height: 0.1px;
@@ -380,4 +387,10 @@ export default {
 .photo-selected{
   margin-bottom: 20px;
 }
+@media (max-width: 480px) {
+  .second-title{
+    width: 80%;
+  }
+}
 </style>
+

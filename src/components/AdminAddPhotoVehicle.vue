@@ -99,7 +99,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .add-photo-vehicle-back{
   position: fixed;

@@ -35,7 +35,6 @@
 
 <script>
 import HeaderHome from '@/components/HeaderHome.vue'
-
 import { mapGetters } from 'vuex';
 
 export default {

@@ -122,6 +122,7 @@ import AdminEditPhotoVehicle from '@/components/AdminEditPhotoVehicle.vue';
 import AdminAddPhotoVehicle from '@/components/AdminAddPhotoVehicle.vue';
 import AdminDeletePhotoVehicle from '@/components/AdminDeletePhotoVehicle.vue';
 import { mapGetters } from 'vuex';
+import instance from '@/axios';
 
 export default {
   name: 'AdminShowroomVehicle',
@@ -181,7 +182,17 @@ export default {
     .then((res) => {
       if(res.data) {
         if(res.data.role !== 'admin') {
-          this.$router.push('/')
+          if(res.data.role !== 'employee') {
+            this.$router.push('/')
+          }
+          if(res.data.role === 'employee') {
+            instance.get(`/employee/user/${res.data.id}`)
+            .then((res) => {
+              if(res.data.privilegesM !== 'yes') {
+                this.$router.push('/')
+              }
+            })
+          }
         }
       } else {
         this.$router.push('/')
@@ -300,7 +311,6 @@ export default {
 .showroom-vehicle-admin-delete-icon{
   height: 20px;
 }
-
 .showroom-vehicle-admin-infos-box{
   width: 90%;
   display: flex;
@@ -333,7 +343,6 @@ export default {
   width: 30px;
   margin-left: 10px;
 }
-
 .showroom-vehicle-admin-photos-box{
   width: 100%;
   display: flex;

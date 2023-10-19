@@ -57,7 +57,6 @@
 
 <script>
 import Header from '@/components/Header.vue';
-
 import AdminEditCustomer from '@/components/AdminEditCustomer.vue';
 import AdminDeleteCustomer from '@/components/AdminDeleteCustomer.vue';
 import AdminAddCustomer from '@/components/AdminAddCustomer.vue';
@@ -153,7 +152,6 @@ export default {
   margin-right: 10px;
   cursor: pointer;
 }
-
 .account-admin-customers-list{
   width: 100%;
   display: flex;
@@ -193,7 +191,6 @@ export default {
 .account-admin-customer-show-icon{
   height: 20px;
 }
-
 .customer-infos-hidden-box{
   position: relative;
   width: 100%;
@@ -239,5 +236,4 @@ export default {
 .customer-delete-icon{
   height: 16px;
 }
-
 </style>

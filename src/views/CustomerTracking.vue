@@ -1,5 +1,6 @@
 <template>
-    <CustomerGetPreparation v-if="getGetBox === 'getCustomerPreparation'" :id="preparation" />
+    <CustomerGetPreparation v-if="getGetBox === 'getCustomerPreparation'" :id="prestation" />
+    <CustomerGetSlot v-if="getGetBox === 'getCustomerSlot'" :id="prestation" />
     <Header url="/customer/home" />
     <div class="main-page">
         <div class="account-admin-title-box">
@@ -8,14 +9,32 @@
         <div class="requests-customer-box">
             <div class="requests-customer-pending-box">
                 <div class="requests-customer-pending-title-box">
-                    <h2 class="requests-customer-pending-title">Preparations En cours</h2>
+                    <h2 class="requests-customer-pending-title">Créneaux programmés</h2>
                 </div>
-                <p class="no-content" v-if="getPreparationsCustomerPlanned.length === 0">Aucune préparation en cours pour le moment</p>
-                <div @click="openGetBox(prep.id)" v-for="prep in getPreparationsCustomerPlanned" :key="prep.id" class="home-tracking-prep-box">
+                <p class="no-content" v-if="slots.length === 0">Aucun créneau programmé pour le moment</p>
+                <div @click="openGetBox({id: slot.id, type: 'getCustomerSlot'})" v-for="slot in slots" :key="slot.id" class="home-tracking-prep-box">
+                    <div class="home-tracking-prep-infos">
+                        <p>Prévu le {{moment(slot.start).format('LL')}}</p>
+                        <p class="home-tracking-in-time-box" v-if="moment(new Date()).isAfter(moment(slot.start))">En cours<img crossorigin="anonymous" src="../assets/Icons/in-time.svg" alt="" class="home-tracking-in-time-icon" /></p>
+                        <p class="home-tracking-calendar-box" v-if="moment(new Date()).isBefore(moment(slot.start))">Programmé<img crossorigin="anonymous" src="../assets/Icons/calendar.svg" alt="" class="home-tracking-calendar-icon" /></p>
+                    </div>
+                    <div class="home-tracking-prep-icon-box">
+                        <img crossorigin="anonymous" src="../assets/Icons/eye.svg" alt="" class="home-tracking-prep-icon" />
+                    </div>
+                </div>
+            </div>
+            <div class="requests-customer-pending-box">
+                <div class="requests-customer-pending-title-box">
+                    <h2 class="requests-customer-pending-title">Preparations programmées</h2>
+                </div>
+                <p class="no-content" v-if="getPreparationsCustomerPlanned.length === 0">Aucune préparation programmée pour le moment</p>
+                <div @click="openGetBox({id: prep.id, type: 'getCustomerPreparation'})" v-for="prep in getPreparationsCustomerPlanned" :key="prep.id" class="home-tracking-prep-box">
                     <div class="home-tracking-prep-infos">
                         <p>{{prep.brand}}</p>
                         <p>{{prep.model}}</p>
                         <p>{{prep.immat}}</p>
+                        <p class="home-tracking-in-time-box" v-if="moment(new Date()).isAfter(moment(prep.start))">En cours<img crossorigin="anonymous" src="../assets/Icons/in-time.svg" alt="" class="home-tracking-in-time-icon" /></p>
+                        <p class="home-tracking-calendar-box" v-if="moment(new Date()).isBefore(moment(prep.start))">Programmé<img crossorigin="anonymous" src="../assets/Icons/calendar.svg" alt="" class="home-tracking-calendar-icon" /></p>
                     </div>
                     <div class="home-tracking-prep-icon-box">
                         <img crossorigin="anonymous" src="../assets/Icons/eye.svg" alt="" class="home-tracking-prep-icon" />
@@ -28,11 +47,12 @@
                 </div>
                 <input @change="updatePrepCompleted()" type="month" v-model="month" name="" id="month-input">
                 <p class="no-content" v-if="getPreparationsCustomerCompleted.length === 0">Aucune préparation terminée pour le mois sélectionné</p>
-                <div @click="openGetBox(prep.id)" v-for="prep in getPreparationsCustomerCompleted" :key="prep.id" class="home-tracking-prep-box">
+                <div @click="openGetBox({id: prep.id, type: 'getCustomerPreparation'})" v-for="prep in getPreparationsCustomerCompleted" :key="prep.id" class="home-tracking-prep-box">
                     <div class="home-tracking-prep-infos">
                         <p>{{prep.brand}}</p>
                         <p>{{prep.model}}</p>
                         <p>{{prep.immat}}</p>
+                        <p class="home-tracking-completed-box">Terminée<img crossorigin="anonymous" src="../assets/Icons/completed.svg" alt="" class="home-tracking-completed-icon" /></p>
                     </div>
                     <div class="home-tracking-prep-icon-box">
                         <img crossorigin="anonymous" src="../assets/Icons/eye.svg" alt="" class="home-tracking-prep-icon" />
@@ -46,6 +66,7 @@
 <script>
 import Header from '@/components/Header.vue';
 import CustomerGetPreparation from '@/components/CustomerGetPreparation.vue';
+import CustomerGetSlot from '@/components/CustomerGetSlot.vue';
 import { mapGetters } from 'vuex';
 let moment = require('moment');
 moment.locale('fr');
@@ -54,30 +75,40 @@ export default {
     name: 'CustomerTracking',
     components: {
         Header,
-        CustomerGetPreparation
+        CustomerGetPreparation,
+        CustomerGetSlot
     },
     data() {
         return {
-            preparation: null,
+            prestation: null,
             moment: moment,
-            month: moment(new Date()).format('yyyy-MM')
+            month: moment(new Date()).format('yyyy-MM'),
+            slots: []
         }
     },
     computed: {
-        ...mapGetters(['getPreparationsCustomerPlanned', 'getPreparationsCustomerCompleted', 'getGetBox'])
+        ...mapGetters(['getPreparationsCustomerPlanned', 'getPreparationsCustomerCompleted', 'getSlotsCustomerPlanned', 'getGetBox'])
     },
     methods: {
         updatePrepCompleted() {
             this.$store.dispatch('getPreparationsCustomerCompleted', moment(this.month).format())
         },
-        openGetBox(id) {
-            this.preparation = id
-            this.$store.state.getBox = 'getCustomerPreparation'
+        openGetBox(data) {
+            this.prestation = data.id
+            this.$store.state.getBox = data.type
         }
     },
     created: function () {
         this.$store.dispatch('getPreparationsCustomerPlanned')
         this.$store.dispatch('getPreparationsCustomerCompleted', new Date())
+        this.$store.dispatch('getSlotsCustomerPlanned')
+        .then((slots) => {
+            slots.data.forEach(slot => {
+                if(moment(slot.end).isAfter(moment(new Date()))) {
+                    this.slots.push(slot)
+                }
+            });
+        })
         this.$store.dispatch('checkToken')
         .then((res) => {
             if(res === 'expired') {
@@ -113,7 +144,9 @@ export default {
 }
 .home-tracking-prep-infos{
     display: flex;
+    align-items: center;
     margin-left: 10px;
+    flex-wrap: wrap;
 }
 .home-tracking-prep-infos p{
     margin-right: 10px;
@@ -130,6 +163,36 @@ export default {
 }
 .home-tracking-prep-icon{
     height: 18px;
+}
+.home-tracking-calendar-box{
+    display: flex;
+    align-items: center;
+    color: rgb(55,136,216);
+    font-weight: 600;
+}
+.home-tracking-calendar-icon{
+    width: 20px;
+    margin-left: 5px;
+}
+.home-tracking-in-time-box{
+    display: flex;
+    align-items: center;
+    color: rgb(243,126,0);
+    font-weight: 600;
+}
+.home-tracking-in-time-icon{
+    width: 20px;
+    margin-left: 5px;
+}
+.home-tracking-completed-box{
+    display: flex;
+    align-items: center;
+    color: #09c407;
+    font-weight: 600;
+}
+.home-tracking-completed-icon{
+    width: 20px;
+    margin-left: 5px;
 }
 #month-input{
   width: 180px;

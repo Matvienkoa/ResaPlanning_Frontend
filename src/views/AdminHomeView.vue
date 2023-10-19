@@ -45,7 +45,15 @@
           <p>Showroom</p>
         </div>
       </router-link>
-      <router-link v-if="getUser.role === 'employee'" to="/customer/showroom" class="home-menu-link">
+      <router-link v-if="getUser.role === 'employee' && getProfile.privilegesM === 'no'" to="/customer/showroom" class="home-menu-link">
+        <div class="home-menu-link-img-box">
+          <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-showroom.jpg" alt="">
+        </div>
+        <div class="home-menu-link-bloc">
+          <p>Showroom</p>
+        </div>
+      </router-link>
+      <router-link v-if="getUser.role === 'employee' && getProfile.privilegesM === 'yes'" to="/admin/showroom" class="home-menu-link">
         <div class="home-menu-link-img-box">
           <img crossorigin="anonymous" class="home-menu-link-img" src="../assets/images/menu-showroom.jpg" alt="">
         </div>
@@ -60,7 +68,6 @@
 
 <script>
 import HeaderHome from '@/components/HeaderHome.vue'
-
 import { mapGetters } from 'vuex';
 
 export default {
@@ -68,16 +75,8 @@ export default {
   components: {
     HeaderHome,
   },
-  data() {
-    return {
-      
-    }
-  },
   computed: {
-    ...mapGetters(['getUser'])
-  },
-  methods: {
-    
+    ...mapGetters(['getUser', 'getProfile'])
   },
   created: function () {
     this.$store.dispatch('checkToken')

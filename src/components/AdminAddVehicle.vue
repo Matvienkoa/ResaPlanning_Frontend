@@ -154,7 +154,6 @@ export default {
 }
 </script>
 
-
 <style scoped>
 .add-vehicle-form{
   max-width: 400px;
@@ -165,7 +164,6 @@ export default {
 .custom-checkbox{
   margin-bottom: 20px;
 }
-
 #vehicle-form-photos{
   width: 0.1px;
   height: 0.1px;
@@ -195,7 +193,6 @@ export default {
   line-height: 0.9em;
   color: #707e8d;
 }
-
 .photos-box{
   width: 100%;
   display: flex;
