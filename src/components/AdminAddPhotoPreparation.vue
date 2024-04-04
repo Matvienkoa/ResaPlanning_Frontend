@@ -1,7 +1,16 @@
 <template>
-  <div class="add-photo-preparation-back">
-    <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
-    <div class="add-photo-preparation-box">
+  <div class="add-photo-preparation-back" id="add-photo-preparation-back">
+    <div id="spinner" class="spinner-off">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <Camera v-if="getCamera" :resolution="{ width: 1920, height: 1080 }" ref="camera" @loading="showSpinner" @started="hideSpinner">
+      <img src="../assets/Icons/photo.svg" alt="" @click="snapshot()" id="photo-button" class="hide" />
+      <img src="../assets/Icons/cancel.svg" alt="" @click="stopCamera()" id="stop-photo-button" class="hide" />
+    </Camera>
+    <div class="add-photo-preparation-box" id="add-photo-preparation-box">
       <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
         <h2 class="add-box-title">Ajouter la photo n°{{checkPhoto(numberPhoto)}}</h2>
         <div class="add-photo-preparation-form">
@@ -16,7 +25,7 @@
             <p>Prendre une photo</p>
           </div>
           <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
-          <img crossorigin="anonymous" v-if="this.getActualPhoto" :src="this.getActualPhoto" alt="" class="photo-selected">
+          <img crossorigin="anonymous" v-if="this.photoUrl" :src="this.photoUrl" alt="" class="photo-selected">
           <div v-if="error" class="error">{{ error.message }}</div>
           <div v-if="this.photo" class="box-choice-button">
             <button class="add-button" @click="addPhotoPreparation()">Ajouter la photo</button>
@@ -34,7 +43,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import instance from '@/axios';
-import Camera from '@/components/Camera.vue';
+import { ref } from 'vue';
+import Camera from 'simple-vue-camera';
 
 export default {
   name: 'AdminAddPhotoPreparation',
@@ -46,20 +56,58 @@ export default {
     return {
       error: "",
       photo: "",
-      photoCamera: "",
       url: ""
     }
   },
+  setup() {
+    let getCamera = ref(false);
+    const camera = ref(null);
+    const photoCamera = ref(null);
+    const photoUrl = ref(null);
+    const snapshot = async () => {
+      const blob = await camera.value?.snapshot({width: window.innerWidth, height: window.innerHeight});
+      const file = new File([blob], 'photo.png', { type: 'image/png' });
+      photoCamera.value = file
+      const url = URL.createObjectURL(blob)
+      photoUrl.value = url
+      getCamera.value = false;
+    }
+    return {
+        camera,
+        snapshot,
+        photoCamera,
+        photoUrl,
+        getCamera
+    }
+  },
   computed: {
-    ...mapGetters(['getAddBox', 'getCamera', 'getActualPhoto'])
+    ...mapGetters(['getAddBox'])
   },
   methods: {
-    handlePhotoCapture(file) {
-      this.photoCamera = file
-    },
     startCamera() {
-      this.$store.state.camera = true;
-      this.resetData()
+      this.getCamera = true;
+      this.resetData();
+    },
+    stopCamera() {
+      this.getCamera = false;
+      this.resetData();
+    },
+    showSpinner() {
+      const spinner = document.getElementById('spinner');
+      spinner.classList.replace('spinner-off', 'lds-ring');
+      const body = document.getElementById('add-photo-preparation-box');
+      body.classList.add('on');
+    },
+    hideSpinner() {
+      const spinner = document.getElementById('spinner');
+      spinner.classList.replace('lds-ring', 'spinner-off');
+      const body = document.getElementById('add-photo-preparation-box');
+      body.classList.remove('on');
+      this.showButtons();
+    },
+    showButtons() {
+      document.getElementById('photo-button').classList.remove('hide')
+      document.getElementById('stop-photo-button').classList.remove('hide')
     },
     checkPhoto(photo) {
       let number = ""
@@ -83,7 +131,7 @@ export default {
       this.photo = ""
       this.photoCamera = ""
       this.url = ""
-      this.$store.state.actualPhoto = ""
+      this.photoUrl = ""
     },
     onFileSelected(event) {
       this.photo = event.target.files[0];
@@ -147,15 +195,44 @@ export default {
       })
       this.error = ''
     }
-  },
-  created() {
-    this.$store.state.actualPhoto = ""
   }
 }
 </script>
 
+<style>
+#camera-container{
+  position: fixed!important;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  z-index: 15;
+}
+#camera-container video{
+ object-fit: cover;
+}
+#photo-button{
+  position: absolute;
+  bottom: 5%;
+  right: 10%;
+  width: 70px;
+  cursor: pointer;
+}
+#stop-photo-button{
+  position: absolute;
+  bottom: 5%;
+  left: 10%;
+  width: 70px;
+  cursor: pointer;
+}
+</style>
 
 <style scoped>
+.hide{
+  display: none;
+}
+.on{
+    opacity: 0.5;
+}
 .add-photo-preparation-back{
   position: fixed;
   top: 0;

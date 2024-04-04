@@ -1,7 +1,16 @@
 <template>
-  <div class="add-back">
-    <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
-    <div class="add-box">
+  <div class="add-back" id="add-back">
+    <div id="spinner" class="spinner-off">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <Camera v-if="getCamera" :resolution="{ width: 1920, height: 1080 }" ref="camera" @loading="showSpinner" @started="hideSpinner">
+      <img src="../assets/Icons/photo.svg" alt="" @click="snapshot()" id="photo-button" class="hide" />
+      <img src="../assets/Icons/cancel.svg" alt="" @click="stopCamera()" id="stop-photo-button" class="hide" />
+    </Camera>
+    <div class="add-box" id="add-box">
       <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
       <img crossorigin="anonymous" v-if="addMode === 'preparation' || addMode === 'slot' || addMode === 'preparationPhoto'" @click="closeAddMode(), cancelError()" src="../assets/Icons/arrow-back.svg" alt="" class="arrow-back" />
       <div v-if="addMode === ''" class="add-choice-box">
@@ -25,7 +34,7 @@
           <p>Prendre une photo</p>
         </div>
         <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
-        <img crossorigin="anonymous" v-if="this.getActualPhoto" :src="this.getActualPhoto" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.photoUrl" :src="this.photoUrl" alt="" class="photo-selected">
         <label class="form-label" for="preparation-form-deliveryDate">Date de livraison souhaitée<span class="star">*</span></label>
         <input class="form-input required" v-model="deliveryDate" @input="cancelError()" type="date" name="preparation-form-deliveryDate" id="preparation-form-deliveryDate">
         <label class="form-label" for="preparation-form-brand">Marque</label>
@@ -36,7 +45,7 @@
         <input class="form-input" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
         <label class="form-label" for="preparation-form-immat">Immatriculation</label>
         <p class="form-password-infos">Ou numéro de série du véhicule</p>
-        <input class="form-input" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
+        <input class="form-input input-immat" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
         <label class="form-label" for="preparation-form-kilometers">Km</label>
         <input class="form-input" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
         <label class="form-label" for="preparation-form-condition">Etat du véhicule</label>
@@ -61,7 +70,7 @@
         <input class="form-input" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
         <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
         <p class="form-password-infos">Ou numéro de série du véhicule</p>
-        <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
+        <input class="form-input required input-immat" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
         <label class="form-label" for="preparation-form-kilometers">Km</label>
         <input class="form-input" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
         <label class="form-label" for="preparation-form-condition">Etat du véhicule</label>
@@ -71,7 +80,16 @@
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsCustomer" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button class="add-button" @click="addPrepRequest()">Envoyer la demande</button>
+        <button class="add-button" @click="checkImmat()">Envoyer la demande</button>
+      </div>
+      <div v-if="alertMode === 'alert'" class="alert-back">
+        <div class="alert-box">
+          <h2 class="add-box-title">Cette Immatriculation est déjà enregistrée</h2>
+          <div class="box-choice-button">
+            <button class="valid-button" @click="addPrepRequest()">Continuer</button>
+            <div class="cancel-button" @click="cancelImmat()">Annuler</div>
+          </div>
+        </div>
       </div>
       <div v-if="addMode=== 'slot'" class="add-slot-box">
         <h2 class="second-title">Demande de créneau</h2>
@@ -95,8 +113,9 @@
 
 <script>
 import instance from '@/axios';
+import { ref } from 'vue';
 import { mapGetters } from 'vuex';
-import Camera from '@/components/Camera.vue';
+import Camera from 'simple-vue-camera';
 let moment = require('moment');
 moment.locale('fr');
 
@@ -109,6 +128,7 @@ export default {
     return {
       moment: moment,
       addMode: '',
+      alertMode: '',
       error: "",
       brand: "",
       model: "",
@@ -122,27 +142,65 @@ export default {
       date: "",
       duration: "",
       place: "",
-      photoCamera: "",
       photo: "",
       url: ""
     }
   },
+  setup() {
+    let getCamera = ref(false);
+    const camera = ref(null);
+    const photoCamera = ref(null);
+    const photoUrl = ref(null);
+    const snapshot = async () => {
+      const blob = await camera.value?.snapshot({width: window.innerWidth, height: window.innerHeight});
+      const file = new File([blob], 'photo.png', { type: 'image/png' });
+      photoCamera.value = file
+      const url = URL.createObjectURL(blob)
+      photoUrl.value = url
+      getCamera.value = false;
+    }
+    return {
+        camera,
+        snapshot,
+        photoCamera,
+        photoUrl,
+        getCamera
+    }
+  },
   computed: {
-    ...mapGetters(['getProfile', 'getCamera', 'getActualPhoto'])
+    ...mapGetters(['getProfile'])
   },
   methods: {
-    handlePhotoCapture(file) {
-      this.photoCamera = file
-    },
     startCamera() {
-      this.$store.state.camera = true;
-      this.resetData()
+      this.getCamera = true;
+      this.resetData();
+    },
+    stopCamera() {
+      this.getCamera = false;
+      this.resetData();
+    },
+    showSpinner() {
+      const spinner = document.getElementById('spinner');
+      spinner.classList.replace('spinner-off', 'lds-ring');
+      const body = document.getElementById('add-box');
+      body.classList.add('on');
+    },
+    hideSpinner() {
+      const spinner = document.getElementById('spinner');
+      spinner.classList.replace('lds-ring', 'spinner-off');
+      const body = document.getElementById('add-box');
+      body.classList.remove('on');
+      this.showButtons();
+    },
+    showButtons() {
+      document.getElementById('photo-button').classList.remove('hide')
+      document.getElementById('stop-photo-button').classList.remove('hide')
     },
     resetData() {
       this.photo = ""
       this.photoCamera = ""
       this.url = ""
-      this.$store.state.actualPhoto = ""
+      this.photoUrl = ""
     },
     onFileSelected(event) {
       this.photo = event.target.files[0];
@@ -154,7 +212,7 @@ export default {
     },
     closeAddMode() {
       this.addMode = ''
-      this.$store.state.actualPhoto = ""
+      this.photoUrl = ""
       this.photoCamera = ""
       this.url = ""
       this.photo = ""
@@ -164,6 +222,33 @@ export default {
     },
     addOption(option) {
       this.addMode = option
+    },
+    checkImmat() {
+      instance.post('/preprequest/check/', {
+        brand: this.brand,
+        model: this.model,
+        immat: this.immat,
+        deliveryDate: this.deliveryDate
+      })
+      .then((res) => {
+        if(res.data.length === 0) {
+          this.addPrepRequest()
+        } else {
+          this.alertMode = 'alert'
+        }
+      })
+      .catch((error) => {
+          this.error = error.response.data;
+          const emptyInput = document.querySelectorAll('.required');
+          emptyInput.forEach(input => {
+              if(input.value === "") {
+                  input.classList.add('empty')
+              }
+          })
+      })
+    },
+    cancelImmat() {
+      this.alertMode = ''
     },
     addPrepRequest() {
       instance.post('/preprequest/', {
@@ -299,15 +384,51 @@ export default {
           })
       })
     }
-  },
-  created: function () {
-    this.$store.state.actualPhoto = ""
   }
 }
 </script>
 
+<style>
+.input-immat{
+  text-transform: uppercase;
+}
+</style>
 
 <style scoped>
+.alert-back{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.808);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 8;
+}
+.alert-box{
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  min-height: 30%;
+  max-height: 90%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 7;
+  border-radius: 10px;
+}
+.hide{
+  display: none;
+}
+.on{
+    opacity: 0.5;
+}
 .prep-photo-button{
   margin: 0 10px;
   width: 200px;
@@ -331,6 +452,9 @@ export default {
   flex-wrap: wrap;
 }
 .box-choice-button button{
+  margin-bottom: 10px;
+}
+.box-choice-button div{
   margin-bottom: 10px;
 }
 .add-preparation-box, .add-preparationPhoto-box, .add-slot-box{

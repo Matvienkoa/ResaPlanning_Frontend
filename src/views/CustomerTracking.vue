@@ -32,7 +32,7 @@
                     <div class="home-tracking-prep-infos">
                         <p>{{prep.brand}}</p>
                         <p>{{prep.model}}</p>
-                        <p>{{prep.immat}}</p>
+                        <p class="input-immat">{{prep.immat}}</p>
                         <p class="home-tracking-in-time-box" v-if="moment(new Date()).isAfter(moment(prep.start))">En cours<img crossorigin="anonymous" src="../assets/Icons/in-time.svg" alt="" class="home-tracking-in-time-icon" /></p>
                         <p class="home-tracking-calendar-box" v-if="moment(new Date()).isBefore(moment(prep.start))">Programmé<img crossorigin="anonymous" src="../assets/Icons/calendar.svg" alt="" class="home-tracking-calendar-icon" /></p>
                     </div>
@@ -51,7 +51,7 @@
                     <div class="home-tracking-prep-infos">
                         <p>{{prep.brand}}</p>
                         <p>{{prep.model}}</p>
-                        <p>{{prep.immat}}</p>
+                        <p class="input-immat">{{prep.immat}}</p>
                         <p class="home-tracking-completed-box">Terminée<img crossorigin="anonymous" src="../assets/Icons/completed.svg" alt="" class="home-tracking-completed-icon" /></p>
                     </div>
                     <div class="home-tracking-prep-icon-box">

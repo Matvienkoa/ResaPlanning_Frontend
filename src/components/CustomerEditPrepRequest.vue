@@ -14,7 +14,7 @@
         <input class="form-input" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
         <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
         <p class="form-password-infos">Ou numéro de série du véhicule</p>
-        <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
+        <input class="form-input required input-immat" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
         <label class="form-label" for="preparation-form-kilometers">Km</label>
         <input class="form-input" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
         <label class="form-label" for="preparation-form-condition">Etat du véhicule</label>
@@ -24,7 +24,16 @@
         <label class="form-label" for="vehicle-form-observations">Observations</label>
         <input class="form-input" v-model="observationsCustomer" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button class="add-button" @click="editPrepRequest()">Modifier</button>
+        <button class="add-button" @click="checkImmat()">Modifier</button>
+      </div>
+      <div v-if="alertMode === 'alert'" class="alert-back">
+        <div class="alert-box">
+          <h2 class="add-box-title">Cette Immatriculation est déjà enregistrée</h2>
+          <div class="box-choice-button">
+            <button class="valid-button" @click="editPrepRequest()">Continuer</button>
+            <div class="cancel-button" @click="cancelImmat()">Annuler</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -42,6 +51,7 @@ export default {
   data() {
     return {
       moment: moment,
+      alertMode: '',
       error: "",
       brand: "",
       model: "",
@@ -60,6 +70,33 @@ export default {
   methods: {
     closeEditBox() {
       this.$store.state.editBox = "closed"
+    },
+    checkImmat() {
+      instance.post(`/preprequest/check/${this.id}`, {
+        brand: this.brand,
+        model: this.model,
+        immat: this.immat,
+        deliveryDate: this.deliveryDate
+      })
+      .then((res) => {
+        if(res.data.length === 0) {
+          this.editPrepRequest()
+        } else {
+          this.alertMode = 'alert'
+        }
+      })
+      .catch((error) => {
+          this.error = error.response.data;
+          const emptyInput = document.querySelectorAll('.required');
+          emptyInput.forEach(input => {
+              if(input.value === "") {
+                  input.classList.add('empty')
+              }
+          })
+      })
+    },
+    cancelImmat() {
+      this.alertMode = ''
     },
     editPrepRequest() {
       instance.put(`/preprequest/${this.id}`, {
@@ -119,6 +156,34 @@ export default {
 
 
 <style scoped>
+.alert-back{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.808);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 8;
+}
+.alert-box{
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  min-height: 30%;
+  max-height: 90%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 7;
+  border-radius: 10px;
+}
 .edit-request-form{
   width: 80%;
   max-width: 400px;

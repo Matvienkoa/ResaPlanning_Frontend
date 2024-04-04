@@ -1,24 +1,13 @@
-# frontend
+# Custom planning and reservations PWA
 
-## Project setup
-```
-npm install
-```
+![enter image description here](https://github.com/Matvienkoa/AFC-Detailing-Frontend/blob/master/src/assets/images/screen.PNG?raw=true)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+Customer reservation requests
 
-### Compiles and minifies for production
-```
-npm run build
-```
+Task planning
 
-### Lints and fixes files
-```
-npm run lint
-```
+Product presentation
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## Technologies Frontend
+
+Vue.js

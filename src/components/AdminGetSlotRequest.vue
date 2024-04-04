@@ -21,18 +21,14 @@
                     <option value="half">Demi-Journée</option>
                     <option value="day">Journée</option>
                 </select>
-                <label class="form-label">Date de début<span class="star">*</span></label>
+                <p class="form-label">Date de début<span class="star">*</span></p>
                 <VueDatePicker class="picker" v-model="startDate" locale="fr" :format="formatStart" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
-                <!-- <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate"> -->
-                <label class="form-label">Date de fin<span class="star">*</span></label>
+                <p class="form-label">Date de fin<span class="star">*</span></p>
                 <VueDatePicker class="picker" v-model="endDate" locale="fr" :format="formatEnd" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
-                <!-- <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate"> -->
-                <label class="form-label">Heure de début<span class="star">*</span></label>
+                <p class="form-label">Heure de début<span class="star">*</span></p>
                 <VueDatePicker class="picker" v-model="startTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="required datepicker" @update:model-value="cancelError()" />
-                <!-- <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime"> -->
-                <label class="form-label">Heure de fin</label>
+                <p class="form-label">Heure de fin</p>
                 <VueDatePicker class="picker" v-model="endTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="datepicker" />
-                <!-- <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime"> -->
                 <label class="form-label" for="vehicle-form-observations">Observations</label>
                 <input class="form-input" v-model="observationsDepot" type="text" name="vehicle-form-observations" id="vehicle-form-observations">
                 <label class="form-label" for="vehicle-form-maker">Créneau attribué à :</label>

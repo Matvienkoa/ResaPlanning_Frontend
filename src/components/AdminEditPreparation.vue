@@ -8,18 +8,14 @@
                 <option v-if="getCustomers.length === 0" disabled selected value="">Aucun client trouvé</option>
                 <option v-for="customer in getCustomers" :key="customer.id" :value="customer.id">{{customer.company}}</option>
             </select>
-            <label class="form-label">Date de début<span class="star">*</span></label>
+            <p class="form-label">Date de début<span class="star">*</span></p>
             <VueDatePicker class="picker" v-model="startDate" locale="fr" :format="formatStart" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
-            <!-- <input class="form-input required" v-model="startDate" @input="cancelError()" type="date" name="preparation-form-startDate" id="preparation-form-startDate"> -->
-            <label class="form-label">Date de fin<span class="star">*</span></label>
+            <p class="form-label">Date de fin<span class="star">*</span></p>
             <VueDatePicker class="picker" v-model="endDate" locale="fr" :format="formatEnd" :enable-time-picker="false" auto-apply month-name-format="long" select-text="Valider" cancel-text="Annuler" teleport-center input-class-name="required datepicker" @update:model-value="cancelError()" />
-            <!-- <input class="form-input required" v-model="endDate" @input="cancelError()" type="date" name="preparation-form-endDate" id="preparation-form-endDate"> -->
-            <label class="form-label">Heure de début<span class="star">*</span></label>
+            <p class="form-label">Heure de début<span class="star">*</span></p>
             <VueDatePicker class="picker" v-model="startTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="required datepicker" @update:model-value="cancelError()" />
-            <!-- <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime"> -->
-            <label class="form-label">Heure de fin</label>
+            <p class="form-label">Heure de fin</p>
             <VueDatePicker class="picker" v-model="endTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="datepicker" />
-            <!-- <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime"> -->
             <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
             <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
             <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
@@ -28,7 +24,7 @@
             <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
             <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
             <p class="form-password-infos">Ou numéro de série du véhicule</p>
-            <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
+            <input class="form-input required input-immat" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
             <label class="form-label" for="preparation-form-kilometers">Km<span class="star">*</span></label>
             <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
             <label class="form-label" for="preparation-form-condition">Etat du véhicule<span class="star">*</span></label>
@@ -39,8 +35,17 @@
             <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
             <div v-if="error" class="error">{{ error.message }}</div>
             <div class="box-choice-button">
-              <button class="valid-button" @click="editPreparation()">Modifier</button>
+              <button class="valid-button" @click="checkImmat()">Modifier</button>
               <div class="cancel-button" @click="closeEditBox()">Annuler</div>
+            </div>
+          </div>
+          <div v-if="alertMode === 'alert'" class="alert-back">
+            <div class="alert-box">
+              <h2 class="add-box-title">Cette Immatriculation est déjà enregistrée</h2>
+              <div class="box-choice-button">
+                <button class="valid-button" @click="editPreparation()">Continuer</button>
+                <div class="cancel-button" @click="cancelImmat()">Annuler</div>
+              </div>
             </div>
           </div>
         </div>
@@ -83,6 +88,7 @@ export default {
   data() {
     return {
       moment: moment,
+      alertMode: '',
       error: "",
       customer: null,
       brand: "",
@@ -102,6 +108,39 @@ export default {
   methods: {
     closeEditBox() {
         this.$store.state.editBox = 'closed'
+    },
+    checkImmat() {
+      instance.post(`/preparation/check/${this.preparationId}`, {
+          brand: this.brand,
+          model: this.model,
+          year: this.year,
+          immat: this.immat,
+          kilometer: this.kilometer,
+          condition: this.condition,
+          customerId: this.customer,
+          startDate: moment(this.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.endDate).format('YYYY-MM-DD'),
+          startTime: this.startTime
+      })
+      .then((res) => {
+          if(res.data.length === 0) {
+              this.editPreparation()
+          } else {
+              this.alertMode = 'alert'
+          }
+      })
+      .catch((error) => {
+          this.error = error.response.data;
+          const emptyInput = document.querySelectorAll('.required');
+          emptyInput.forEach(input => {
+              if(input.value === "") {
+                  input.classList.add('empty')
+              }
+          })
+      })
+    },
+    cancelImmat() {
+        this.alertMode = ''
     },
     editPreparation() {
       instance.put(`/preparation/${this.preparationId}`, {
@@ -208,5 +247,36 @@ export default {
   max-width: 400px;
   display: flex;
   flex-direction: column;
+}
+</style>
+
+<style scoped>
+.alert-back{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.808);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 11;
+}
+.alert-box{
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  min-height: 30%;
+  max-height: 90%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 12;
+  border-radius: 10px;
 }
 </style>

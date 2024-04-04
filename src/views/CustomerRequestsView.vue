@@ -22,7 +22,7 @@
                 <p>Le {{moment(prep.createdAt).format('LL')}}</p>
                 <p>{{prep.brand}}</p>
                 <p>{{prep.model}}</p>
-                <p>{{prep.immat}}</p>
+                <p class="input-immat">{{prep.immat}}</p>
               </div>
               <div v-if="showModePrepRequestPending === 'closed' || prepRequestPendingSelected !== prep.id" class="request-customer-show-box">
                 <img crossorigin="anonymous" @click="openShowModePRP(prep.id)" src="../assets/Icons/arrow-down.svg" alt="" class="request-customer-show">
@@ -99,7 +99,7 @@
                 <p>Le {{moment(prep.createdAt).format('LL')}}</p>
                 <p>{{prep.brand}}</p>
                 <p>{{prep.model}}</p>
-                <p>{{prep.immat}}</p>
+                <p class="input-immat">{{prep.immat}}</p>
               </div>
               <div v-if="showModePrepRequestRefused === 'closed' || prepRequestRefusedSelected !== prep.id" class="request-customer-show-box">
                 <img crossorigin="anonymous" @click="openShowModePRR(prep.id)" src="../assets/Icons/arrow-down.svg" alt="" class="request-customer-show">
@@ -121,6 +121,9 @@
                 <p v-if="!prep.condition">Etat du véhicule : Non renseigné</p>
                 <p v-if="prep.observationsCustomer">Observations : {{prep.observationsCustomer}}</p>
                 <p v-if="!prep.observationsCustomer">Observations : Non renseigné</p>
+                <div v-if="prep.photo" class="request-customer-photo-box-hidden">
+                  <img crossorigin="anonymous" :src="prep.photo" alt="" class="request-customer-photo-hidden">
+                </div>
                 <p>Motif du refus : {{prep.observationsDepot}}</p>
               </div>
               <div @click="openDeleteBox({type: 'deletePrepRequest', id: prep.id})" class="request-customer-delete-icon-box">

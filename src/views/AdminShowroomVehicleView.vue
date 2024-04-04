@@ -38,7 +38,7 @@
         <p class="showroom-vehicle-admin-info-box">Modèle : <span class="showroom-vehicle-admin-info">{{getVehicle.model}}</span></p>
         <p class="showroom-vehicle-admin-info-box">Année : <span class="showroom-vehicle-admin-info">{{getVehicle.year}}</span></p>
         <p class="showroom-vehicle-admin-info-box">KM : <span class="showroom-vehicle-admin-info">{{getVehicle.kilometers}}</span></p>
-        <p class="showroom-vehicle-admin-info-box">Immat : <span class="showroom-vehicle-admin-info">{{getVehicle.immat}}</span></p>
+        <p class="showroom-vehicle-admin-info-box">Immat : <span class="showroom-vehicle-admin-info input-immat">{{getVehicle.immat}}</span></p>
         <p v-if="getVehicle.observations" class="showroom-vehicle-admin-info-box">Observations : <span class="showroom-vehicle-admin-info">{{getVehicle.observations}}</span></p>
         <p class="showroom-vehicle-admin-info-box">Prix Marchand : <span class="showroom-vehicle-admin-info">{{getVehicle.marketPrice/100}} €</span></p>
         <p class="showroom-vehicle-admin-info-box">Prix Public : <span class="showroom-vehicle-admin-info">{{getVehicle.publicPrice/100}} €</span></p>

@@ -12,7 +12,7 @@
             <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="vehicle-form-year" id="vehicle-form-year">
             <label class="form-label" for="vehicle-form-immat">Immatriculation<span class="star">*</span></label>
             <p class="form-password-infos">Ou numéro de série du véhicule</p>
-            <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="vehicle-form-immat" id="vehicle-form-immat">
+            <input class="form-input required input-immat" v-model="immat" @input="cancelError()" type="text" name="vehicle-form-immat" id="vehicle-form-immat">
             <label class="form-label" for="vehicle-form-kilometers">Km<span class="star">*</span></label>
             <input class="form-input required" v-model="kilometers" @input="cancelError()" type="text" name="vehicle-form-kilometers" id="vehicle-form-kilometers">
             <label class="form-label" for="vehicle-form-marketPrice">Prix marchand<span class="star">*</span></label>

@@ -14,7 +14,7 @@
     <AdminInvalidatePreparation v-if="getEditBox === 'invalidatePreparation'" :preparationId="this.id" />
     <div class="get-box">
       <img crossorigin="anonymous" @click="closePrepBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
-      <h2 class="get-box-title">Préparation du véhicule immatriculé : {{getPreparation.immat}}</h2>
+      <h2 class="get-box-title">Préparation du véhicule immatriculé : <span class="input-immat">{{getPreparation.immat}}</span></h2>
       <div v-if="getPreparation.state === 'planned' && moment(new Date()).isAfter(moment(getPreparation.start))" class="get-box-state">
         <img src="../assets/Icons/in-time.svg" alt="" class="get-state-icon" /><p class="get-state-txt-in-time">En cours</p>
       </div>

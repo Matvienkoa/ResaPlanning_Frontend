@@ -1,7 +1,16 @@
 <template>
-  <div class="edit-photo-preparation-back">
-    <Camera v-if="getCamera" @photo-captured="handlePhotoCapture" />
-    <div class="edit-photo-preparation-box">
+  <div class="edit-photo-preparation-back" id="edit-photo-preparation-back">
+    <div id="spinner" class="spinner-off">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
+    <Camera v-if="getCamera" :resolution="{ width: 1920, height: 1080 }" ref="camera" @loading="showSpinner" @started="hideSpinner">
+      <img src="../assets/Icons/photo.svg" alt="" @click="snapshot()" id="photo-button" class="hide" />
+      <img src="../assets/Icons/cancel.svg" alt="" @click="stopCamera()" id="stop-photo-button" class="hide" />
+    </Camera>
+    <div class="edit-photo-preparation-box" id="edit-photo-preparation-box">
       <img crossorigin="anonymous" @click="closeEditBox()" src="../assets/Icons/close.svg" alt="" class="close-get" />
       <h2 class="add-box-title">Modifier la photo n°{{checkPhoto(numberPhoto)}}</h2>
       <div class="edit-photo-preparation-form">
@@ -15,12 +24,12 @@
           <img crossorigin="anonymous" src="../assets/Icons/camera.svg" alt="" class="file-icon" />
           <p>Prendre une photo</p>
         </div>
-        <img crossorigin="anonymous" v-if="this.getActualPhoto" :src="this.getActualPhoto" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.photoUrl" :src="this.photoUrl" alt="" class="photo-selected">
         <img crossorigin="anonymous" v-if="this.url" :src="this.url" alt="" class="photo-selected">
-        <img crossorigin="anonymous" v-if="this.url === '' && !this.getActualPhoto && this.numberPhoto ==='photo1'" :src="getPreparation.photo1" alt="" class="photo-selected">
-        <img crossorigin="anonymous" v-if="this.url === '' && !this.getActualPhoto && this.numberPhoto ==='photo2'" :src="getPreparation.photo2" alt="" class="photo-selected">
-        <img crossorigin="anonymous" v-if="this.url === '' && !this.getActualPhoto && this.numberPhoto ==='photo3'" :src="getPreparation.photo3" alt="" class="photo-selected">
-        <img crossorigin="anonymous" v-if="this.url === '' && !this.getActualPhoto && this.numberPhoto ==='photo4'" :src="getPreparation.photo4" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.url === '' && !this.photoUrl && this.numberPhoto ==='photo1'" :src="getPreparation.photo1" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.url === '' && !this.photoUrl && this.numberPhoto ==='photo2'" :src="getPreparation.photo2" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.url === '' && !this.photoUrl && this.numberPhoto ==='photo3'" :src="getPreparation.photo3" alt="" class="photo-selected">
+        <img crossorigin="anonymous" v-if="this.url === '' && !this.photoUrl && this.numberPhoto ==='photo4'" :src="getPreparation.photo4" alt="" class="photo-selected">
         <div v-if="error" class="error">{{ error.message }}</div>
         <div v-if="this.photo" class="box-choice-button">
           <button class="valid-button" @click="editPhotoPreparation()">Modifier</button>
@@ -38,8 +47,8 @@
 <script>
 import { mapGetters } from 'vuex';
 import instance from '@/axios';
-
-import Camera from '@/components/Camera.vue';
+import { ref } from 'vue';
+import Camera from 'simple-vue-camera';
 
 export default {
   name: 'AdminEditPhotoPreparation',
@@ -51,20 +60,58 @@ export default {
     return {
       error: "",
       photo: "",
-      photoCamera: "",
       url: ""
     }
   },
+  setup() {
+    let getCamera = ref(false);
+    const camera = ref(null);
+    const photoCamera = ref(null);
+    const photoUrl = ref(null);
+    const snapshot = async () => {
+      const blob = await camera.value?.snapshot({width: window.innerWidth, height: window.innerHeight});
+      const file = new File([blob], 'photo.png', { type: 'image/png' });
+      photoCamera.value = file
+      const url = URL.createObjectURL(blob)
+      photoUrl.value = url
+      getCamera.value = false;
+    }
+    return {
+        camera,
+        snapshot,
+        photoCamera,
+        photoUrl,
+        getCamera,
+    }
+  },
   computed: {
-    ...mapGetters(['getEditBox', 'getPreparation', 'getCamera', 'getActualPhoto'])
+    ...mapGetters(['getEditBox', 'getPreparation'])
   },
   methods: {
-    handlePhotoCapture(file) {
-      this.photoCamera = file
-    },
     startCamera() {
-      this.$store.state.camera = true;
-      this.resetData()
+      this.getCamera = true;
+      this.resetData();
+    },
+    stopCamera() {
+      this.getCamera = false;
+      this.resetData();
+    },
+    showSpinner() {
+      const spinner = document.getElementById('spinner');
+      spinner.classList.replace('spinner-off', 'lds-ring');
+      const body = document.getElementById('edit-photo-preparation-box');
+      body.classList.add('on');
+    },
+    hideSpinner() {
+      const spinner = document.getElementById('spinner');
+      spinner.classList.replace('lds-ring', 'spinner-off');
+      const body = document.getElementById('edit-photo-preparation-box');
+      body.classList.remove('on');
+      this.showButtons();
+    },
+    showButtons() {
+      document.getElementById('photo-button').classList.remove('hide')
+      document.getElementById('stop-photo-button').classList.remove('hide')
     },
     checkPhoto(photo) {
       let number = ""
@@ -88,7 +135,7 @@ export default {
       this.photo = ""
       this.photoCamera = ""
       this.url = ""
-      this.$store.state.actualPhoto = ""
+      this.photoUrl = ""
     },
     onFileSelected(event) {
       this.photo = event.target.files[0];
@@ -152,15 +199,18 @@ export default {
       })
       this.error = ''
     },
-  },
-  created() {
-    this.$store.state.actualPhoto = ""
   }
 }
 </script>
 
 
 <style scoped>
+.hide{
+  display: none;
+}
+.on{
+    opacity: 0.5;
+}
 .edit-photo-preparation-back{
   position: fixed;
   top: 0;
@@ -234,5 +284,8 @@ export default {
   width: 100%;
   object-fit: cover;
   margin-top: 20px;
+}
+.add-button{
+  margin: 0 10px;
 }
 </style>

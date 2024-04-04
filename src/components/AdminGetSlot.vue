@@ -47,7 +47,7 @@
         <p class="no-content" v-if="getPreparationsSlot.length === 0">Aucune préparation prévue au créneau pour le moment</p>
           <div class="prep-request" v-for="prep in getPreparationsSlot" :key="prep.id">
               <div class="prep-request-infos">
-                <p class="prep-request-info">{{prep.immat}}</p>
+                <p class="prep-request-info input-immat">{{prep.immat}}</p>
                 <p class="prep-request-info">{{prep.brand}}</p>
                 <p class="prep-request-info">{{prep.model}}</p>
               </div>

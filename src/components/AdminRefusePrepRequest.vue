@@ -18,7 +18,7 @@
                 <p v-if="!getPrepRequest.year">Année : Non renseigné</p>
                 <p v-if="getPrepRequest.condition">Etat : <span class="info-bold">{{getPrepRequest.condition}}</span></p>
                 <p v-if="!getPrepRequest.condition">Etat : Non renseigné</p>
-                <p v-if="getPrepRequest.immat">Immatriculation / N° de série : <span class="info-bold">{{getPrepRequest.immat}}</span></p>
+                <p v-if="getPrepRequest.immat">Immatriculation / N° de série : <span class="info-bold input-immat">{{getPrepRequest.immat}}</span></p>
                 <p v-if="!getPrepRequest.immat">Immatriculation / N° de série : Non renseigné</p>
                 <p v-if="getPrepRequest.kilometer">KM : <span class="info-bold">{{getPrepRequest.kilometer}}</span></p>
                 <p v-if="!getPrepRequest.kilometer">KM : Non renseigné</p>

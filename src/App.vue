@@ -1,7 +1,18 @@
 <template>
-  
+  <UpdateNotification />
   <router-view/>
 </template>
+
+<script>
+import UpdateNotification from './components/UpdateNotification.vue';
+
+export default {
+  name: 'App',
+  components: {
+    UpdateNotification
+  },
+};
+</script>
 
 <style>
 @font-face {

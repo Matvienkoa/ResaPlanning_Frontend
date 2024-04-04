@@ -4,12 +4,10 @@
       <img crossorigin="anonymous" @click="closeAddBox()" src="../assets/Icons/close.svg" alt="" class="close-add" />
       <div class="add-preparation-box">
         <h2 class="second-title">Ajouter une préparation</h2>
-        <label class="form-label">Heure de début<span class="star">*</span></label>
+        <p class="form-label">Heure de début<span class="star">*</span></p>
         <VueDatePicker class="picker" v-model="startTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="required datepicker" @update:model-value="cancelError()" />
-        <!-- <input class="form-input required" v-model="startTime" @input="cancelError()" type="time" name="preparation-form-startTime" id="preparation-form-startTime"> -->
-        <label class="form-label">Heure de fin</label>
+        <p class="form-label">Heure de fin</p>
         <VueDatePicker class="picker" v-model="endTime" timePicker teleport-center select-text="Valider" cancel-text="Annuler" input-class-name="datepicker" />
-        <!-- <input class="form-input" v-model="endTime" @input="cancelError()" type="time" name="preparation-form-endTime" id="preparation-form-endTime"> -->
         <label class="form-label" for="preparation-form-brand">Marque<span class="star">*</span></label>
         <input class="form-input required" v-model="brand" @input="cancelError()" type="text" name="preparation-form-brand" id="preparation-form-brand">
         <label class="form-label" for="preparation-form-model">Modèle<span class="star">*</span></label>
@@ -18,7 +16,7 @@
         <input class="form-input required" v-model="year" @input="cancelError()" type="text" name="preparation-form-year" id="preparation-form-year">
         <label class="form-label" for="preparation-form-immat">Immatriculation<span class="star">*</span></label>
         <p class="form-password-infos">Ou numéro de série du véhicule</p>
-        <input class="form-input required" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
+        <input class="form-input required input-immat" v-model="immat" @input="cancelError()" type="text" name="preparation-form-immat" id="preparation-form-immat">
         <label class="form-label" for="preparation-form-kilometers">Km<span class="star">*</span></label>
         <input class="form-input required" v-model="kilometer" @input="cancelError()" type="text" name="preparation-form-kilometers" id="preparation-form-kilometers">
         <label class="form-label" for="preparation-form-condition">Etat du véhicule<span class="star">*</span></label>
@@ -38,7 +36,16 @@
         <label class="form-label" for="vehicle-form-maker">Préparation attribuée à :</label>
         <input class="form-input" v-model="maker" type="text" name="vehicle-form-maker" id="vehicle-form-maker">
         <div v-if="error" class="error">{{ error.message }}</div>
-        <button class="add-button" @click="addPreparation()">Créer la préparation</button>
+        <button class="add-button" @click="checkImmat()">Créer la préparation</button>
+      </div>
+      <div v-if="alertMode === 'alert'" class="alert-back">
+        <div class="alert-box">
+          <h2 class="add-box-title">Cette Immatriculation est déjà enregistrée</h2>
+          <div class="box-choice-button">
+            <button class="valid-button" @click="addPreparation()">Continuer</button>
+            <div class="cancel-button" @click="cancelImmat()">Annuler</div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -59,11 +66,11 @@ export default {
   components: { 
     VueDatePicker 
   },
-  setup() {
+  setup(props) {
     return {
       startTime: ref({
-        hours: "9",
-        minutes: "0"
+        hours: moment(props.date).format('HH'),
+        minutes: moment(props.date).format('mm')
       }),
       endTime: ref(null)
     }
@@ -71,6 +78,7 @@ export default {
   data() {
     return {
       moment: moment,
+      alertMode: '',
       error: "",
       errorPrestation: "",
       customer: this.customerId,
@@ -114,6 +122,39 @@ export default {
       if(index !== -1) {
         this.steps.splice(index, 1)
       }
+    },
+    checkImmat() {
+      instance.post('/preparation/check/', {
+          brand: this.brand,
+          model: this.model,
+          year: this.year,
+          immat: this.immat,
+          kilometer: this.kilometer,
+          condition: this.condition,
+          customerId: this.customer,
+          startDate: moment(this.startDate).format('YYYY-MM-DD'),
+          endDate: moment(this.endDate).format('YYYY-MM-DD'),
+          startTime: this.startTime
+      })
+      .then((res) => {
+          if(res.data.length === 0) {
+              this.addPreparation()
+          } else {
+              this.alertMode = 'alert'
+          }
+      })
+      .catch((error) => {
+          this.error = error.response.data;
+          const emptyInput = document.querySelectorAll('.required');
+          emptyInput.forEach(input => {
+              if(input.value === "") {
+                  input.classList.add('empty')
+              }
+          })
+      })
+    },
+    cancelImmat() {
+        this.alertMode = ''
     },
     addPreparation() {
       instance.post('/preparation/', {
@@ -174,6 +215,34 @@ export default {
 </script>
 
 <style scoped>
+.alert-back{
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.808);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 11;
+}
+.alert-box{
+  position: relative;
+  width: 90%;
+  max-width: 500px;
+  min-height: 30%;
+  max-height: 90%;
+  background: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow-y: auto;
+  z-index: 12;
+  border-radius: 10px;
+}
 .add-back{
   z-index: 8;
 }

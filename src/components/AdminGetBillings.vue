@@ -8,11 +8,12 @@
                     <div class="get-requests-title-box">
                         <h2 class="get-requests-title">Préparations à facturer</h2>
                     </div>
+                    <div v-if="getPreparationsBilling.length !== 0" class="download-file" @click="downloadFile()">Télécharger</div>
                     <p class="no-content" v-if="getPreparationsBilling.length === 0">Aucune préparation à facturer pour le moment</p>
                     <div class="prep-request" v-for="prep in getPreparationsBilling" :key="prep.id">
                         <div class="prep-request-infos">
                           <p class="prep-request-info">{{prep.company}}</p>
-                          <p class="prep-request-info">{{prep.immat}}</p>
+                          <p class="prep-request-info input-immat">{{prep.immat}}</p>
                           <p class="prep-request-info">{{prep.brand}}</p>
                           <p class="prep-request-info">{{prep.model}}</p>
                           <p class="prep-request-info">Terminée le : {{moment(prep.end).format('LL')}}</p>
@@ -31,7 +32,7 @@
                     <div class="prep-request" v-for="prep in getPreparationsBilled" :key="prep.id">
                         <div class="prep-request-infos">
                           <p class="prep-request-info">{{prep.company}}</p>
-                          <p class="prep-request-info">{{prep.immat}}</p>
+                          <p class="prep-request-info input-immat">{{prep.immat}}</p>
                           <p class="prep-request-info">{{prep.brand}}</p>
                           <p class="prep-request-info">{{prep.model}}</p>
                           <p class="prep-request-info">Terminée le : {{moment(prep.end).format('LL')}}</p>
@@ -47,9 +48,11 @@
 </template>
 
 <script>
+import instance from '@/axios';
 import { mapGetters } from 'vuex';
 let moment = require('moment');
 moment.locale('fr');
+import xlsx from "json-as-xlsx";
 
 import AdminInvoicePreparation from '@/components/AdminInvoicePreparation.vue';
 
@@ -62,13 +65,39 @@ export default {
     return {
         id: null,
         moment: moment,
-        month: moment(new Date()).format('yyyy-MM')
+        month: moment(new Date()).format('yyyy-MM'),
+        data: [
+          {
+            sheet: "Prestations à facturer",
+            columns: [
+              { label: "Client", value: "client"},
+              { label: "Immatriculation", value: "immat"},
+              { label: "Marque", value: "brand"},
+              { label: "Modèle", value: "model"},
+              { label: "Terminée le", value: "end"},
+            ],
+            content: []
+          }
+        ],
+        settings: {
+          fileName: "Préparations à facturer",
+          writeMode: "writeFile"
+        }
     }
   },
   computed: {
     ...mapGetters(['getPreparationsBilling', 'getPreparationsBilled', 'getInvoiceBox'])
   },
   methods: {
+    downloadFile() {
+      instance.get(`/billings/nobilled/`)
+      .then((res) => {
+        res.data.forEach(prep => {
+          this.data[0].content.push({client: prep.company, immat: prep.immat.toUpperCase(), brand: prep.brand, model: prep.model, end: moment(prep.end).format('LL')})
+        });
+        xlsx(this.data, this.settings)
+      })
+    },
     updatePrepBilled() {
       this.$store.dispatch('getPreparationsCompletedBilled', moment(this.month).format())
     },
@@ -124,10 +153,24 @@ export default {
   padding-bottom: 5px;
   margin-bottom: 15px;
   margin-top: 15px;
+  flex-wrap: wrap;
 }
 .get-requests-title{
   font-family: 'trumpSoftPro', sans-serif;
   font-size: 2em;
+}
+.download-file{
+  width: 100px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: green;
+  border-radius: 10px;
+  padding: 5px;
+  color: white;
+  margin: auto;
+  margin-bottom: 20px;
+  cursor: pointer;
 }
 .prep-request{
   width: 100%;
